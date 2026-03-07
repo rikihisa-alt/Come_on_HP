@@ -233,55 +233,51 @@
       });
     });
 
-    /* --- Concept deco — animated right side --- */
+    /* --- Concept deco — card slit arc animation --- */
     if (!isMobile) {
-      // Spade rotates on scroll
-      gsap.to('.concept-spade', {
-        rotation: 360, ease: 'none',
-        scrollTrigger: { trigger: '#concept', start: 'top bottom', end: 'bottom top', scrub: 3 }
+      const cards = gsap.utils.toArray('.cd-card');
+      const cardCount = cards.length;
+      // Arc parameters: cards fan out in a semi-circle arc curving to the right
+      const arcRadius = 160; // radius of the arc
+      const totalArc = 70; // total arc degrees spread
+      const startAngle = -totalArc / 2; // center the arc
+
+      // Initial state: all cards stacked at center, hidden
+      cards.forEach(card => {
+        gsap.set(card, { opacity: 0, x: '-50%', y: '-50%' });
       });
 
-      // Floating suits animate in
-      gsap.utils.toArray('.cd-float').forEach((el, i) => {
-        gsap.to(el, {
-          opacity: 0.15 + Math.random() * 0.15,
-          duration: 1,
-          delay: 0.3 + i * 0.2,
+      // Scroll-driven slit animation
+      cards.forEach((card, i) => {
+        const angle = startAngle + (i / (cardCount - 1)) * totalArc;
+        const rad = (angle * Math.PI) / 180;
+        // Arc curves to the right: x from center of arc, y spreads vertically
+        const targetX = Math.sin(rad) * arcRadius;
+        const targetY = (i - (cardCount - 1) / 2) * 70; // vertical spread
+        const targetRotation = angle * 0.6; // subtle rotation matching arc
+
+        // Fade in staggered
+        gsap.to(card, {
+          opacity: 0.85,
+          duration: 0.6,
+          delay: i * 0.12,
           ease: 'power2.out',
           scrollTrigger: { trigger: '#concept', start: 'top 70%' }
         });
-        // Perpetual float
-        gsap.to(el, {
-          y: -12 - Math.random() * 20,
-          x: -8 + Math.random() * 16,
-          rotation: -15 + Math.random() * 30,
-          duration: 3 + Math.random() * 3,
-          ease: 'sine.inOut', yoyo: true, repeat: -1,
-          delay: Math.random() * 2
-        });
-      });
 
-      // Dots pulse
-      gsap.utils.toArray('.cd-dot').forEach((el, i) => {
-        gsap.to(el, {
-          opacity: 0.2 + Math.random() * 0.4,
-          scale: 1 + Math.random() * 0.5,
-          duration: 2 + Math.random() * 2,
-          ease: 'sine.inOut', yoyo: true, repeat: -1,
-          delay: Math.random() * 3
+        // Slit apart on scroll — cards spread from stacked to arc
+        gsap.to(card, {
+          x: targetX - 28, // offset from the center (css translate -50%)
+          y: targetY,
+          rotation: targetRotation,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#concept',
+            start: 'top 60%',
+            end: 'bottom 40%',
+            scrub: 1.5
+          }
         });
-      });
-
-      // Rings parallax on scroll
-      gsap.to('.cd-ring-1', {
-        scale: 1.15, opacity: 0.6,
-        ease: 'none',
-        scrollTrigger: { trigger: '#concept', start: 'top bottom', end: 'bottom top', scrub: 2 }
-      });
-      gsap.to('.cd-ring-3', {
-        scale: 1.3,
-        ease: 'none',
-        scrollTrigger: { trigger: '#concept', start: 'top bottom', end: 'bottom top', scrub: 1.5 }
       });
     }
 
@@ -400,7 +396,7 @@
 
       // Fade in/out
       gsap.to(p, {
-        opacity: 0.04 + Math.random() * 0.08,
+        opacity: 0.06 + Math.random() * 0.12,
         duration: 2 + Math.random() * 3,
         ease: 'sine.inOut', yoyo: true, repeat: -1,
         delay: Math.random() * 4
@@ -445,7 +441,7 @@
         vx: (Math.random() - 0.5) * 0.3,
         vy: (Math.random() - 0.5) * 0.3,
         r: 1 + Math.random() * 1.5,
-        alpha: 0.1 + Math.random() * 0.2
+        alpha: 0.15 + Math.random() * 0.25
       });
     }
 
@@ -477,7 +473,7 @@
             ctx.beginPath();
             ctx.moveTo(dots[i].x, dots[i].y);
             ctx.lineTo(dots[j].x, dots[j].y);
-            ctx.strokeStyle = 'rgba(107, 159, 212, ' + (0.06 * (1 - dist / 120)) + ')';
+            ctx.strokeStyle = 'rgba(107, 159, 212, ' + (0.10 * (1 - dist / 120)) + ')';
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }

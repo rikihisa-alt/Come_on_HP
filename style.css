@@ -12,17 +12,17 @@
   --white:        #ffffff;
   --off-white:    #edf1f7;
   --warm-white:   #f5f0e8;
-  --gray-light:   #a0b0c4;
-  --gray:         #6a7d95;
-  --gray-dark:    #3a4a5c;
+  --gray-light:   #b8c8da;
+  --gray:         #8a9bb0;
+  --gray-dark:    #4a5e74;
   --gold-soft:    #c4a265;
   --warm:         #d4a373;
   --red-card:     #c94040;
   --bg:           #0a1628;
   --bg-card:      #101e34;
   --bg-card-2:    #152744;
-  --border:       rgba(106, 157, 212, 0.12);
-  --border-hover: rgba(106, 157, 212, 0.28);
+  --border:       rgba(106, 157, 212, 0.18);
+  --border-hover: rgba(106, 157, 212, 0.35);
   --font-display: 'Cormorant Garamond', 'Georgia', serif;
   --font-body:    'Noto Sans JP', -apple-system, sans-serif;
   --sec-pad: clamp(100px, 18vh, 200px);
@@ -208,7 +208,7 @@ button { font: inherit; cursor: pointer; }
 .hero-canvas {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
-  pointer-events: none; opacity: 0.3;
+  pointer-events: none; opacity: 0.4;
 }
 
 .hero-glow {
@@ -217,15 +217,15 @@ button { font: inherit; cursor: pointer; }
 }
 .hero-glow-1 {
   width: 600px; height: 600px; top: 5%; left: 15%;
-  background: var(--blue-light); opacity: 0.12;
+  background: var(--blue-light); opacity: 0.18;
 }
 .hero-glow-2 {
   width: 400px; height: 400px; bottom: 10%; right: 10%;
-  background: var(--blue-pale); opacity: 0.06;
+  background: var(--blue-pale); opacity: 0.10;
 }
 .hero-glow-3 {
   width: 300px; height: 300px; top: 60%; left: 50%;
-  background: var(--warm); opacity: 0.04;
+  background: var(--warm); opacity: 0.07;
 }
 
 .hero-particles { position: absolute; inset: 0; pointer-events: none; }
@@ -407,7 +407,7 @@ button { font: inherit; cursor: pointer; }
 .sec-divider { display: flex; justify-content: center; padding: 0 var(--side-pad); }
 .divider-line {
   width: 1px; height: 80px;
-  background: linear-gradient(to bottom, transparent, var(--border-hover), transparent);
+  background: linear-gradient(to bottom, transparent, rgba(106, 157, 212, 0.25), transparent);
 }
 
 /* ============================================
@@ -439,73 +439,49 @@ button { font: inherit; cursor: pointer; }
 
 .concept-deco {
   position: absolute;
-  top: 50%; right: -60px;
+  top: 50%; right: -30px;
   transform: translateY(-50%);
   pointer-events: none;
-  width: clamp(180px, 22vw, 320px);
-  height: clamp(180px, 22vw, 320px);
-}
-.concept-spade {
-  width: clamp(80px, 10vw, 120px);
-  color: var(--border);
-  opacity: 0.5;
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
+  width: clamp(140px, 18vw, 240px);
+  height: clamp(320px, 45vw, 480px);
 }
 
-/* Concept deco rings */
-.cd-ring {
+/* Concept card slit animation */
+.cd-card {
   position: absolute;
-  top: 50%; left: 50%;
-  border-radius: 50%;
-  border: 1px solid;
-  transform: translate(-50%, -50%);
-}
-.cd-ring-1 {
-  width: 100%; height: 100%;
-  border-color: rgba(107, 159, 212, 0.08);
-  animation: cdRingSpin1 20s linear infinite;
-}
-.cd-ring-2 {
-  width: 75%; height: 75%;
-  border-color: rgba(107, 159, 212, 0.12);
-  border-style: dashed;
-  animation: cdRingSpin2 15s linear infinite reverse;
-}
-.cd-ring-3 {
-  width: 50%; height: 50%;
-  border-color: rgba(212, 163, 115, 0.1);
-  animation: cdRingSpin1 12s linear infinite;
-}
-@keyframes cdRingSpin1 { to { transform: translate(-50%, -50%) rotate(360deg); } }
-@keyframes cdRingSpin2 { to { transform: translate(-50%, -50%) rotate(360deg); } }
-
-/* Concept floating suits */
-.cd-float {
-  position: absolute;
-  font-size: clamp(14px, 2vw, 22px);
-  color: var(--blue-pale);
+  width: clamp(56px, 7vw, 80px);
+  height: clamp(80px, 10vw, 112px);
+  background: var(--white);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.15);
+  /* Start stacked at the center */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
   opacity: 0;
+  will-change: transform, opacity;
+  transition: box-shadow 0.4s;
 }
-.cd-float-1 { top: 8%; left: 15%; }
-.cd-float-2 { top: 18%; right: 10%; color: var(--warm); }
-.cd-float-3 { bottom: 18%; left: 10%; }
-.cd-float-4 { bottom: 8%; right: 18%; color: var(--warm); }
-
-/* Concept floating dots */
-.cd-dot {
-  position: absolute;
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  background: var(--blue-pale);
-  opacity: 0;
+.cd-card-suit {
+  font-size: clamp(18px, 2.5vw, 28px);
+  line-height: 1;
+  color: var(--blue-deep);
 }
-.cd-dot-1 { top: 25%; right: 25%; }
-.cd-dot-2 { bottom: 30%; left: 30%; }
-.cd-dot-3 { top: 40%; left: 5%; }
-.cd-dot-4 { bottom: 15%; right: 35%; }
-.cd-dot-5 { top: 10%; left: 45%; }
+.cd-card-suit.cd-red {
+  color: var(--red-card);
+}
+.cd-card-val {
+  font-family: var(--font-display);
+  font-size: clamp(11px, 1.5vw, 15px);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--blue-deep);
+  margin-top: 2px;
+}
 
 /* ============================================
    EXPERIENCE
@@ -792,25 +768,6 @@ button { font: inherit; cursor: pointer; }
   z-index: 5;
 }
 
-/* Floating logo */
-.gallery-logo-float {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  pointer-events: none;
-}
-.gallery-logo-img {
-  width: clamp(60px, 8vw, 100px);
-  height: auto;
-  filter: drop-shadow(0 0 40px rgba(10, 22, 40, 0.9)) drop-shadow(0 0 80px rgba(10, 22, 40, 0.8));
-  animation: logoFloat 4s ease-in-out infinite;
-}
-@keyframes logoFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
 /* Carousel */
 .gallery-carousel {
   width: 100%;
@@ -823,8 +780,8 @@ button { font: inherit; cursor: pointer; }
   will-change: transform;
 }
 .gallery-slide {
-  flex: 0 0 clamp(260px, 28vw, 380px);
-  height: clamp(200px, 24vw, 320px);
+  flex: 0 0 clamp(300px, 34vw, 460px);
+  height: clamp(240px, 28vw, 380px);
   border-radius: 10px;
   overflow: hidden;
   will-change: transform;
@@ -1159,7 +1116,7 @@ button { font: inherit; cursor: pointer; }
   .game-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .gc-back p { font-size: 10px; line-height: 1.7; }
 
-  .gallery-slide { flex: 0 0 clamp(220px, 60vw, 300px); height: clamp(180px, 45vw, 260px); }
+  .gallery-slide { flex: 0 0 clamp(260px, 70vw, 360px); height: clamp(200px, 52vw, 300px); }
 
   .system-grid { grid-template-columns: 1fr; }
   .access-grid { grid-template-columns: 1fr; gap: 32px; }
