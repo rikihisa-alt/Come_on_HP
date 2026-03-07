@@ -320,6 +320,134 @@ button { font: inherit; cursor: pointer; }
    ANIMATION HELPERS
    ============================================ */
 .rv { opacity: 0; transform: translateY(40px); }
+.rv-item { opacity: 0; transform: translateY(30px); }
+
+/* ============================================
+   NAV — Active link
+   ============================================ */
+.nav-links a.active { color: var(--white); }
+.nav-links a.active::after { width: 100%; }
+
+/* ============================================
+   READ MORE / CTA BUTTON
+   ============================================ */
+.btn-more { display: inline-flex; align-items: center; gap: 10px; font-family: var(--ff-d); font-size: 13px; font-weight: 400; letter-spacing: .18em; color: var(--blue-mid); margin-top: 40px; padding: 14px 0; position: relative; transition: color .4s; }
+.btn-more::after { content: ''; display: block; width: 28px; height: 1px; background: var(--blue-mid); transition: width .4s, background .4s; }
+.btn-more:hover { color: var(--blue); }
+.btn-more:hover::after { width: 44px; background: var(--blue); }
+.btn-more svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; transition: transform .3s; }
+.btn-more:hover svg { transform: translateX(4px); }
+
+/* ============================================
+   SUB-PAGE: Page Hero (dark banner)
+   ============================================ */
+.page-hero { position: relative; height: clamp(280px, 40vh, 420px); display: flex; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(ellipse 60% 50% at 50% 45%, rgba(26,58,108,.25), transparent), var(--hero-bg); padding-top: 60px; }
+.page-hero::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 80px; background: linear-gradient(to top, var(--off), transparent); pointer-events: none; }
+.page-hero-inner { text-align: center; position: relative; z-index: 2; }
+.page-hero-title { font-family: var(--ff-d); font-size: clamp(40px,9vw,80px); font-weight: 300; letter-spacing: .06em; color: var(--white); opacity: 0; transform: translateY(30px); }
+.page-hero-sub { font-size: clamp(11px,1.3vw,14px); font-weight: 300; letter-spacing: .12em; color: rgba(123,176,222,.5); margin-top: 16px; opacity: 0; }
+
+/* ============================================
+   SUB-PAGE: Breadcrumb
+   ============================================ */
+.breadcrumb { padding: 24px var(--side); background: var(--off); }
+.breadcrumb-inner { max-width: var(--max-w); margin: 0 auto; font-family: var(--ff-d); font-size: 11px; font-weight: 400; letter-spacing: .12em; color: var(--text-m); display: flex; align-items: center; gap: 8px; }
+.breadcrumb-inner a { color: var(--text-m); transition: color .3s; }
+.breadcrumb-inner a:hover { color: var(--blue-mid); }
+.breadcrumb-inner .sep { font-size: 9px; color: var(--silver); }
+
+/* ============================================
+   SUB-PAGE: Content layout
+   ============================================ */
+.page-content { max-width: var(--max-w); margin: 0 auto; padding: clamp(60px,10vh,100px) var(--side); }
+.page-section { margin-bottom: clamp(80px,14vh,140px); }
+.page-section:last-child { margin-bottom: 0; }
+.page-section-h { font-family: var(--ff-b); font-weight: 200; font-size: clamp(22px,4.5vw,36px); letter-spacing: .06em; color: var(--blue-deep); margin-bottom: clamp(28px,4vh,48px); line-height: 1.6; }
+.page-section-h .accent { font-family: var(--ff-d); font-weight: 300; font-size: clamp(28px,5.5vw,44px); display: block; letter-spacing: .04em; margin-bottom: 8px; }
+.page-lead { font-size: clamp(14px,1.6vw,17px); font-weight: 300; line-height: 2.2; color: var(--text-s); margin-bottom: 32px; }
+.page-body { font-size: clamp(13px,1.4vw,15px); font-weight: 300; line-height: 2.2; color: var(--text-s); }
+.page-body p { margin-bottom: 24px; }
+.page-body strong { color: var(--warm); font-weight: 500; }
+
+/* Page columns */
+.page-columns { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px,6vw,72px); align-items: start; }
+
+/* Page card */
+.page-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: clamp(28px,4vw,44px); box-shadow: var(--shd-card); transition: border-color .4s, transform .4s, box-shadow .4s; }
+.page-card:hover { border-color: var(--border-h); transform: translateY(-3px); box-shadow: var(--shd-m); }
+.page-card h3 { font-family: var(--ff-d); font-size: clamp(18px,2.5vw,24px); font-weight: 400; letter-spacing: .06em; color: var(--blue-deep); margin-bottom: 14px; }
+.page-card p { font-size: 13px; font-weight: 300; line-height: 2; color: var(--text-s); }
+
+/* ============================================
+   SUB-PAGE: Games overview grid
+   ============================================ */
+.games-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: clamp(20px,3vw,32px); }
+.game-link-card { display: block; background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: clamp(36px,5vw,56px); text-align: center; box-shadow: var(--shd-card); transition: border-color .4s, transform .5s, box-shadow .5s; overflow: hidden; position: relative; }
+.game-link-card:hover { border-color: var(--border-h); transform: translateY(-6px); box-shadow: var(--shd-l); }
+.game-link-card .suit-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: clamp(80px,14vw,140px); color: rgba(26,58,108,.03); pointer-events: none; line-height: 1; }
+.game-link-card[data-color="red"] .suit-bg { color: rgba(201,64,64,.04); }
+.game-link-card h3 { font-family: var(--ff-d); font-size: clamp(24px,4vw,36px); font-weight: 400; letter-spacing: .06em; color: var(--blue-deep); margin-bottom: 8px; position: relative; z-index: 1; }
+.game-link-card .suit-icon { font-size: clamp(28px,5vw,42px); margin-bottom: 16px; position: relative; z-index: 1; }
+.game-link-card[data-color="dark"] .suit-icon { color: var(--blue-deep); }
+.game-link-card[data-color="red"] .suit-icon { color: var(--red); }
+.game-link-card .tagline { font-size: clamp(11px,1.2vw,13px); font-weight: 300; letter-spacing: .06em; color: var(--text-m); margin-bottom: 24px; position: relative; z-index: 1; line-height: 1.8; }
+.game-link-card .card-more { font-family: var(--ff-d); font-size: 12px; font-weight: 400; letter-spacing: .2em; color: var(--blue-mid); position: relative; z-index: 1; }
+
+/* ============================================
+   SUB-PAGE: Game detail
+   ============================================ */
+.game-detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+.game-detail-suit { font-size: clamp(36px,6vw,52px); line-height: 1; }
+.rules-list { counter-reset: rule; list-style: none; padding: 0; }
+.rules-list li { counter-increment: rule; position: relative; padding: 20px 0 20px 52px; border-bottom: 1px solid var(--border); font-size: 14px; font-weight: 300; line-height: 2; color: var(--text-s); }
+.rules-list li::before { content: counter(rule); position: absolute; left: 0; top: 20px; width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--blue-deep), var(--blue)); color: var(--white); font-family: var(--ff-d); font-size: 13px; font-weight: 400; display: flex; align-items: center; justify-content: center; }
+
+/* Info table */
+.info-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+.info-table th, .info-table td { padding: 16px 20px; text-align: left; font-size: 13px; font-weight: 300; border-bottom: 1px solid var(--border); }
+.info-table th { font-family: var(--ff-d); font-weight: 400; letter-spacing: .08em; color: var(--blue-mid); width: 35%; background: rgba(26,58,108,.02); }
+.info-table td { color: var(--text-s); }
+
+/* ============================================
+   SUB-PAGE: Food menu list
+   ============================================ */
+.menu-list { list-style: none; padding: 0; }
+.menu-list li { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--border); }
+.menu-item-name { font-size: 14px; font-weight: 400; color: var(--text); }
+.menu-item-desc { font-size: 12px; font-weight: 300; color: var(--text-m); margin-left: 8px; }
+.menu-item-price { font-family: var(--ff-d); font-size: 14px; font-weight: 400; letter-spacing: .04em; color: var(--blue-mid); white-space: nowrap; }
+
+/* ============================================
+   SUB-PAGE: Step flow (Beginner)
+   ============================================ */
+.step-flow { display: grid; gap: 0; counter-reset: step; }
+.step-item { display: grid; grid-template-columns: 60px 1fr; gap: 20px; padding: 32px 0; border-bottom: 1px solid var(--border); position: relative; }
+.step-num { counter-increment: step; width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--blue-deep), var(--blue-mid)); color: var(--white); font-family: var(--ff-d); font-size: 16px; font-weight: 400; display: flex; align-items: center; justify-content: center; }
+.step-item h4 { font-family: var(--ff-d); font-size: clamp(16px,2.2vw,20px); font-weight: 400; letter-spacing: .06em; color: var(--blue-deep); margin-bottom: 8px; }
+.step-item p { font-size: 13px; font-weight: 300; line-height: 2; color: var(--text-s); }
+
+/* ============================================
+   SUB-PAGE: FAQ (Beginner)
+   ============================================ */
+.faq-list { list-style: none; padding: 0; }
+.faq-item { border-bottom: 1px solid var(--border); padding: 28px 0; }
+.faq-q { font-size: clamp(14px,1.5vw,16px); font-weight: 500; color: var(--blue-deep); margin-bottom: 12px; display: flex; align-items: baseline; gap: 10px; }
+.faq-q::before { content: 'Q.'; font-family: var(--ff-d); font-size: 18px; font-weight: 400; color: var(--blue-mid); flex-shrink: 0; }
+.faq-a { font-size: 13px; font-weight: 300; line-height: 2.2; color: var(--text-s); padding-left: 32px; }
+
+/* ============================================
+   SUB-PAGE: CTA section
+   ============================================ */
+.page-cta { text-align: center; padding: clamp(48px,8vh,80px) clamp(24px,4vw,48px); background: linear-gradient(135deg, rgba(26,58,108,.03), rgba(123,176,222,.04)); border: 1px solid var(--border); border-radius: 16px; margin-top: clamp(60px,10vh,100px); }
+.page-cta h3 { font-family: var(--ff-d); font-size: clamp(22px,4vw,32px); font-weight: 300; letter-spacing: .06em; color: var(--blue-deep); margin-bottom: 14px; }
+.page-cta p { font-size: clamp(12px,1.3vw,14px); font-weight: 300; color: var(--text-s); margin-bottom: 28px; line-height: 2; }
+.page-cta-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+
+/* ============================================
+   SUB-PAGE: Image placeholder
+   ============================================ */
+.page-ph { width: 100%; min-height: clamp(180px,24vw,300px); display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #eef1f7 0%, rgba(26,58,108,.06) 50%, #e6eaf3 100%); border-radius: 12px; overflow: hidden; }
+.page-ph span { font-family: var(--ff-d); font-size: 13px; font-weight: 400; letter-spacing: .15em; color: var(--text-m); }
 
 /* ============================================
    RESPONSIVE
@@ -361,4 +489,11 @@ button { font: inherit; cursor: pointer; }
   .sys-card { padding: 24px; }
   .access-row { grid-template-columns: 70px 1fr; }
   .food-en { font-size: clamp(28px,9vw,42px); }
+  /* Sub-page responsive */
+  .page-hero { height: clamp(220px,35vh,300px); }
+  .page-columns { grid-template-columns: 1fr; }
+  .games-grid { grid-template-columns: 1fr; }
+  .step-item { grid-template-columns: 48px 1fr; gap: 14px; }
+  .info-table th { width: 40%; }
+  .page-cta-links { flex-direction: column; align-items: center; }
 }
