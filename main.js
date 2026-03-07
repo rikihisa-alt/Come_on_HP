@@ -233,12 +233,57 @@
       });
     });
 
-    /* --- Concept spade rotates on scroll --- */
-    gsap.to('.concept-spade', {
-      rotation: 15, y: -30, scale: 1.1,
-      ease: 'none',
-      scrollTrigger: { trigger: '#concept', start: 'top bottom', end: 'bottom top', scrub: 2.5 }
-    });
+    /* --- Concept deco — animated right side --- */
+    if (!isMobile) {
+      // Spade rotates on scroll
+      gsap.to('.concept-spade', {
+        rotation: 360, ease: 'none',
+        scrollTrigger: { trigger: '#concept', start: 'top bottom', end: 'bottom top', scrub: 3 }
+      });
+
+      // Floating suits animate in
+      gsap.utils.toArray('.cd-float').forEach((el, i) => {
+        gsap.to(el, {
+          opacity: 0.15 + Math.random() * 0.15,
+          duration: 1,
+          delay: 0.3 + i * 0.2,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: '#concept', start: 'top 70%' }
+        });
+        // Perpetual float
+        gsap.to(el, {
+          y: -12 - Math.random() * 20,
+          x: -8 + Math.random() * 16,
+          rotation: -15 + Math.random() * 30,
+          duration: 3 + Math.random() * 3,
+          ease: 'sine.inOut', yoyo: true, repeat: -1,
+          delay: Math.random() * 2
+        });
+      });
+
+      // Dots pulse
+      gsap.utils.toArray('.cd-dot').forEach((el, i) => {
+        gsap.to(el, {
+          opacity: 0.2 + Math.random() * 0.4,
+          scale: 1 + Math.random() * 0.5,
+          duration: 2 + Math.random() * 2,
+          ease: 'sine.inOut', yoyo: true, repeat: -1,
+          delay: Math.random() * 3
+        });
+      });
+
+      // Rings parallax on scroll
+      gsap.to('.cd-ring-1', {
+        scale: 1.15, opacity: 0.6,
+        ease: 'none',
+        scrollTrigger: { trigger: '#concept', start: 'top bottom', end: 'bottom top', scrub: 2 }
+      });
+      gsap.to('.cd-ring-3', {
+        scale: 1.3,
+        ease: 'none',
+        scrollTrigger: { trigger: '#concept', start: 'top bottom', end: 'bottom top', scrub: 1.5 }
+      });
+    }
 
     /* --- Generic fade reveals --- */
     gsap.utils.toArray('.reveal-fade').forEach(el => {
@@ -283,30 +328,8 @@
       });
     }
 
-    /* --- Gallery items — stagger with parallax --- */
-    gsap.utils.toArray('.reveal-gallery').forEach((el, i) => {
-      gsap.to(el, {
-        opacity: 1, y: 0, scale: 1,
-        duration: 1,
-        delay: i * 0.1,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: el, start: 'top 86%' }
-      });
-    });
-
-    /* --- Gallery items parallax on scroll --- */
-    gsap.utils.toArray('.gallery-item').forEach((el, i) => {
-      const speed = (i % 2 === 0) ? -15 : 15;
-      gsap.to(el, {
-        y: speed, ease: 'none',
-        scrollTrigger: {
-          trigger: '#gallery',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1.5
-        }
-      });
-    });
+    /* --- Gallery infinite horizontal carousel --- */
+    initGalleryCarousel();
 
     /* --- System cards — dramatic entrance --- */
     gsap.utils.toArray('.reveal-card').forEach((el, i) => {
@@ -464,6 +487,85 @@
       requestAnimationFrame(draw);
     }
     draw();
+  }
+
+  /* ==============================
+     GALLERY CAROUSEL — infinite circular scroll
+     ============================== */
+  function initGalleryCarousel () {
+    const track = document.getElementById('galleryTrack');
+    const carousel = document.getElementById('galleryCarousel');
+    if (!track || !carousel) return;
+
+    const slides = Array.from(track.children);
+    const slideCount = slides.length;
+    if (slideCount === 0) return;
+
+    // Clone slides 2x for seamless infinite loop
+    for (let c = 0; c < 2; c++) {
+      slides.forEach(slide => {
+        track.appendChild(slide.cloneNode(true));
+      });
+    }
+
+    const allSlides = Array.from(track.children);
+    const gap = 20;
+
+    // Calculate total width of one set
+    function getSetWidth () {
+      let w = 0;
+      for (let i = 0; i < slideCount; i++) {
+        w += allSlides[i].offsetWidth + gap;
+      }
+      return w;
+    }
+
+    let setWidth = getSetWidth();
+    let currentX = 0;
+
+    // Start from middle set for seamless looping
+    currentX = -setWidth;
+    gsap.set(track, { x: currentX });
+
+    // Pin gallery and scroll horizontally
+    ScrollTrigger.create({
+      trigger: '#gallery',
+      start: 'top top',
+      end: '+=' + (setWidth * 1.5),
+      pin: true,
+      scrub: 1,
+      onUpdate: function (self) {
+        const progress = self.progress;
+        let x = -setWidth - (progress * setWidth * 1.2);
+
+        // Wrap around for infinite loop
+        if (x < -setWidth * 2) {
+          x += setWidth;
+        }
+
+        gsap.set(track, { x: x });
+
+        // Rotate each visible slide based on its position
+        allSlides.forEach(slide => {
+          const rect = slide.getBoundingClientRect();
+          const center = window.innerWidth / 2;
+          const slideCenter = rect.left + rect.width / 2;
+          const dist = (slideCenter - center) / window.innerWidth;
+          const rotation = dist * 15; // Max 15deg rotation
+          const scale = 1 - Math.abs(dist) * 0.12; // Slight scale down at edges
+          gsap.set(slide, {
+            rotation: rotation,
+            scale: Math.max(scale, 0.85)
+          });
+        });
+      }
+    });
+
+    // Recalculate on resize
+    window.addEventListener('resize', () => {
+      setWidth = getSetWidth();
+      ScrollTrigger.refresh();
+    });
   }
 
   /* ==============================
