@@ -15,31 +15,17 @@
 </head>
 <body>
 
-  <!-- ===== Loading Screen ===== -->
+  <!-- ===== Loader ===== -->
   <div id="loader">
     <div class="loader-inner">
-      <div class="loader-cards">
-        <div class="loader-card-wrap lc-1">
-          <div class="loader-card">
-            <div class="loader-card-face loader-card-front"><span>♠</span></div>
-            <div class="loader-card-face loader-card-back"></div>
-          </div>
-        </div>
-        <div class="loader-card-wrap lc-2">
-          <div class="loader-card">
-            <div class="loader-card-face loader-card-front"><span>♥</span></div>
-            <div class="loader-card-face loader-card-back"></div>
-          </div>
-        </div>
-        <div class="loader-card-wrap lc-3">
-          <div class="loader-card">
-            <div class="loader-card-face loader-card-front"><span>♦</span></div>
-            <div class="loader-card-face loader-card-back"></div>
-          </div>
-        </div>
+      <div class="loader-ring">
+        <span class="lr-s">♠</span>
+        <span class="lr-s">♥</span>
+        <span class="lr-s">♦</span>
+        <span class="lr-s">♣</span>
       </div>
       <p class="loader-text">COME ON CASINO</p>
-      <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
     </div>
   </div>
 
@@ -63,118 +49,106 @@
     </div>
   </nav>
 
-  <!-- ===== Hero ===== -->
+  <!-- ===== Hero (Dark Immersive) ===== -->
   <section id="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-glow hero-glow-1"></div>
-    <div class="hero-glow hero-glow-2"></div>
-    <div class="hero-glow hero-glow-3"></div>
-    <div class="hero-particles" id="heroParticles"></div>
-    <canvas id="heroCanvas" class="hero-canvas"></canvas>
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-vignette"></div>
     <div class="hero-content">
       <p class="hero-label">Amusement Casino & Bar — Osaka</p>
       <h1 class="hero-title">
-        <span class="hero-title-line">
-          <span class="hero-title-word" data-delay="0">COME</span>
-          <span class="hero-title-word" data-delay="0.1">ON</span>
+        <span class="hero-line">
+          <span class="hw">COME</span>
+          <span class="hw">ON</span>
         </span>
-        <span class="hero-title-line">
-          <span class="hero-title-word hero-title-accent" data-delay="0.2">CASINO</span>
+        <span class="hero-line">
+          <span class="hw hw-accent">CASINO</span>
         </span>
       </h1>
+      <div class="hero-rule"></div>
       <p class="hero-catch">
-        <span class="hc-char">夜</span><span class="hc-char">が</span><span class="hc-char">、</span><span class="hc-char">動</span><span class="hc-char">き</span><span class="hc-char">出</span><span class="hc-char">す</span><span class="hc-char">。</span>
+        <span class="hc">夜</span><span class="hc">が</span><span class="hc">、</span><span class="hc">動</span><span class="hc">き</span><span class="hc">出</span><span class="hc">す</span><span class="hc">。</span>
       </p>
-      <p class="hero-welcome">はじめての方も、常連さんも。<br>あなたの居場所がここにある。</p>
-      <div class="hero-cta">
-        <a href="#concept" class="hero-btn"><span>Enter the Night</span></a>
-      </div>
+      <p class="hero-sub">はじめての方も、常連さんも。<br>あなたの居場所がここにある。</p>
+      <a href="#concept" class="hero-btn"><span>Enter the Night</span></a>
     </div>
-    <div class="hero-floating">
-      <div class="hf-card hf-card-1"><span>A</span><small>♠</small></div>
-      <div class="hf-card hf-card-2"><span>K</span><small>♥</small></div>
-      <div class="hf-card hf-card-3"><span>Q</span><small>♦</small></div>
-      <div class="hf-chip hf-chip-1"></div>
-      <div class="hf-chip hf-chip-2"></div>
-      <div class="hf-chip hf-chip-3"></div>
+    <div class="hero-float">
+      <div class="hf-card hf-c1"><span>A</span><small>♠</small></div>
+      <div class="hf-card hf-c2"><span>K</span><small>♥</small></div>
+      <div class="hf-card hf-c3"><span>Q</span><small>♦</small></div>
+      <div class="hf-chip hf-ch1"></div>
+      <div class="hf-chip hf-ch2"></div>
     </div>
-    <div class="hero-scroll-indicator">
-      <span>Scroll</span>
-      <div class="scroll-bar"></div>
-    </div>
+    <div class="hero-scroll"><span>Scroll</span><div class="hs-line"></div></div>
   </section>
 
-  <!-- ===== Concept ===== -->
-  <section id="concept" class="sec">
+  <!-- ===== Concept (White) ===== -->
+  <section id="concept" class="sec sec-white">
     <div class="sec-inner">
-      <div class="sec-label">
+      <div class="sec-head">
         <span class="sec-num">01</span>
         <span class="sec-line"></span>
         <span class="sec-name">Concept</span>
       </div>
-      <div class="concept-block">
-        <h2 class="concept-heading">
-          <span class="ch-line reveal-line">大人の夜に、</span>
-          <span class="ch-line reveal-line">もうひとつの</span>
-          <span class="ch-line reveal-line">居場所を。</span>
-        </h2>
-        <div class="concept-spacer"></div>
-        <div class="concept-body">
-          <p class="reveal-fade">
-            はじめてでも大丈夫。<br>
-            ディーラーが優しくお迎えします。
-          </p>
-          <p class="reveal-fade">
-            カジノは、ただのゲームじゃない。<br>
-            駆け引き、高揚感、<br class="sp-only">隣にいる人との距離感。<br>
-            日常から少しだけ踏み出した先にある、<br class="sp-only">特別な時間。
-          </p>
-          <p class="reveal-fade">
-            COME ON CASINO は、<br class="sp-only">本格的なカジノゲームと<br>
-            こだわりの料理・ドリンクで<br class="sp-only">あなたの夜を彩る<br>
-            アミューズメントカジノバーです。
-          </p>
-          <p class="reveal-fade concept-warm">
-            常連さんも、はじめましての方も、<br>
-            みんなが笑顔になれる場所。<br>
-            気軽に遊びに来てください。
-          </p>
+      <div class="concept-wrap">
+        <div class="concept-text">
+          <h2 class="concept-h">
+            <span class="ch-l">大人の夜に、</span>
+            <span class="ch-l">もうひとつの</span>
+            <span class="ch-l">居場所を。</span>
+          </h2>
+          <div class="concept-spacer"></div>
+          <div class="concept-body">
+            <p class="rv">
+              はじめてでも大丈夫。<br>
+              ディーラーが優しくお迎えします。
+            </p>
+            <p class="rv">
+              カジノは、ただのゲームじゃない。<br>
+              駆け引き、高揚感、<br class="sp">隣にいる人との距離感。<br>
+              日常から少しだけ踏み出した先にある、<br class="sp">特別な時間。
+            </p>
+            <p class="rv">
+              COME ON CASINO は、<br class="sp">本格的なカジノゲームと<br>
+              こだわりの料理・ドリンクで<br class="sp">あなたの夜を彩る<br>
+              アミューズメントカジノバーです。
+            </p>
+            <p class="rv concept-warm">
+              常連さんも、はじめましての方も、<br>
+              みんなが笑顔になれる場所。<br>
+              気軽に遊びに来てください。
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="concept-deco" id="conceptDeco">
-        <div class="cd-card cd-card-1"><span class="cd-card-suit">♠</span><span class="cd-card-val">A</span></div>
-        <div class="cd-card cd-card-2"><span class="cd-card-suit cd-red">♥</span><span class="cd-card-val">K</span></div>
-        <div class="cd-card cd-card-3"><span class="cd-card-suit cd-red">♦</span><span class="cd-card-val">Q</span></div>
-        <div class="cd-card cd-card-4"><span class="cd-card-suit">♣</span><span class="cd-card-val">J</span></div>
-        <div class="cd-card cd-card-5"><span class="cd-card-suit">♠</span><span class="cd-card-val">10</span></div>
+        <div class="concept-deco" id="conceptDeco">
+          <div class="cd cd-1"><span>A</span><small>♠</small></div>
+          <div class="cd cd-2"><span>K</span><small class="red">♥</small></div>
+          <div class="cd cd-3"><span>Q</span><small class="red">♦</small></div>
+          <div class="cd cd-4"><span>J</span><small>♣</small></div>
+          <div class="cd cd-5"><span>10</span><small>♠</small></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== Divider ===== -->
-  <div class="sec-divider"><div class="divider-line"></div></div>
-
-  <!-- ===== Experience ===== -->
-  <section id="experience" class="sec">
-    <div class="sec-inner">
-      <div class="sec-label">
+  <!-- ===== Experience (Tinted) ===== -->
+  <section id="experience" class="sec sec-tint">
+    <div class="sec-inner sec-wide">
+      <div class="sec-head">
         <span class="sec-num">02</span>
         <span class="sec-line"></span>
         <span class="sec-name">Experience</span>
       </div>
-      <h2 class="exp-heading reveal-fade">
-        <span class="exp-heading-en">Your Game Awaits</span>
-        <span class="exp-heading-ja">あなたのゲームが、待っている。</span>
+      <h2 class="exp-h rv">
+        <span class="exp-en">Your Game Awaits</span>
+        <span class="exp-ja">あなたのゲームが、待っている。</span>
       </h2>
       <div class="game-grid">
-
-        <!-- Tournament -->
-        <div class="game-card gc-reveal" data-suit="♠" data-color="dark">
+        <div class="game-card gc-rv" data-suit="♠" data-color="dark">
           <div class="game-card-inner">
             <div class="gc-front">
               <div class="gc-suit">♠</div>
-              <span class="gc-corner-top">T</span>
-              <span class="gc-corner-bottom">T</span>
+              <span class="gc-tl">T</span>
+              <span class="gc-br">T</span>
             </div>
             <div class="gc-back">
               <h3>Tournament</h3>
@@ -182,14 +156,12 @@
             </div>
           </div>
         </div>
-
-        <!-- Ring Game -->
-        <div class="game-card gc-reveal" data-suit="♥" data-color="red">
+        <div class="game-card gc-rv" data-suit="♥" data-color="red">
           <div class="game-card-inner">
             <div class="gc-front">
               <div class="gc-suit">♥</div>
-              <span class="gc-corner-top">R</span>
-              <span class="gc-corner-bottom">R</span>
+              <span class="gc-tl">R</span>
+              <span class="gc-br">R</span>
             </div>
             <div class="gc-back">
               <h3>Ring Game</h3>
@@ -197,14 +169,12 @@
             </div>
           </div>
         </div>
-
-        <!-- Blackjack -->
-        <div class="game-card gc-reveal" data-suit="♦" data-color="red">
+        <div class="game-card gc-rv" data-suit="♦" data-color="red">
           <div class="game-card-inner">
             <div class="gc-front">
               <div class="gc-suit">♦</div>
-              <span class="gc-corner-top">B</span>
-              <span class="gc-corner-bottom">B</span>
+              <span class="gc-tl">B</span>
+              <span class="gc-br">B</span>
             </div>
             <div class="gc-back">
               <h3>Blackjack</h3>
@@ -212,14 +182,12 @@
             </div>
           </div>
         </div>
-
-        <!-- Baccarat -->
-        <div class="game-card gc-reveal" data-suit="♣" data-color="dark">
+        <div class="game-card gc-rv" data-suit="♣" data-color="dark">
           <div class="game-card-inner">
             <div class="gc-front">
               <div class="gc-suit">♣</div>
-              <span class="gc-corner-top">B</span>
-              <span class="gc-corner-bottom">B</span>
+              <span class="gc-tl">B</span>
+              <span class="gc-br">B</span>
             </div>
             <div class="gc-back">
               <h3>Baccarat</h3>
@@ -227,98 +195,87 @@
             </div>
           </div>
         </div>
-
       </div>
-      <p class="exp-note reveal-fade">
-        <span class="exp-note-icon">&#9755;</span>
+      <p class="exp-note rv">
+        <span class="exp-note-icon">☞</span>
         初心者の方にはディーラーがルールから丁寧にお教えします。手ぶらでOK、お気軽にどうぞ！
       </p>
     </div>
   </section>
 
-  <!-- ===== Divider ===== -->
-  <div class="sec-divider"><div class="divider-line"></div></div>
-
-  <!-- ===== Food (河内鴨) ===== -->
-  <section id="food" class="sec">
+  <!-- ===== Food (White) ===== -->
+  <section id="food" class="sec sec-white">
     <div class="sec-inner">
-      <div class="sec-label">
+      <div class="sec-head">
         <span class="sec-num">03</span>
         <span class="sec-line"></span>
         <span class="sec-name">Food</span>
       </div>
-      <div class="food-layout">
+      <div class="food-grid">
         <div class="food-text">
-          <h2 class="food-heading">
-            <span class="food-heading-en reveal-fade">Kawachi Duck</span>
-            <span class="food-heading-ja reveal-fade">一夜の興奮に、一皿の感動を。</span>
+          <h2 class="food-h">
+            <span class="food-en rv">Kawachi Duck</span>
+            <span class="food-ja rv">一夜の興奮に、<br>一皿の感動を。</span>
           </h2>
           <div class="food-body">
-            <p class="reveal-fade">
-              大阪が誇る至高のブランド食材、<br class="sp-only">
+            <p class="rv">
+              大阪が誇る至高のブランド食材、<br class="sp">
               <strong>「河内鴨」</strong>。<br>
               その芳醇な旨味を、カジノの夜に。
             </p>
-            <p class="reveal-fade">
-              低温でじっくり火入れしたローストは、<br class="sp-only">
-              ナイフを入れた瞬間に広がる<br class="sp-only">
+            <p class="rv">
+              低温でじっくり火入れしたローストは、<br class="sp">
+              ナイフを入れた瞬間に広がる<br class="sp">
               美しいロゼ色。<br>
-              旨味が凝縮された鴨鍋は、<br class="sp-only">
+              旨味が凝縮された鴨鍋は、<br class="sp">
               最後の一滴まで余韻が残る。
             </p>
-            <p class="reveal-fade concept-warm">
+            <p class="rv food-warm">
               勝負の合間に、語らいの傍らに。<br>
               カジノバーで味わう本格鴨料理 ——<br>
               ここだけの、贅沢な夜。
             </p>
           </div>
         </div>
-        <div class="food-visual reveal-fade">
-          <div class="food-card food-card-1">
-            <div class="food-placeholder">
-              <div class="gi-label">河内鴨ロースト</div>
-            </div>
+        <div class="food-images">
+          <div class="food-img food-img-1 rv">
+            <div class="food-ph"><span>河内鴨ロースト</span></div>
           </div>
-          <div class="food-card food-card-2">
-            <div class="food-placeholder">
-              <div class="gi-label">鴨鍋</div>
-            </div>
+          <div class="food-img food-img-2 rv">
+            <div class="food-ph"><span>鴨鍋</span></div>
           </div>
         </div>
       </div>
-      <div class="food-event reveal-fade">
-        <div class="food-event-inner">
-          <h3 class="food-event-title">Event & Tournament Catering</h3>
-          <p class="food-event-desc">大会・イベントへの河内鴨弁当のケータリングも承っております。</p>
-          <a href="#" class="food-event-btn" target="_blank" rel="noopener">
+      <div class="food-cta rv">
+        <div class="food-cta-inner">
+          <h3 class="food-cta-title">Event & Tournament Catering</h3>
+          <p class="food-cta-desc">大会・イベントへの河内鴨弁当のケータリングも承っております。</p>
+          <a href="#" class="btn-outline" target="_blank" rel="noopener">
             <span>お申し込みはこちら</span>
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== Divider ===== -->
-  <div class="sec-divider"><div class="divider-line"></div></div>
-
-  <!-- ===== Gallery ===== -->
+  <!-- ===== Gallery (Dark Immersive) ===== -->
   <section id="gallery" class="sec sec-gallery">
-    <div class="gallery-pin-wrap">
-      <div class="sec-label gallery-label">
+    <div class="gallery-wrap">
+      <div class="sec-head gallery-head">
         <span class="sec-num">04</span>
         <span class="sec-line"></span>
         <span class="sec-name">Gallery</span>
       </div>
-      <h2 class="gallery-heading reveal-fade">The Scene</h2>
+      <h2 class="gallery-h rv">The Scene</h2>
       <div class="gallery-carousel" id="galleryCarousel">
         <div class="gallery-track" id="galleryTrack">
-          <div class="gallery-slide"><div class="gs-inner"><div class="gs-placeholder"><span>Casino Floor</span></div></div></div>
-          <div class="gallery-slide"><div class="gs-inner"><div class="gs-placeholder"><span>Bar Counter</span></div></div></div>
-          <div class="gallery-slide"><div class="gs-inner"><div class="gs-placeholder"><span>Poker Table</span></div></div></div>
-          <div class="gallery-slide"><div class="gs-inner"><div class="gs-placeholder"><span>Cocktails</span></div></div></div>
-          <div class="gallery-slide"><div class="gs-inner"><div class="gs-placeholder"><span>河内鴨料理</span></div></div></div>
-          <div class="gallery-slide"><div class="gs-inner"><div class="gs-placeholder"><span>みんなの笑顔</span></div></div></div>
+          <div class="gallery-slide"><div class="gs-inner"><div class="gs-ph"><span>Casino Floor</span></div></div></div>
+          <div class="gallery-slide"><div class="gs-inner"><div class="gs-ph"><span>Bar Counter</span></div></div></div>
+          <div class="gallery-slide"><div class="gs-inner"><div class="gs-ph"><span>Poker Table</span></div></div></div>
+          <div class="gallery-slide"><div class="gs-inner"><div class="gs-ph"><span>Cocktails</span></div></div></div>
+          <div class="gallery-slide"><div class="gs-inner"><div class="gs-ph"><span>河内鴨料理</span></div></div></div>
+          <div class="gallery-slide"><div class="gs-inner"><div class="gs-ph"><span>みんなの笑顔</span></div></div></div>
         </div>
       </div>
       <div class="gallery-fade gallery-fade-l"></div>
@@ -326,38 +283,35 @@
     </div>
   </section>
 
-  <!-- ===== Divider ===== -->
-  <div class="sec-divider"><div class="divider-line"></div></div>
-
-  <!-- ===== System ===== -->
-  <section id="system" class="sec">
+  <!-- ===== System (Tinted) ===== -->
+  <section id="system" class="sec sec-tint">
     <div class="sec-inner">
-      <div class="sec-label">
+      <div class="sec-head">
         <span class="sec-num">05</span>
         <span class="sec-line"></span>
         <span class="sec-name">System</span>
       </div>
-      <h2 class="system-heading reveal-fade">Menu & System</h2>
+      <h2 class="system-h rv">Menu & System</h2>
       <div class="system-grid">
-        <div class="sys-card reveal-card">
-          <div class="sys-card-icon">🃏</div>
+        <div class="sys-card rv">
+          <div class="sys-icon">🃏</div>
           <h3>Casino Time</h3>
           <p class="sys-time">Mon - Sat / 18:00 - 24:00</p>
           <p class="sys-desc">チップを購入してお好きなゲームをお楽しみください。初めての方にはフリーレッスンあり！気軽に声かけてくださいね。</p>
         </div>
-        <div class="sys-card reveal-card">
-          <div class="sys-card-icon">☕</div>
+        <div class="sys-card rv">
+          <div class="sys-icon">☕</div>
           <h3>Cafe & Lunch</h3>
           <p class="sys-time">Mon - Fri / 11:00 - 14:00</p>
           <p class="sys-desc">ランチタイムは河内鴨を使ったこだわりの料理をご提供。昼の顔もぜひ体験してみてください。</p>
         </div>
-        <div class="sys-card reveal-card">
-          <div class="sys-card-icon">🍸</div>
+        <div class="sys-card rv">
+          <div class="sys-icon">🍸</div>
           <h3>Drinks & Food</h3>
           <p class="sys-desc">ウイスキー、カクテル、ワインなど豊富なドリンクメニュー。河内鴨のフードメニューもおすすめです。</p>
         </div>
-        <div class="sys-card reveal-card">
-          <div class="sys-card-icon">🎉</div>
+        <div class="sys-card rv">
+          <div class="sys-icon">🎉</div>
           <h3>Party & Event</h3>
           <p class="sys-desc">貸切パーティー、トーナメントイベント、企業様のご利用も。お気軽にご相談ください！</p>
         </div>
@@ -365,20 +319,17 @@
     </div>
   </section>
 
-  <!-- ===== Divider ===== -->
-  <div class="sec-divider"><div class="divider-line"></div></div>
-
-  <!-- ===== Access ===== -->
-  <section id="access" class="sec">
+  <!-- ===== Access (White) ===== -->
+  <section id="access" class="sec sec-white">
     <div class="sec-inner">
-      <div class="sec-label">
+      <div class="sec-head">
         <span class="sec-num">06</span>
         <span class="sec-line"></span>
         <span class="sec-name">Access</span>
       </div>
-      <h2 class="access-heading reveal-fade">Access</h2>
+      <h2 class="access-h rv">Access</h2>
       <div class="access-grid">
-        <div class="access-info reveal-fade">
+        <div class="access-info rv">
           <dl class="access-dl">
             <div class="access-row">
               <dt>Address</dt>
@@ -401,14 +352,12 @@
               <dd>大阪メトロ 本町駅 2番出口 徒歩5分</dd>
             </div>
           </dl>
-          <p class="access-welcome reveal-fade">おひとりさまも大歓迎。<br>ふらっと立ち寄ってみてください。</p>
+          <p class="access-welcome rv">おひとりさまも大歓迎。<br>ふらっと立ち寄ってみてください。</p>
           <div class="access-sns">
-            <a href="https://www.instagram.com/come_on_casino/" target="_blank" rel="noopener" class="sns-btn">
-              <span>Instagram</span>
-            </a>
+            <a href="https://www.instagram.com/come_on_casino/" target="_blank" rel="noopener" class="btn-outline-sm">Instagram</a>
           </div>
         </div>
-        <div class="access-map reveal-fade">
+        <div class="access-map rv">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.0!2d135.5!3d34.69!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDQxJzIzLjAiTiAxMzXCsDMwJzAzLjAiRQ!5e0!3m2!1sja!2sjp!4v1"
             width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
@@ -418,19 +367,17 @@
     </div>
   </section>
 
-  <!-- ===== Instagram Section ===== -->
-  <section id="instagram" class="sec sec-instagram">
+  <!-- ===== Instagram ===== -->
+  <section id="instagram" class="sec sec-ig">
     <div class="sec-inner">
-      <div class="ig-content reveal-fade">
-        <div class="ig-icon">
-          <svg viewBox="0 0 48 48" width="48" height="48">
-            <rect x="4" y="4" width="40" height="40" rx="12" fill="none" stroke="currentColor" stroke-width="2"/>
-            <circle cx="24" cy="24" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
-            <circle cx="36" cy="12" r="2.5" fill="currentColor"/>
-          </svg>
-        </div>
-        <h2 class="ig-heading">Follow Us</h2>
-        <p class="ig-text">店内の様子、イベント情報、河内鴨のお料理など。<br>最新のカモンカジノをInstagramでチェック。</p>
+      <div class="ig-content rv">
+        <svg class="ig-icon" viewBox="0 0 48 48" width="44" height="44">
+          <rect x="4" y="4" width="40" height="40" rx="12" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="24" cy="24" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="36" cy="12" r="2" fill="currentColor"/>
+        </svg>
+        <h2>Follow Us</h2>
+        <p>店内の様子、イベント情報、河内鴨のお料理など。<br>最新のカモンカジノをInstagramでチェック。</p>
         <a href="https://www.instagram.com/come_on_casino/" target="_blank" rel="noopener" class="ig-btn">
           <span>@come_on_casino</span>
         </a>
@@ -438,13 +385,14 @@
     </div>
   </section>
 
-  <!-- ===== Footer ===== -->
+  <!-- ===== Footer (Dark Bookend) ===== -->
   <footer id="footer">
     <div class="footer-inner">
-      <div class="footer-logo-wrap">
-        <img src="logo.png" alt="COME ON CASINO" class="footer-logo-img">
+      <div class="footer-suits">
+        <span>♠</span><span>♥</span><span>♦</span><span>♣</span>
       </div>
-      <p class="footer-message">今夜、お待ちしています。</p>
+      <img src="logo.png" alt="COME ON CASINO" class="footer-logo">
+      <p class="footer-msg">今夜、お待ちしています。</p>
       <nav class="footer-nav">
         <a href="#concept">Concept</a>
         <a href="#experience">Experience</a>
