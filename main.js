@@ -1,7 +1,7 @@
 /* ============================================
-   COME ON CASINO — Premium Casino Experience v4
+   COME ON CASINO — Dramatic Casino Experience
    GSAP 3.12.5 + ScrollTrigger
-   Dense casino-themed animation system
+   EVERY animation is BOLD, VISIBLE, DRAMATIC.
    ============================================ */
 
 ;(function () {
@@ -9,26 +9,29 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const isMobile = window.innerWidth < 768;
-  const isTouch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  var isMobile = window.innerWidth < 768;
+  var isTouch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
   /* ==============================
      LOADER -> HERO TRANSITION
      ============================== */
-  const loader = document.getElementById('loader');
+  var loader = document.getElementById('loader');
 
-  window.addEventListener('load', () => {
+  window.addEventListener('load', function () {
     gsap.to(loader, {
-      delay: 2.2,
-      duration: 1.0,
+      delay: 2,
+      duration: 0.8,
       opacity: 0,
       ease: 'power2.inOut',
-      onComplete () {
+      onComplete: function () {
         loader.classList.add('done');
+        loader.style.display = 'none';
         document.body.style.overflow = '';
         initHero();
         initScrollAnimations();
         initCanvasBg();
+        initAmbientFloaters();
+        initGameMicroAnims();
       }
     });
   });
@@ -36,22 +39,22 @@
   /* ==============================
      NAVIGATION
      ============================== */
-  const nav      = document.getElementById('nav');
-  const toggle   = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
+  var nav      = document.getElementById('nav');
+  var toggle   = document.getElementById('navToggle');
+  var navLinks = document.getElementById('navLinks');
 
-  window.addEventListener('scroll', () => {
+  window.addEventListener('scroll', function () {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 
-  toggle.addEventListener('click', () => {
+  toggle.addEventListener('click', function () {
     toggle.classList.toggle('active');
     navLinks.classList.toggle('open');
     document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
   });
 
-  navLinks.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
+  navLinks.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
       toggle.classList.remove('active');
       navLinks.classList.remove('open');
       document.body.style.overflow = '';
@@ -59,217 +62,201 @@
   });
 
   /* ==============================
-     HERO — Cinematic entrance + casino effects
+     HERO — Cinematic Casino Entrance
      ============================== */
-  function initHero () {
-    const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+  function initHero() {
+    var tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
-    /* ── a) Roulette ring spin entrance ── */
-    const rouletteSvg = document.querySelector('.roulette-svg');
-    if (rouletteSvg) {
-      gsap.set('#heroRoulette', { opacity: 0, scale: 0.7 });
-      tl.to('#heroRoulette', {
-        opacity: 1, scale: 1, rotation: 360,
-        duration: 3, ease: 'power1.out'
-      }, 0);
+    var flyCards  = gsap.utils.toArray('.fly-card');
+    var fallChips = gsap.utils.toArray('.fall-chip');
+    var mob = isMobile ? 0.5 : 1;
 
-      /* Perpetual slow rotation */
-      gsap.to(rouletteSvg, {
-        rotation: '+=360',
-        duration: 80,
-        ease: 'none',
-        repeat: -1,
-        transformOrigin: '50% 50%'
-      });
-    }
+    /* ── a) Roulette wheel entrance (t=0) ── */
+    gsap.set('#heroRoulette', { opacity: 0, scale: 0.5 });
+    tl.to('#heroRoulette', {
+      opacity: 1,
+      scale: 1,
+      duration: 2,
+      ease: 'power1.out'
+    }, 0);
 
-    /* ── b) Card shuffle -> fan animation ── */
-    const deckCards = gsap.utils.toArray('.deck-card');
-    const dcShines  = gsap.utils.toArray('.dc-shine');
+    /* ── b) Cards FLY in from WAY off-screen (t=0.3) ── */
 
-    /* Initial: stacked, invisible */
-    gsap.set(deckCards, { opacity: 0, x: 0, y: 0, rotation: 0, scale: 0.95 });
-    gsap.set(dcShines, { xPercent: -120 });
-
-    /* Phase 1: Cards appear + riffle shuffle simulation */
-    deckCards.forEach((card, i) => {
-      tl.to(card, {
-        opacity: 1,
-        duration: 0.15,
-        ease: 'power1.in'
-      }, 0.4 + i * 0.06);
-
-      /* Quick riffle — y oscillation */
-      tl.to(card, {
-        y: -5, duration: 0.08, ease: 'power1.inOut'
-      }, 0.45 + i * 0.07);
-      tl.to(card, {
-        y: 5, duration: 0.08, ease: 'power1.inOut'
-      }, 0.53 + i * 0.07);
-      tl.to(card, {
-        y: -3, duration: 0.06, ease: 'power1.inOut'
-      }, 0.61 + i * 0.07);
-      tl.to(card, {
-        y: 0, duration: 0.06, ease: 'power1.out'
-      }, 0.67 + i * 0.07);
-    });
-
-    /* Phase 2: Spread into fan formation */
-    const fanPositions = [
-      { x: isMobile ? -60 : -120, y: -10, rotation: -25 },
-      { x: isMobile ? -30 : -60,  y: -30, rotation: -12 },
-      { x: 0,                      y: -40, rotation: 0   },
-      { x: isMobile ? 30  : 60,   y: -30, rotation: 12  },
-      { x: isMobile ? 60  : 120,  y: -10, rotation: 25  }
+    /* Starting positions — far outside viewport */
+    var cardStarts = [
+      { x: -1200, y: -800, rotation: -720 },
+      { x:  1200, y: -600, rotation:  540 },
+      { x: -900,  y:  800, rotation: -540 },
+      { x:  1100, y:  700, rotation:  720 },
+      { x: -600,  y: -1000, rotation: -360 },
+      { x:  900,  y: -900, rotation:  540 }
     ];
 
-    deckCards.forEach((card, i) => {
+    /* Landing positions — around edges, clear of center text */
+    var cardEnds = [
+      { x: -38 * mob, y: -22 * mob, rotation: -15 },
+      { x:  36 * mob, y: -18 * mob, rotation:  12 },
+      { x: -42 * mob, y:   8 * mob, rotation:  -8 },
+      { x:  40 * mob, y:  12 * mob, rotation:  10 },
+      { x: -30 * mob, y:  28 * mob, rotation: -20 },
+      { x:  32 * mob, y:  25 * mob, rotation:  18 }
+    ];
+
+    /* Set initial state for all cards */
+    flyCards.forEach(function (card, i) {
+      gsap.set(card, {
+        x: cardStarts[i].x,
+        y: cardStarts[i].y,
+        rotation: cardStarts[i].rotation,
+        opacity: 0,
+        scale: 0.6
+      });
+    });
+
+    /* Animate each card from off-screen to landing position */
+    flyCards.forEach(function (card, i) {
+      /* Convert vw/vh to pixels for landing */
+      var endX = (cardEnds[i].x / 100) * window.innerWidth;
+      var endY = (cardEnds[i].y / 100) * window.innerHeight;
+
       tl.to(card, {
-        x: fanPositions[i].x,
-        y: fanPositions[i].y,
-        rotation: fanPositions[i].rotation,
+        x: endX,
+        y: endY,
+        rotation: cardEnds[i].rotation,
+        opacity: 1,
+        scale: 1,
+        duration: 1.8,
+        ease: 'power2.out'
+      }, 0.3 + i * 0.15);
+    });
+
+    /* After landing: gentle perpetual float */
+    flyCards.forEach(function (card, i) {
+      gsap.to(card, {
+        y: '+=' + gsap.utils.random(-10, 10),
+        rotation: '+=' + gsap.utils.random(-3, 3),
+        duration: gsap.utils.random(3, 5),
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        delay: 2.5 + i * 0.3
+      });
+    });
+
+    /* ── c) Chips FALL from above with BOUNCE (t=1.5) ── */
+
+    var chipEnds = [
+      { x: -25 * mob, y: 35 * mob },
+      { x:  -8 * mob, y: 38 * mob },
+      { x:   5 * mob, y: 33 * mob },
+      { x:  18 * mob, y: 37 * mob },
+      { x:  30 * mob, y: 34 * mob }
+    ];
+
+    fallChips.forEach(function (chip, i) {
+      var startRot = gsap.utils.random(-180, 180);
+      var endRot   = gsap.utils.random(-10, 10);
+      var endX = (chipEnds[i].x / 100) * window.innerWidth;
+      var endY = (chipEnds[i].y / 100) * window.innerHeight;
+
+      gsap.set(chip, {
+        y: -600,
+        x: endX,
+        rotation: startRot,
+        opacity: 0,
+        scale: 0.8
+      });
+
+      tl.to(chip, {
+        y: endY,
+        rotation: endRot,
+        opacity: 1,
         scale: 1,
         duration: 1.2,
-        ease: 'expo.out'
-      }, 0.9 + i * 0.08);
+        ease: 'bounce.out'
+      }, 1.5 + i * 0.2);
     });
 
-    /* Shine slides across each card during spread */
-    dcShines.forEach((shine, i) => {
-      tl.to(shine, {
-        xPercent: 120,
-        duration: 0.8,
-        ease: 'power2.inOut'
-      }, 1.1 + i * 0.1);
-    });
+    /* ── d) Text appears AFTER cards and chips (t=2.5) ── */
 
-    /* ── c) Text entrance — overlapping with cards ── */
+    /* Set initial states for all hero text elements */
+    gsap.set('.hero-label', { opacity: 0, y: 20 });
+    gsap.set('.ht-line',    { opacity: 0, y: 40 });
+    gsap.set('.hero-rule',  { opacity: 0, width: 0 });
+    gsap.set('.hero-catch', { opacity: 0, y: 15 });
+    gsap.set('.hero-sub',   { opacity: 0 });
+    gsap.set('.hero-btn',   { opacity: 0, y: 20 });
+    gsap.set('.hero-scroll',{ opacity: 0 });
+
     tl.to('.hero-label', {
-      opacity: 1,
-      duration: 1.6,
-      ease: 'power2.out'
-    }, 1.6);
-
-    tl.to('.hw', {
       opacity: 1, y: 0,
-      duration: 1.8,
-      stagger: 0.22,
-      ease: 'expo.out'
-    }, 1.8);
+      duration: 0.8,
+      ease: 'power2.out'
+    }, 2.5);
+
+    tl.to('.ht-line', {
+      opacity: 1, y: 0,
+      duration: 1.2,
+      stagger: 0.2,
+      ease: 'back.out(1.5)'
+    }, 2.6);
 
     tl.to('.hero-rule', {
       opacity: 1,
       width: 'clamp(80px, 20vw, 200px)',
-      duration: 1.4,
+      duration: 0.8,
       ease: 'power3.inOut'
-    }, 2.1);
+    }, 2.9);
 
-    tl.to('.hc', {
+    tl.to('.hero-catch', {
       opacity: 1, y: 0,
-      duration: 0.6,
-      stagger: 0.06,
-      ease: 'back.out(2.4)'
-    }, 2.4);
+      duration: 0.7,
+      ease: 'power2.out'
+    }, 3.1);
 
     tl.to('.hero-sub', {
       opacity: 1,
-      duration: 1.2,
+      duration: 0.6,
       ease: 'power2.out'
-    }, 2.8);
+    }, 3.3);
 
     tl.to('.hero-btn', {
       opacity: 1, y: 0,
-      duration: 0.9,
+      duration: 0.6,
       ease: 'power3.out'
-    }, 3.0);
+    }, 3.5);
 
-    /* ── d) Chip cascade — drop with bounce ── */
-    const chipsL = gsap.utils.toArray('.chipstack-l .chip-el');
-    const chipsR = gsap.utils.toArray('.chipstack-r .chip-el');
+    tl.to('.hero-scroll', {
+      opacity: 1,
+      duration: 0.8
+    }, 3.5);
 
-    /* Initial: above viewport */
-    gsap.set([...chipsL, ...chipsR], {
-      y: -200, opacity: 0, rotation: () => gsap.utils.random(-30, 30)
-    });
+    /* ── e) Hero scroll exit — shrink + scatter ── */
+    initHeroScrollExit(flyCards, fallChips);
+  }
 
-    /* Left stack drops */
-    chipsL.forEach((chip, i) => {
-      tl.to(chip, {
-        y: 0,
-        opacity: 1,
-        rotation: gsap.utils.random(-5, 5),
-        duration: 1.4,
-        ease: 'elastic.out(1, 0.35)'
-      }, 2.6 + i * 0.18);
-    });
+  /* ==============================
+     HERO SCROLL EXIT — Shrink & Scatter
+     ============================== */
+  function initHeroScrollExit(flyCards, fallChips) {
 
-    /* Right stack drops */
-    chipsR.forEach((chip, i) => {
-      tl.to(chip, {
-        y: 0,
-        opacity: 1,
-        rotation: gsap.utils.random(-5, 5),
-        duration: 1.4,
-        ease: 'elastic.out(1, 0.35)'
-      }, 3.0 + i * 0.18);
-    });
-
-    /* ── e) Roulette ball orbit ── */
-    orbitBall();
-
-    /* ── f) Perpetual floating: deck cards + chips ── */
-    deckCards.forEach((card, i) => {
-      gsap.to(card, {
-        y: '+=' + gsap.utils.random(-18, -8),
-        rotation: '+=' + gsap.utils.random(-4, 4),
-        duration: gsap.utils.random(3.5, 5.2),
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        delay: i * 0.3
-      });
-    });
-
-    chipsL.concat(chipsR).forEach((chip, i) => {
-      gsap.to(chip, {
-        y: '+=' + gsap.utils.random(-8, -3),
-        rotation: '+=' + gsap.utils.random(-6, 6),
-        duration: gsap.utils.random(3.0, 4.5),
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        delay: i * 0.4 + 3.5
-      });
-    });
-
-    /* Scroll indicator */
-    tl.to('.hero-scroll', { opacity: 1, duration: 0.8 }, 3.6);
-
-    /* ── g) Hero scroll exit — scrub parallax ── */
-    gsap.to('.hero-content', {
-      yPercent: -60, opacity: 0, scale: 0.88,
+    /* The entire hero scales down — the "shrinking" effect */
+    gsap.to('#hero', {
+      scale: 0.92,
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
         start: 'top top',
-        end: '80% top',
+        end: 'bottom top',
         scrub: 1
       }
     });
 
-    gsap.to('#heroDeck', {
-      yPercent: -80, opacity: 0, rotation: 15,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#hero',
-        start: 'top top',
-        end: '75% top',
-        scrub: 1
-      }
-    });
-
-    gsap.to('#heroChipstack', {
-      y: 100, opacity: 0, scale: 0.5,
+    /* Hero content shrinks and fades */
+    gsap.to('#heroContent', {
+      scale: 0.85,
+      y: -50,
+      opacity: 0,
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
@@ -279,8 +266,52 @@
       }
     });
 
+    /* Cards scatter OUTWARD — back toward off-screen positions */
+    var cardScatterTargets = [
+      { x: -800, y: -500, rotation: -360 },
+      { x:  800, y: -400, rotation:  300 },
+      { x: -600, y:  500, rotation: -300 },
+      { x:  700, y:  450, rotation:  360 },
+      { x: -400, y: -650, rotation: -200 },
+      { x:  600, y: -580, rotation:  300 }
+    ];
+
+    flyCards.forEach(function (card, i) {
+      gsap.to(card, {
+        x: cardScatterTargets[i].x,
+        y: cardScatterTargets[i].y,
+        rotation: cardScatterTargets[i].rotation,
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: '60% top',
+          scrub: 1
+        }
+      });
+    });
+
+    /* Chips drop further down and fade */
+    fallChips.forEach(function (chip) {
+      gsap.to(chip, {
+        y: '+=300',
+        opacity: 0,
+        rotation: '+=' + gsap.utils.random(-180, 180),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: '60% top',
+          scrub: 1
+        }
+      });
+    });
+
+    /* Roulette expands and fades */
     gsap.to('#heroRoulette', {
-      scale: 1.3, opacity: 0,
+      scale: 1.5,
+      opacity: 0,
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
@@ -290,8 +321,9 @@
       }
     });
 
+    /* Canvas parallax */
     gsap.to('#heroCanvas', {
-      yPercent: 15,
+      yPercent: 20,
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
@@ -301,19 +333,10 @@
       }
     });
 
-    gsap.to('.hero-vignette', {
-      opacity: 1.5,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#hero',
-        start: '40% top',
-        end: 'bottom top',
-        scrub: 1
-      }
-    });
-
+    /* Scroll indicator fades early */
     gsap.to('.hero-scroll', {
-      opacity: 0, y: 20,
+      opacity: 0,
+      y: 20,
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
@@ -325,96 +348,53 @@
   }
 
   /* ==============================
-     ROULETTE BALL ORBIT
+     SCROLL ANIMATIONS — All sections below hero
      ============================== */
-  function orbitBall () {
-    const ball = document.getElementById('rouletteBall');
-    if (!ball) return;
+  function initScrollAnimations() {
 
-    let angle  = 0;
-    const radius = isMobile ? 140 : 230;
-    const speed  = 0.015;
-
-    function tick () {
-      angle += speed;
-      const x = Math.cos(angle) * radius;
-      const y = Math.sin(angle) * radius;
-      ball.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
-      requestAnimationFrame(tick);
-    }
-    tick();
-  }
-
-  /* ==============================
-     SCROLL ANIMATIONS — Dense casino-themed
-     ============================== */
-  function initScrollAnimations () {
-
-    /* ── Section divider elements ── */
-    gsap.utils.toArray('.div-suit, .div-chip').forEach(el => {
-      gsap.from(el, {
-        opacity: 0, scale: 0.5,
-        duration: 0.7,
-        ease: 'back.out(2)',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 90%',
-          end: 'top 65%',
-          scrub: 1
-        }
-      });
-    });
-
-    /* ── Section heads: slide in with line growth ── */
-    gsap.utils.toArray('.sec-head').forEach(el => {
+    /* ── Section heads: slide in + line growth ── */
+    gsap.utils.toArray('.sec-head').forEach(function (el) {
+      gsap.set(el, { opacity: 0, x: -30 });
       gsap.to(el, {
-        opacity: 1, x: 0,
+        opacity: 1,
+        x: 0,
         duration: 1,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: el,
           start: 'top 88%',
-          end: 'top 60%',
-          scrub: 1
+          toggleActions: 'play none none none'
         }
       });
 
-      const ln = el.querySelector('.sec-ln');
+      var ln = el.querySelector('.sec-ln');
       if (ln) {
-        gsap.from(ln, {
-          width: 0,
+        gsap.set(ln, { width: 0 });
+        gsap.to(ln, {
+          width: '100%',
           duration: 1.2,
           ease: 'power2.out',
-          scrollTrigger: { trigger: el, start: 'top 82%' }
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 82%',
+            toggleActions: 'play none none none'
+          }
         });
       }
     });
 
-    /* ── Section entrance: smooth opacity ramp ── */
-    gsap.utils.toArray('.sec').forEach(sec => {
-      if (sec.classList.contains('sec-gallery') || sec.classList.contains('sec-ig')) return;
-      gsap.from(sec, {
-        opacity: 0.7,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sec,
-          start: 'top bottom',
-          end: 'top 65%',
-          scrub: 1
-        }
-      });
-    });
-
-    /* ── Generic reveals: scrub connected ── */
-    gsap.utils.toArray('.rv').forEach(el => {
+    /* ── Generic .anim-up reveals ── */
+    gsap.utils.toArray('.anim-up').forEach(function (el) {
+      gsap.set(el, { opacity: 0, y: 30 });
       gsap.to(el, {
-        opacity: 1, y: 0,
-        ease: 'none',
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: el,
-          start: 'top 88%',
-          end: 'top 62%',
-          scrub: 1
+          start: 'top 85%',
+          toggleActions: 'play none none none'
         }
       });
     });
@@ -423,225 +403,139 @@
        CONCEPT SECTION
        ──────────────────────────── */
 
-    /* Heading lines: scrub reveal with card-peel feel */
-    const chLines = gsap.utils.toArray('.ch-l');
-    chLines.forEach((el, i) => {
-      gsap.to(el, {
-        opacity: 1, y: 0, rotateX: 0,
-        ease: 'none',
+    /* Concept heading — slides up as single block */
+    var conceptH = document.querySelector('.concept-h');
+    if (conceptH) {
+      gsap.set(conceptH, { opacity: 0, y: 40 });
+      gsap.to(conceptH, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
         scrollTrigger: {
-          trigger: '#concept',
-          start: () => 'top+=' + (i * 60 + 80) + 'px 75%',
-          end:   () => 'top+=' + (i * 60 + 220) + 'px 75%',
-          scrub: 1.2
+          trigger: conceptH,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
         }
       });
-    });
+    }
 
-    /* Float chips: scrub fade + rotation */
-    gsap.utils.toArray('#concept .float-chip').forEach((chip, i) => {
-      gsap.set(chip, { opacity: 0, rotation: gsap.utils.random(-30, 30) });
-      gsap.to(chip, {
-        opacity: 0.6,
-        rotation: '+=360',
-        duration: 2,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#concept',
-          start: 'top 70%',
-          end: 'bottom 40%',
-          scrub: 2
-        }
-      });
-    });
+    /* Concept cards — fan out in arc on scroll */
+    var cdCards = gsap.utils.toArray('#conceptCards .cd');
+    if (cdCards.length) {
+      var arcCount  = cdCards.length;
+      var arcTotal  = 70; /* degrees */
+      var arcRadius = 160;
+      var arcStart  = -arcTotal / 2;
 
-    /* Concept card fan — scrub arc deployment (desktop) */
-    if (!isMobile) {
-      const cards  = gsap.utils.toArray('.cd');
-      const count  = cards.length;
-      const radius = 160;
-      const arc    = 70;
-      const startA = -arc / 2;
-
-      cards.forEach(c => gsap.set(c, { opacity: 0, x: '-50%', y: '-50%' }));
-
-      /* Phase 1: Fade in staggered */
-      cards.forEach((card, i) => {
-        gsap.to(card, {
-          opacity: 0.92,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '#concept',
-            start: () => 'top+=' + (i * 30) + 'px 65%',
-            end:   () => 'top+=' + (i * 30 + 100) + 'px 65%',
-            scrub: 1
-          }
-        });
+      /* Initial: all stacked at center, invisible */
+      cdCards.forEach(function (card) {
+        gsap.set(card, { opacity: 0, x: 0, y: 0, rotation: 0 });
       });
 
-      /* Phase 2: Fan out with rotation */
-      cards.forEach((card, i) => {
-        const angle = startA + (i / (count - 1)) * arc;
-        const rad   = (angle * Math.PI) / 180;
-        const tx    = Math.sin(rad) * radius;
-        const ty    = (i - (count - 1) / 2) * 70;
-        const tr    = angle * 0.55;
+      cdCards.forEach(function (card, i) {
+        var angle = arcStart + (i / (arcCount - 1)) * arcTotal;
+        var rad   = (angle * Math.PI) / 180;
+        var tx    = Math.sin(rad) * arcRadius;
+        var ty    = -Math.cos(rad) * arcRadius + arcRadius; /* shift so bottom anchored */
+        var tr    = angle * 0.6;
 
         gsap.to(card, {
-          x: tx - 28, y: ty, rotation: tr,
+          opacity: 0.95,
+          x: tx,
+          y: ty * 0.3,
+          rotation: tr,
           ease: 'none',
           scrollTrigger: {
-            trigger: '#concept',
-            start: 'top 55%',
-            end: 'bottom 40%',
-            scrub: 1.8
-          }
-        });
-      });
-
-      /* Card shine — shimmer on scroll */
-      gsap.utils.toArray('.cd-shine').forEach(shine => {
-        gsap.to(shine, {
-          x: '60%',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '#concept',
-            start: 'top 50%',
-            end: 'bottom 30%',
-            scrub: 2
+            trigger: '#conceptCards',
+            start: 'top 80%',
+            end: 'top 30%',
+            scrub: 1.5
           }
         });
       });
     }
 
     /* ────────────────────────────
-       EXPERIENCE SECTION
+       EXPERIENCE SECTION — Game Cards Deal In
        ──────────────────────────── */
+    var gameCards = gsap.utils.toArray('#gameGrid .game-card');
 
-    /* Dealer zone: felt table edge grows */
-    gsap.to('.dealer-zone', {
-      scaleX: 1,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#experience',
-        start: 'top 80%',
-        end: 'top 50%',
-        scrub: 1
-      }
-    });
-    gsap.set('.dealer-zone', { scaleX: 0, transformOrigin: 'center center' });
-
-    /* Exp deck: fade in */
-    gsap.to('#expDeck', {
-      opacity: 1,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#experience',
-        start: 'top 75%',
-        end: 'top 55%',
-        scrub: 1
-      }
-    });
-    gsap.set('#expDeck', { opacity: 0 });
-
-    /* Game cards dealing animation */
-    const expDeck   = document.getElementById('expDeck');
-    const gameGrid  = document.getElementById('gameGrid');
-    const gameCards = gsap.utils.toArray('.gc-rv');
-
-    gameCards.forEach((el, i) => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: '#gameGrid',
-          start: 'top 85%',
-          end: 'top 35%',
-          scrub: 1.2
-        }
+    /* Initial: all cards at central "deck" position */
+    gameCards.forEach(function (card) {
+      gsap.set(card, {
+        opacity: 0,
+        y: -100,
+        rotateY: 90,
+        scale: 0.8,
+        transformPerspective: 800
       });
+    });
 
-      /* Card deals: rises, unrotates, scales to full, flips from back */
-      tl.to(el, {
+    gameCards.forEach(function (card, i) {
+      gsap.to(card, {
         opacity: 1,
         y: 0,
-        rotateX: 0,
+        rotateY: 0,
         scale: 1,
         duration: 1,
-        delay: i * 0.15,
-        ease: 'power2.out'
+        delay: i * 0.2,
+        ease: 'back.out(1.3)',
+        scrollTrigger: {
+          trigger: '#gameGrid',
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
       });
-
-      /* Chip decoration bounces in on arrival */
-      const chipDeco = el.querySelector('.gc-chip-deco');
-      if (chipDeco) {
-        gsap.set(chipDeco, { scale: 0 });
-        gsap.to(chipDeco, {
-          scale: 1,
-          duration: 0.8,
-          ease: 'elastic.out(1, 0.3)',
-          scrollTrigger: {
-            trigger: '#gameGrid',
-            start: 'top 55%',
-            toggleActions: 'play none none none'
-          },
-          delay: i * 0.15 + 0.3
-        });
-      }
     });
 
-    /* 3D card tilt on hover (desktop) */
+    /* 3D tilt on hover (desktop) */
     if (!isMobile) {
-      document.querySelectorAll('.game-card').forEach(card => {
-        card.addEventListener('mousemove', e => {
-          const r = card.getBoundingClientRect();
-          const x = (e.clientX - r.left) / r.width - 0.5;
-          const y = (e.clientY - r.top)  / r.height - 0.5;
+      document.querySelectorAll('.game-card').forEach(function (card) {
+        card.addEventListener('mousemove', function (e) {
+          var r = card.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width - 0.5;
+          var y = (e.clientY - r.top) / r.height - 0.5;
           gsap.to(card, {
-            rotateY: x * 14,
-            rotateX: -y * 14,
+            rotateY: x * 12,
+            rotateX: -y * 12,
             duration: 0.4,
-            ease: 'power2.out'
+            ease: 'power2.out',
+            transformPerspective: 800
           });
         });
 
-        card.addEventListener('mouseleave', () => {
+        card.addEventListener('mouseleave', function () {
           gsap.to(card, {
-            rotateY: 0, rotateX: 0,
+            rotateY: 0,
+            rotateX: 0,
             duration: 0.7,
             ease: 'elastic.out(1, 0.4)'
           });
         });
-
-        /* Shine follows mouse */
-        const shine = card.querySelector('.gc-front-shine');
-        if (shine) {
-          card.addEventListener('mousemove', e => {
-            const r  = card.getBoundingClientRect();
-            const px = ((e.clientX - r.left) / r.width) * 100;
-            const py = ((e.clientY - r.top) / r.height) * 100;
-            gsap.to(shine, {
-              background: 'radial-gradient(circle at ' + px + '% ' + py + '%, rgba(255,255,255,.45) 0%, transparent 60%)',
-              duration: 0.3
-            });
-          });
-          card.addEventListener('mouseleave', () => {
-            gsap.to(shine, {
-              background: 'linear-gradient(135deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%)',
-              duration: 0.5
-            });
-          });
-        }
       });
     }
 
-    /* ────────────────────────────
-       FOOD SECTION
-       ──────────────────────────── */
+    /* Click/tap to flip game cards */
+    document.querySelectorAll('.game-card').forEach(function (card) {
+      card.addEventListener('click', function () {
+        /* On mobile, close other flipped cards */
+        if (isTouch) {
+          document.querySelectorAll('.game-card.flipped').forEach(function (c) {
+            if (c !== card) c.classList.remove('flipped');
+          });
+        }
+        card.classList.toggle('flipped');
+      });
+    });
 
-    /* Image parallax (desktop) */
+    /* ────────────────────────────
+       FOOD SECTION — Parallax images
+       ──────────────────────────── */
     if (!isMobile) {
-      gsap.utils.toArray('.food-img').forEach((img, i) => {
+      gsap.utils.toArray('.food-img').forEach(function (img, i) {
         gsap.to(img, {
-          yPercent: i === 0 ? -12 : 12,
+          yPercent: i === 0 ? -15 : 15,
           ease: 'none',
           scrollTrigger: {
             trigger: '.food-grid',
@@ -653,80 +547,21 @@
       });
     }
 
-    /* Food floating chips */
-    gsap.utils.toArray('#food .float-chip').forEach(chip => {
-      gsap.set(chip, { opacity: 0 });
-      gsap.to(chip, {
-        opacity: 0.5,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#food',
-          start: 'top 75%',
-          end: 'top 45%',
-          scrub: 1
-        }
-      });
-    });
-
     /* ────────────────────────────
-       GALLERY SECTION
+       GALLERY — Horizontal Scroll Card Dealing
        ──────────────────────────── */
-
-    /* Gallery title scrub entrance */
-    gsap.to('.gallery-h', {
-      opacity: 1, y: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#gallery',
-        start: 'top 85%',
-        end: 'top 55%',
-        scrub: 1
-      }
-    });
-
-    /* Gallery head entrance */
-    gsap.to('.gallery-head', {
-      opacity: 1, x: 0,
-      duration: 1,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: '#gallery', start: 'top 80%' }
-    });
-
-    /* Gallery dramatic section fade */
-    ScrollTrigger.create({
-      trigger: '#gallery',
-      start: 'top 85%',
-      end: 'top 25%',
-      scrub: 1,
-      onUpdate: function (self) {
-        var p = self.progress;
-        gsap.set('#gallery', { opacity: 0.2 + p * 0.8 });
-      }
-    });
-
-    /* Floating suit marks — perpetual float */
-    gsap.utils.toArray('.gsf').forEach((suit, i) => {
-      gsap.to(suit, {
-        y: gsap.utils.random(-25, -10),
-        x: gsap.utils.random(-8, 8),
-        rotation: gsap.utils.random(-15, 15),
-        duration: gsap.utils.random(3, 5),
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        delay: i * 0.5
-      });
-    });
-
-    /* Horizontal scroll pinned gallery */
     initGallery();
 
     /* ────────────────────────────
        SYSTEM SECTION — Card flip reveal
        ──────────────────────────── */
-    gsap.utils.toArray('.sys-card').forEach((el, i) => {
-      /* Start with card "face down" */
-      gsap.set(el, { rotateY: 180, opacity: 0, y: 40 });
+    gsap.utils.toArray('.sys-card').forEach(function (el, i) {
+      gsap.set(el, {
+        rotateY: 180,
+        opacity: 0,
+        y: 40,
+        transformPerspective: 800
+      });
 
       gsap.to(el, {
         rotateY: 0,
@@ -734,18 +569,18 @@
         y: 0,
         duration: 1.2,
         ease: 'power3.out',
+        delay: i * 0.15,
         scrollTrigger: {
           trigger: el,
           start: 'top 88%',
           toggleActions: 'play none none none'
-        },
-        delay: i * 0.12
+        }
       });
     });
 
-    /* System cards: subtle 3D tilt on hover (desktop) */
+    /* System cards: 3D tilt on hover (desktop, subtler) */
     if (!isMobile) {
-      document.querySelectorAll('.sys-card').forEach(card => {
+      document.querySelectorAll('.sys-card').forEach(function (card) {
         card.addEventListener('mousemove', function (e) {
           var r = card.getBoundingClientRect();
           var x = (e.clientX - r.left) / r.width - 0.5;
@@ -754,12 +589,14 @@
             rotateY: x * 8,
             rotateX: -y * 8,
             duration: 0.35,
-            ease: 'power2.out'
+            ease: 'power2.out',
+            transformPerspective: 800
           });
         });
         card.addEventListener('mouseleave', function () {
           gsap.to(card, {
-            rotateY: 0, rotateX: 0,
+            rotateY: 0,
+            rotateX: 0,
             duration: 0.6,
             ease: 'elastic.out(1, 0.5)'
           });
@@ -770,19 +607,24 @@
     /* ────────────────────────────
        INSTAGRAM SECTION
        ──────────────────────────── */
-    gsap.to('.ig-content', {
-      opacity: 1, y: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.sec-ig',
-        start: 'top 80%',
-        end: 'top 55%',
-        scrub: 1
-      }
-    });
+    var igContent = document.querySelector('.ig-content');
+    if (igContent) {
+      gsap.set(igContent, { opacity: 0, y: 30 });
+      gsap.to(igContent, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.sec-ig',
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      });
+    }
 
     /* ────────────────────────────
-       FOOTER
+       FOOTER — Suit symbols bounce in
        ──────────────────────────── */
     gsap.from('.footer-suits span', {
       opacity: 0,
@@ -792,127 +634,264 @@
       duration: 0.9,
       stagger: 0.12,
       ease: 'back.out(2.5)',
-      scrollTrigger: { trigger: '#footer', start: 'top 90%' }
+      scrollTrigger: {
+        trigger: '#footer',
+        start: 'top 90%',
+        toggleActions: 'play none none none'
+      }
     });
 
     gsap.from('.footer-msg', {
-      opacity: 0, y: 20,
+      opacity: 0,
+      y: 20,
       duration: 1,
       ease: 'power2.out',
-      scrollTrigger: { trigger: '#footer', start: 'top 85%' }
+      scrollTrigger: {
+        trigger: '#footer',
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      }
     });
   }
 
   /* ==============================
-     GALLERY — Pinned horizontal scroll with roulette progress
+     GALLERY — Pinned Horizontal Scroll with Card Dealing
      ============================== */
-  function initGallery () {
+  function initGallery() {
     var track    = document.getElementById('galleryTrack');
-    var carousel = document.getElementById('galleryCarousel');
-    var wheelProgress = document.getElementById('galleryWheelProgress');
-    var wheelDot      = document.getElementById('galleryWheelDot');
-    if (!track || !carousel) return;
+    var viewport = document.getElementById('galleryViewport');
+    var section  = document.getElementById('gallery');
+    var counter  = document.querySelector('.gc-current');
+    if (!track || !viewport || !section) return;
 
-    var slides     = Array.from(track.children);
-    var slideCount = slides.length;
-    if (!slideCount) return;
+    var cards      = gsap.utils.toArray('.gallery-card');
+    var cardCount  = cards.length;
+    if (!cardCount) return;
 
-    /* Clone sets for seamless infinite loop */
-    for (var c = 0; c < 2; c++) {
-      slides.forEach(function (s) { track.appendChild(s.cloneNode(true)); });
-    }
+    /* Calculate total scroll width */
+    var totalWidth = 0;
+    cards.forEach(function (card) {
+      totalWidth += card.offsetWidth + 28; /* gap */
+    });
+    var scrollDistance = totalWidth - viewport.offsetWidth;
+    if (scrollDistance < 0) scrollDistance = 0;
 
-    var all = Array.from(track.children);
-    var gap = 28;
+    /* Phase 1 initial state: all cards stacked in center */
+    cards.forEach(function (card, i) {
+      gsap.set(card, {
+        x: 0,
+        rotation: gsap.utils.random(-8, 8),
+        scale: 0.9,
+        opacity: 0.7
+      });
+    });
 
-    function setWidth () {
-      var w = 0;
-      for (var i = 0; i < slideCount; i++) {
-        w += all[i].offsetWidth + gap;
-      }
-      return w;
-    }
+    /* Pin the gallery section */
+    var galleryTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#gallery',
+        start: 'top top',
+        end: '+=' + (scrollDistance + window.innerHeight),
+        pin: true,
+        scrub: 1.5,
+        onUpdate: function (self) {
+          /* Update counter based on scroll progress */
+          if (counter) {
+            var p = self.progress;
+            var currentCard = Math.min(
+              Math.floor(p * cardCount) + 1,
+              cardCount
+            );
+            counter.textContent = currentCard;
+          }
 
-    var sw = setWidth();
-    gsap.set(track, { x: -sw });
-
-    /* SVG progress constants */
-    var circumference = 226.2; // 2 * PI * 36
-    if (wheelProgress) {
-      gsap.set(wheelProgress, { attr: { 'stroke-dashoffset': circumference } });
-    }
-
-    ScrollTrigger.create({
-      trigger: '#gallery',
-      start: 'top top',
-      end: '+=' + (sw * 1.8),
-      pin: true,
-      scrub: 1.5,
-      onUpdate: function (self) {
-        var p = self.progress;
-
-        /* Move track */
-        var x = -sw - (p * sw * 1.5);
-        if (x < -sw * 2) x += sw;
-        gsap.set(track, { x: x });
-
-        /* Roulette wheel progress — stroke-dashoffset */
-        if (wheelProgress) {
-          var offset = circumference * (1 - p);
-          gsap.set(wheelProgress, { attr: { 'stroke-dashoffset': offset } });
-        }
-
-        /* Wheel dot — rotates around the circle */
-        if (wheelDot) {
-          var dotAngle = p * Math.PI * 2 - Math.PI / 2; // start from top
-          var dotR     = 36;
-          var cx       = 40 + Math.cos(dotAngle) * dotR;
-          var cy       = 40 + Math.sin(dotAngle) * dotR;
-          /* Position relative to parent (gallery-wheel-wrap) */
-          gsap.set(wheelDot, {
-            left: (cx / 80) * 100 + '%',
-            top:  (cy / 80) * 100 + '%'
+          /* 3D perspective on each card based on center distance */
+          var center = window.innerWidth / 2;
+          cards.forEach(function (card) {
+            var r    = card.getBoundingClientRect();
+            var sc   = r.left + r.width / 2;
+            var dist = (sc - center) / window.innerWidth;
+            var rot  = dist * 8;
+            var scl  = 1 - Math.abs(dist) * 0.15;
+            gsap.set(card, {
+              rotateY: rot,
+              scale: Math.max(scl, 0.85),
+              transformPerspective: 1000
+            });
           });
         }
-
-        /* Per-slide 3D perspective effect */
-        var center = window.innerWidth / 2;
-        all.forEach(function (slide) {
-          var r    = slide.getBoundingClientRect();
-          var sc   = r.left + r.width / 2;
-          var dist = (sc - center) / window.innerWidth;
-          var rot  = dist * 8;
-          var scl  = 1 - Math.abs(dist) * 0.12;
-          var opa  = 1 - Math.abs(dist) * 0.4;
-          gsap.set(slide, {
-            rotation: rot,
-            scale: Math.max(scl, 0.85),
-            opacity: Math.max(opa, 0.5)
-          });
-        });
       }
     });
 
+    /* Phase 1 (0-30%): Cards "deal" — spread from stack to positions */
+    cards.forEach(function (card, i) {
+      galleryTl.to(card, {
+        x: 0,
+        rotation: 0,
+        scale: 1,
+        opacity: 1,
+        duration: 0.3,
+        ease: 'power2.out'
+      }, i * 0.04);
+    });
+
+    /* Phase 2 (30-100%): Horizontal scroll through the dealt cards */
+    galleryTl.to(track, {
+      x: -scrollDistance,
+      duration: 0.7,
+      ease: 'none'
+    }, 0.3);
+
+    /* Resize handler */
     window.addEventListener('resize', function () {
-      sw = setWidth();
       ScrollTrigger.refresh();
     });
   }
 
   /* ==============================
-     CANVAS — Hero particle network
+     GAME MICRO-ANIMATIONS — Continuous casino life
      ============================== */
-  function initCanvasBg () {
+  function initGameMicroAnims() {
+
+    /* ── POKER: Two cards oscillate ── */
+    var pk1 = document.querySelector('.pk-1');
+    var pk2 = document.querySelector('.pk-2');
+    if (pk1) {
+      gsap.to(pk1, {
+        rotation: -5,
+        y: -3,
+        duration: 2,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1
+      });
+      gsap.set(pk1, { rotation: -12 });
+    }
+    if (pk2) {
+      gsap.to(pk2, {
+        rotation: 12,
+        y: 3,
+        duration: 2,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1
+      });
+      gsap.set(pk2, { rotation: 5 });
+    }
+
+    /* ── BLACKJACK: Face-down card teases a flip ── */
+    var bjDown = document.querySelector('.bj-down');
+    if (bjDown) {
+      gsap.to(bjDown, {
+        rotateY: 180,
+        duration: 1,
+        ease: 'power2.inOut',
+        yoyo: true,
+        repeat: -1,
+        repeatDelay: 1
+      });
+    }
+
+    /* ── BACCARAT: "Squeeze" peek effect ── */
+    var bcCover = document.querySelector('.bc-cover');
+    if (bcCover) {
+      gsap.set(bcCover, { transformOrigin: 'center bottom' });
+      gsap.to(bcCover, {
+        rotateX: 15,
+        duration: 3,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1
+      });
+    }
+
+    /* ── ROULETTE: Ball orbits around the mini wheel ── */
+    var rlBall = document.querySelector('.rl-ball-mini');
+    if (rlBall) {
+      var ballAngle  = 0;
+      var ballRadius = 38;
+
+      function orbitBall() {
+        ballAngle += 0.03;
+        var bx = Math.cos(ballAngle) * ballRadius;
+        var by = Math.sin(ballAngle) * ballRadius;
+        rlBall.style.transform = 'translate(' + bx + 'px, ' + by + 'px)';
+        requestAnimationFrame(orbitBall);
+      }
+      orbitBall();
+    }
+  }
+
+  /* ==============================
+     AMBIENT FLOATING SUIT MARKS
+     ============================== */
+  function initAmbientFloaters() {
+    var suits  = ['\u2660', '\u2665', '\u2666', '\u2663']; /* spade heart diamond club */
+    var colors = [
+      'rgba(107, 159, 212, 0.12)',
+      'rgba(212, 107, 107, 0.10)',
+      'rgba(212, 180, 107, 0.10)',
+      'rgba(107, 159, 212, 0.10)'
+    ];
+    var count  = 15;
+    var pageH  = document.documentElement.scrollHeight;
+
+    for (var i = 0; i < count; i++) {
+      var span = document.createElement('span');
+      var suitIdx = i % 4;
+      span.textContent = suits[suitIdx];
+      span.style.cssText =
+        'position:absolute;' +
+        'left:' + gsap.utils.random(3, 97) + '%;' +
+        'top:' + gsap.utils.random(10, 90) + '%;' +
+        'font-size:' + gsap.utils.random(18, 42) + 'px;' +
+        'color:' + colors[suitIdx] + ';' +
+        'pointer-events:none;' +
+        'z-index:0;' +
+        'user-select:none;' +
+        'opacity:0;';
+      span.className = 'ambient-suit';
+      document.body.appendChild(span);
+
+      /* Fade in when scrolled near */
+      gsap.to(span, {
+        opacity: 1,
+        duration: 0.5,
+        scrollTrigger: {
+          trigger: span,
+          start: 'top 95%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+
+      /* Perpetual floating animation */
+      gsap.to(span, {
+        y: gsap.utils.random(-30, 30),
+        x: gsap.utils.random(-15, 15),
+        rotation: gsap.utils.random(-25, 25),
+        duration: gsap.utils.random(4, 7),
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        delay: i * 0.4
+      });
+    }
+  }
+
+  /* ==============================
+     CANVAS — Hero Particle Network
+     ============================== */
+  function initCanvasBg() {
     var canvas = document.getElementById('heroCanvas');
     if (!canvas) return;
 
     var ctx = canvas.getContext('2d');
     var w, h;
     var dots  = [];
-    var count = isMobile ? 28 : 60;
-    var linkD = isMobile ? 90 : 120;
+    var count = isMobile ? 20 : 45;
+    var linkD = 120;
 
-    function resize () {
+    function resize() {
       w = canvas.width  = canvas.offsetWidth;
       h = canvas.height = canvas.offsetHeight;
     }
@@ -923,14 +902,14 @@
       dots.push({
         x:  Math.random() * w,
         y:  Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.22,
-        vy: (Math.random() - 0.5) * 0.22,
-        r:  0.8 + Math.random() * 1.4,
-        a:  0.10 + Math.random() * 0.18
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        r:  0.8 + Math.random() * 1.5,
+        a:  0.10 + Math.random() * 0.20
       });
     }
 
-    /* Mouse interaction — subtle attraction */
+    /* Mouse attracts nearby dots (desktop only) */
     var mx = w / 2, my = h / 2;
     if (!isTouch) {
       window.addEventListener('mousemove', function (e) {
@@ -940,33 +919,33 @@
       }, { passive: true });
     }
 
-    function draw () {
+    function draw() {
       ctx.clearRect(0, 0, w, h);
 
       for (var di = 0; di < dots.length; di++) {
         var d = dots[di];
 
-        /* Gentle cursor attraction */
+        /* Mouse attraction (desktop) */
         if (!isTouch) {
           var dx   = mx - d.x;
           var dy   = my - d.y;
           var dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 260) {
-            d.vx += dx * 0.000012;
-            d.vy += dy * 0.000012;
+          if (dist < 200) {
+            d.vx += dx * 0.000015;
+            d.vy += dy * 0.000015;
           }
         }
 
         /* Damping */
-        d.vx *= 0.9985;
-        d.vy *= 0.9985;
+        d.vx *= 0.998;
+        d.vy *= 0.998;
 
         d.x += d.vx;
         d.y += d.vy;
-        if (d.x < 0)  d.x = w;
-        if (d.x > w)  d.x = 0;
-        if (d.y < 0)  d.y = h;
-        if (d.y > h)  d.y = 0;
+        if (d.x < 0) d.x = w;
+        if (d.x > w) d.x = 0;
+        if (d.y < 0) d.y = h;
+        if (d.y > h) d.y = 0;
 
         ctx.beginPath();
         ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
@@ -974,17 +953,17 @@
         ctx.fill();
       }
 
-      /* Link nearby dots */
+      /* Connect nearby dots with faint lines */
       for (var i = 0; i < dots.length; i++) {
         for (var j = i + 1; j < dots.length; j++) {
-          var dx2  = dots[i].x - dots[j].x;
-          var dy2  = dots[i].y - dots[j].y;
+          var dx2   = dots[i].x - dots[j].x;
+          var dy2   = dots[i].y - dots[j].y;
           var dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
           if (dist2 < linkD) {
             ctx.beginPath();
             ctx.moveTo(dots[i].x, dots[i].y);
             ctx.lineTo(dots[j].x, dots[j].y);
-            ctx.strokeStyle = 'rgba(107, 159, 212, ' + (0.07 * (1 - dist2 / linkD)) + ')';
+            ctx.strokeStyle = 'rgba(107, 159, 212, ' + (0.08 * (1 - dist2 / linkD)) + ')';
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -997,25 +976,13 @@
   }
 
   /* ==============================
-     MOBILE CARD FLIP
-     ============================== */
-  if (isTouch) {
-    document.querySelectorAll('.game-card').forEach(function (card) {
-      card.addEventListener('click', function () {
-        document.querySelectorAll('.game-card.flipped').forEach(function (c) {
-          if (c !== card) c.classList.remove('flipped');
-        });
-        card.classList.toggle('flipped');
-      });
-    });
-  }
-
-  /* ==============================
      SMOOTH SCROLL — Anchor links
      ============================== */
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
-      var target = document.querySelector(a.getAttribute('href'));
+      var href = a.getAttribute('href');
+      if (href === '#') return;
+      var target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
       var offset = target.getBoundingClientRect().top + window.scrollY;
