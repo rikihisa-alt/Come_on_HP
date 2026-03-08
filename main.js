@@ -401,60 +401,100 @@
     });
 
     /* ────────────────────────────
-       CONCEPT SECTION
+       CONCEPT SECTION — Pinned vertical card traverse
        ──────────────────────────── */
+    var conceptSec = document.querySelector('.concept-pin');
+    var ctCards = gsap.utils.toArray('#conceptTraverse .ct-card');
+    var cpEls = gsap.utils.toArray('.cp');
 
-    /* Concept heading — slides up as single block */
-    var conceptH = document.querySelector('.concept-h');
-    if (conceptH) {
-      gsap.set(conceptH, { opacity: 0, y: 40 });
-      gsap.to(conceptH, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: conceptH,
-          start: 'top 85%',
-          toggleActions: 'play none none none'
-        }
-      });
-    }
+    if (conceptSec && ctCards.length) {
 
-    /* Concept cards — fan out in arc on scroll */
-    var cdCards = gsap.utils.toArray('#conceptCards .cd');
-    if (cdCards.length) {
-      var arcCount  = cdCards.length;
-      var arcTotal  = 70; /* degrees */
-      var arcRadius = 160;
-      var arcStart  = -arcTotal / 2;
-
-      /* Initial: all stacked at center, invisible */
-      cdCards.forEach(function (card) {
-        gsap.set(card, { opacity: 0, x: 0, y: 0, rotation: 0 });
-      });
-
-      cdCards.forEach(function (card, i) {
-        var angle = arcStart + (i / (arcCount - 1)) * arcTotal;
-        var rad   = (angle * Math.PI) / 180;
-        var tx    = Math.sin(rad) * arcRadius;
-        var ty    = -Math.cos(rad) * arcRadius + arcRadius; /* shift so bottom anchored */
-        var tr    = angle * 0.6;
-
-        gsap.to(card, {
-          opacity: 0.95,
-          x: tx,
-          y: ty * 0.3,
-          rotation: tr,
-          ease: 'none',
+      if (!isMobile) {
+        /* === DESKTOP: Pin section, scrub timeline === */
+        var cpTl = gsap.timeline({
           scrollTrigger: {
-            trigger: '#conceptCards',
-            start: 'top 80%',
-            end: 'top 30%',
-            scrub: 1.5
+            trigger: conceptSec,
+            start: 'top top',
+            end: '+=300%',
+            pin: true,
+            scrub: 1.5,
+            anticipatePin: 1
           }
         });
-      });
+
+        /* Heading: dramatic scale-up reveal */
+        var conceptH = conceptSec.querySelector('.concept-h');
+        if (conceptH) {
+          cpTl.fromTo(conceptH,
+            { opacity: 0, y: 80, scale: 0.92 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.12, ease: 'power3.out' },
+            0
+          );
+        }
+
+        /* Paragraphs: staggered reveal */
+        var cpParas = gsap.utils.toArray('.concept-body .cp');
+        cpParas.forEach(function (p, i) {
+          cpTl.fromTo(p,
+            { opacity: 0, y: 50 },
+            { opacity: 1, y: 0, duration: 0.10, ease: 'power2.out' },
+            0.12 + i * 0.10
+          );
+        });
+
+        /* Cards traverse from bottom to top at varying speeds */
+        var rotations = [-15, 12, -8, 20, -18, 10, -22, 14];
+        ctCards.forEach(function (card, i) {
+          var speed = parseFloat(card.getAttribute('data-speed')) || 1;
+          gsap.fromTo(card,
+            { y: 0, rotation: 0, opacity: 0.12 },
+            {
+              y: function () { return -(conceptSec.offsetHeight * 2.2 * speed); },
+              rotation: rotations[i] || 0,
+              opacity: 0.18,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: conceptSec,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.3 + speed * 0.8
+              }
+            }
+          );
+        });
+
+      } else {
+        /* === MOBILE: No pin, simple reveals === */
+        cpEls.forEach(function (el) {
+          gsap.to(el, {
+            opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 88%',
+              toggleActions: 'play none none none'
+            }
+          });
+        });
+
+        /* Cards still traverse on mobile (lighter) */
+        ctCards.forEach(function (card) {
+          var speed = parseFloat(card.getAttribute('data-speed')) || 1;
+          gsap.fromTo(card,
+            { y: 0, opacity: 0.06 },
+            {
+              y: function () { return -(conceptSec.offsetHeight * 1.5 * speed); },
+              opacity: 0.08,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: conceptSec,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true
+              }
+            }
+          );
+        });
+      }
     }
 
     /* ────────────────────────────
