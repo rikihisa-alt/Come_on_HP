@@ -65,7 +65,7 @@
      HERO — Cinematic Casino Entrance
      ============================== */
   function initHero() {
-    var tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+    var tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
     var flyCards  = gsap.utils.toArray('.fly-card');
     var fallChips = gsap.utils.toArray('.fall-chip');
@@ -123,23 +123,24 @@
         x: endX,
         y: endY,
         rotation: cardEnds[i].rotation,
-        opacity: 1,
+        opacity: 0.85,
         scale: 1,
-        duration: 1.8,
-        ease: 'power2.out'
-      }, 0.3 + i * 0.15);
+        duration: 2.2,
+        ease: 'power1.out'
+      }, 0.3 + i * 0.18);
     });
 
-    /* After landing: gentle perpetual float */
+    /* After landing: gentle perpetual float — slow & dreamy */
     flyCards.forEach(function (card, i) {
       gsap.to(card, {
-        y: '+=' + gsap.utils.random(-10, 10),
-        rotation: '+=' + gsap.utils.random(-3, 3),
-        duration: gsap.utils.random(3, 5),
+        y: '+=' + gsap.utils.random(-8, 8),
+        rotation: '+=' + gsap.utils.random(-2, 2),
+        opacity: '+=' + gsap.utils.random(-0.08, 0.05),
+        duration: gsap.utils.random(5, 8),
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
-        delay: 2.5 + i * 0.3
+        delay: 3 + i * 0.4
       });
     });
 
@@ -171,11 +172,11 @@
       tl.to(chip, {
         y: endY,
         rotation: endRot,
-        opacity: 1,
+        opacity: 0.8,
         scale: 1,
-        duration: 1.2,
-        ease: 'bounce.out'
-      }, 1.5 + i * 0.2);
+        duration: 1.6,
+        ease: 'power2.out'
+      }, 1.5 + i * 0.25);
     });
 
     /* ── d) Text appears AFTER cards and chips (t=2.5) ── */
@@ -190,47 +191,47 @@
     gsap.set('.hero-scroll',{ opacity: 0 });
 
     tl.to('.hero-label', {
-      opacity: 1, y: 0,
-      duration: 0.8,
-      ease: 'power2.out'
-    }, 2.5);
+      opacity: 0.6, y: 0,
+      duration: 1.2,
+      ease: 'power1.out'
+    }, 2.8);
 
     tl.to('.ht-line', {
       opacity: 1, y: 0,
-      duration: 1.2,
-      stagger: 0.2,
-      ease: 'back.out(1.5)'
-    }, 2.6);
+      duration: 1.6,
+      stagger: 0.25,
+      ease: 'power1.out'
+    }, 3.0);
 
     tl.to('.hero-rule', {
-      opacity: 1,
+      opacity: 0.6,
       width: 'clamp(80px, 20vw, 200px)',
-      duration: 0.8,
-      ease: 'power3.inOut'
-    }, 2.9);
+      duration: 1.2,
+      ease: 'power2.inOut'
+    }, 3.4);
 
     tl.to('.hero-catch', {
-      opacity: 1, y: 0,
-      duration: 0.7,
-      ease: 'power2.out'
-    }, 3.1);
+      opacity: 0.9, y: 0,
+      duration: 1,
+      ease: 'power1.out'
+    }, 3.6);
 
     tl.to('.hero-sub', {
-      opacity: 1,
-      duration: 0.6,
-      ease: 'power2.out'
-    }, 3.3);
+      opacity: 0.5,
+      duration: 1,
+      ease: 'power1.out'
+    }, 3.8);
 
     tl.to('.hero-btn', {
       opacity: 1, y: 0,
-      duration: 0.6,
-      ease: 'power3.out'
-    }, 3.5);
+      duration: 0.8,
+      ease: 'power1.out'
+    }, 4.0);
 
     tl.to('.hero-scroll', {
-      opacity: 1,
-      duration: 0.8
-    }, 3.5);
+      opacity: 0.6,
+      duration: 1.2
+    }, 4.0);
 
     /* ── e) Hero scroll exit — shrink + scatter ── */
     initHeroScrollExit(flyCards, fallChips);
@@ -355,12 +356,12 @@
 
     /* ── Section heads: slide in + line growth ── */
     gsap.utils.toArray('.sec-head').forEach(function (el) {
-      gsap.set(el, { opacity: 0, x: -30 });
+      gsap.set(el, { opacity: 0, x: -20 });
       gsap.to(el, {
-        opacity: 1,
+        opacity: 0.9,
         x: 0,
-        duration: 1,
-        ease: 'power3.out',
+        duration: 1.4,
+        ease: 'power1.out',
         scrollTrigger: {
           trigger: el,
           start: 'top 88%',
@@ -373,8 +374,8 @@
         gsap.set(ln, { width: 0 });
         gsap.to(ln, {
           width: '100%',
-          duration: 1.2,
-          ease: 'power2.out',
+          duration: 1.6,
+          ease: 'power1.out',
           scrollTrigger: {
             trigger: el,
             start: 'top 82%',
@@ -384,17 +385,17 @@
       }
     });
 
-    /* ── Generic .anim-up reveals ── */
+    /* ── Generic .anim-up reveals — soft fade ── */
     gsap.utils.toArray('.anim-up').forEach(function (el) {
-      gsap.set(el, { opacity: 0, y: 30 });
+      gsap.set(el, { opacity: 0, y: 24 });
       gsap.to(el, {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        ease: 'power2.out',
+        duration: 1.2,
+        ease: 'power1.out',
         scrollTrigger: {
           trigger: el,
-          start: 'top 85%',
+          start: 'top 86%',
           toggleActions: 'play none none none'
         }
       });
@@ -422,23 +423,23 @@
           }
         });
 
-        /* Heading: dramatic scale-up reveal */
+        /* Heading: soft scale reveal */
         var conceptH = conceptSec.querySelector('.concept-h');
         if (conceptH) {
           cpTl.fromTo(conceptH,
-            { opacity: 0, y: 80, scale: 0.92 },
-            { opacity: 1, y: 0, scale: 1, duration: 0.12, ease: 'power3.out' },
+            { opacity: 0, y: 60, scale: 0.95 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.15, ease: 'power1.out' },
             0
           );
         }
 
-        /* Paragraphs: staggered reveal */
+        /* Paragraphs: staggered gentle reveal */
         var cpParas = gsap.utils.toArray('.concept-body .cp');
         cpParas.forEach(function (p, i) {
           cpTl.fromTo(p,
-            { opacity: 0, y: 50 },
-            { opacity: 1, y: 0, duration: 0.10, ease: 'power2.out' },
-            0.12 + i * 0.10
+            { opacity: 0, y: 40 },
+            { opacity: 1, y: 0, duration: 0.12, ease: 'power1.out' },
+            0.15 + i * 0.10
           );
         });
 
@@ -519,9 +520,9 @@
         y: 0,
         rotateY: 0,
         scale: 1,
-        duration: 1,
+        duration: 1.4,
         delay: i * 0.2,
-        ease: 'back.out(1.3)',
+        ease: 'power1.out',
         scrollTrigger: {
           trigger: '#gameGrid',
           start: 'top 80%',
@@ -598,19 +599,18 @@
        ──────────────────────────── */
     gsap.utils.toArray('.sys-card').forEach(function (el, i) {
       gsap.set(el, {
-        rotateY: 180,
         opacity: 0,
-        y: 40,
-        transformPerspective: 800
+        y: 30,
+        scale: 0.97
       });
 
       gsap.to(el, {
-        rotateY: 0,
         opacity: 1,
         y: 0,
-        duration: 1.2,
-        ease: 'power3.out',
-        delay: i * 0.15,
+        scale: 1,
+        duration: 1.4,
+        ease: 'power1.out',
+        delay: i * 0.12,
         scrollTrigger: {
           trigger: el,
           start: 'top 88%',
@@ -669,12 +669,11 @@
        ──────────────────────────── */
     gsap.from('.footer-suits span', {
       opacity: 0,
-      y: 24,
-      rotation: -120,
-      scale: 0.5,
-      duration: 0.9,
-      stagger: 0.12,
-      ease: 'back.out(2.5)',
+      y: 16,
+      scale: 0.8,
+      duration: 1.2,
+      stagger: 0.15,
+      ease: 'power1.out',
       scrollTrigger: {
         trigger: '#footer',
         start: 'top 90%',
@@ -684,9 +683,9 @@
 
     gsap.from('.footer-msg', {
       opacity: 0,
-      y: 20,
-      duration: 1,
-      ease: 'power2.out',
+      y: 14,
+      duration: 1.4,
+      ease: 'power1.out',
       scrollTrigger: {
         trigger: '#footer',
         start: 'top 85%',
@@ -911,12 +910,12 @@
   function initAmbientFloaters() {
     var suits  = ['\u2660', '\u2665', '\u2666', '\u2663']; /* spade heart diamond club */
     var colors = [
-      'rgba(107, 159, 212, 0.12)',
-      'rgba(212, 107, 107, 0.10)',
-      'rgba(212, 180, 107, 0.10)',
-      'rgba(107, 159, 212, 0.10)'
+      'rgba(107, 159, 212, 0.06)',
+      'rgba(212, 107, 107, 0.04)',
+      'rgba(212, 180, 107, 0.04)',
+      'rgba(107, 159, 212, 0.05)'
     ];
-    var count  = 15;
+    var count  = 12;
     var pageH  = document.documentElement.scrollHeight;
 
     for (var i = 0; i < count; i++) {
@@ -947,16 +946,16 @@
         }
       });
 
-      /* Perpetual floating animation */
+      /* Perpetual floating animation — slow & ethereal */
       gsap.to(span, {
-        y: gsap.utils.random(-30, 30),
-        x: gsap.utils.random(-15, 15),
-        rotation: gsap.utils.random(-25, 25),
-        duration: gsap.utils.random(4, 7),
+        y: gsap.utils.random(-20, 20),
+        x: gsap.utils.random(-10, 10),
+        rotation: gsap.utils.random(-12, 12),
+        duration: gsap.utils.random(7, 12),
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
-        delay: i * 0.4
+        delay: i * 0.6
       });
     }
   }
@@ -971,8 +970,8 @@
     var ctx = canvas.getContext('2d');
     var w, h;
     var dots  = [];
-    var count = isMobile ? 20 : 45;
-    var linkD = 120;
+    var count = isMobile ? 15 : 35;
+    var linkD = 130;
 
     function resize() {
       w = canvas.width  = canvas.offsetWidth;
@@ -985,10 +984,10 @@
       dots.push({
         x:  Math.random() * w,
         y:  Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        r:  0.8 + Math.random() * 1.5,
-        a:  0.10 + Math.random() * 0.20
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.15,
+        r:  0.6 + Math.random() * 1.2,
+        a:  0.05 + Math.random() * 0.12
       });
     }
 
@@ -1046,7 +1045,7 @@
             ctx.beginPath();
             ctx.moveTo(dots[i].x, dots[i].y);
             ctx.lineTo(dots[j].x, dots[j].y);
-            ctx.strokeStyle = 'rgba(107, 159, 212, ' + (0.08 * (1 - dist2 / linkD)) + ')';
+            ctx.strokeStyle = 'rgba(107, 159, 212, ' + (0.04 * (1 - dist2 / linkD)) + ')';
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
