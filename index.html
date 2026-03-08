@@ -15,8 +15,15 @@
   <!-- ===== Loader ===== -->
   <div id="loader">
     <div class="loader-inner">
-      <div class="loader-ring">
-        <span class="lr-s">♠</span><span class="lr-s">♥</span><span class="lr-s">♦</span><span class="lr-s">♣</span>
+      <div class="loader-roulette">
+        <svg viewBox="0 0 120 120" class="loader-wheel">
+          <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(123,176,222,.12)" stroke-width="1"/>
+          <circle cx="60" cy="60" r="42" fill="none" stroke="rgba(123,176,222,.08)" stroke-width="1"/>
+          <circle cx="60" cy="60" r="30" fill="none" stroke="rgba(123,176,222,.05)" stroke-width="1"/>
+        </svg>
+        <div class="loader-suits">
+          <span>♠</span><span>♥</span><span>♦</span><span>♣</span>
+        </div>
       </div>
       <p class="loader-text">COME ON CASINO</p>
       <div class="loader-bar"><div class="loader-fill"></div></div>
@@ -26,7 +33,7 @@
   <!-- ===== Navigation ===== -->
   <nav id="nav">
     <div class="nav-inner">
-      <a href="#" class="nav-logo"><img src="logo.png" alt="COME ON CASINO" class="nav-logo-img"></a>
+      <a href="/" class="nav-logo"><img src="logo.png" alt="COME ON CASINO" class="nav-logo-img"></a>
       <button class="nav-toggle" id="navToggle" aria-label="メニュー"><span></span><span></span><span></span></button>
       <div class="nav-links" id="navLinks">
         <a href="/concept">Concept</a>
@@ -39,10 +46,83 @@
     </div>
   </nav>
 
-  <!-- ===== Hero (Dark Cinematic — Pinned) ===== -->
+  <!-- ===== Hero ===== -->
   <section id="hero">
     <canvas id="heroCanvas"></canvas>
     <div class="hero-vignette"></div>
+
+    <!-- Roulette ring background -->
+    <div class="hero-roulette" id="heroRoulette">
+      <svg viewBox="0 0 600 600" class="roulette-svg">
+        <circle cx="300" cy="300" r="280" fill="none" stroke="rgba(123,176,222,.06)" stroke-width="1"/>
+        <circle cx="300" cy="300" r="240" fill="none" stroke="rgba(123,176,222,.04)" stroke-width="1"/>
+        <circle cx="300" cy="300" r="200" fill="none" stroke="rgba(123,176,222,.03)" stroke-width="1"/>
+        <!-- Roulette notches -->
+        <g class="roulette-notches" opacity=".07">
+          <line x1="300" y1="20" x2="300" y2="40" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(0 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(9.73 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(19.46 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(29.19 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="40" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(38.92 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(48.65 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(58.38 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(68.11 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="40" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(77.84 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(87.57 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(97.3 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="40" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(107.03 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(116.76 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(126.49 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(136.22 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="40" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(145.95 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(155.68 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(165.41 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="40" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(175.14 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(184.87 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(194.6 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="40" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(204.33 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(214.06 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(223.79 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(233.52 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="40" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(243.25 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(252.98 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(262.71 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="40" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(272.44 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(282.17 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(291.9 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="40" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(301.63 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(311.36 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(321.09 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(330.82 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="40" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(340.55 300 300)"/>
+          <line x1="300" y1="20" x2="300" y2="35" stroke="rgba(123,176,222,1)" stroke-width="1" transform="rotate(350.28 300 300)"/>
+        </g>
+      </svg>
+      <div class="roulette-ball" id="rouletteBall"></div>
+    </div>
+
+    <!-- Card deck (5 cards for shuffle/fan animation) -->
+    <div class="hero-deck" id="heroDeck">
+      <div class="deck-card dc-1"><div class="dc-shine"></div><span class="dc-val">A</span><small class="dc-suit hf-dark">♠</small></div>
+      <div class="deck-card dc-2"><div class="dc-shine"></div><span class="dc-val">K</span><small class="dc-suit hf-red">♥</small></div>
+      <div class="deck-card dc-3"><div class="dc-shine"></div><span class="dc-val">Q</span><small class="dc-suit hf-red">♦</small></div>
+      <div class="deck-card dc-4"><div class="dc-shine"></div><span class="dc-val">J</span><small class="dc-suit hf-dark">♣</small></div>
+      <div class="deck-card dc-5"><div class="dc-shine"></div><span class="dc-val">10</span><small class="dc-suit hf-dark">♠</small></div>
+    </div>
+
+    <!-- Chip stacks -->
+    <div class="hero-chipstack" id="heroChipstack">
+      <div class="chipstack chipstack-l">
+        <div class="chip-el chip-s1" data-color="blue"><div class="chip-ring"></div><div class="chip-center">♠</div></div>
+        <div class="chip-el chip-s2" data-color="red"><div class="chip-ring"></div><div class="chip-center">♥</div></div>
+        <div class="chip-el chip-s3" data-color="blue"><div class="chip-ring"></div><div class="chip-center">♦</div></div>
+      </div>
+      <div class="chipstack chipstack-r">
+        <div class="chip-el chip-s4" data-color="gold"><div class="chip-ring"></div><div class="chip-center">♣</div></div>
+        <div class="chip-el chip-s5" data-color="blue"><div class="chip-ring"></div><div class="chip-center">♠</div></div>
+      </div>
+    </div>
+
     <div class="hero-content">
       <p class="hero-label">Amusement Casino & Bar — Osaka Honmachi</p>
       <h1 class="hero-title">
@@ -54,35 +134,29 @@
         <span class="hc">夜</span><span class="hc">が</span><span class="hc">、</span><span class="hc">動</span><span class="hc">き</span><span class="hc">出</span><span class="hc">す</span><span class="hc">。</span>
       </p>
       <p class="hero-sub">はじめての方も、常連さんも。<br>あなたの居場所がここにある。</p>
-      <a href="#concept" class="hero-btn"><span>Enter the Night</span></a>
-    </div>
-
-    <!-- Realistic floating cards -->
-    <div class="hero-float">
-      <div class="hf-card hf-c1">
-        <div class="hf-card-shine"></div>
-        <span class="hf-val">A</span><small class="hf-suit hf-dark">♠</small>
-      </div>
-      <div class="hf-card hf-c2">
-        <div class="hf-card-shine"></div>
-        <span class="hf-val">K</span><small class="hf-suit hf-red">♥</small>
-      </div>
-      <div class="hf-card hf-c3">
-        <div class="hf-card-shine"></div>
-        <span class="hf-val">Q</span><small class="hf-suit hf-red">♦</small>
-      </div>
-      <!-- Realistic chips -->
-      <div class="hf-chip hf-ch1"><div class="chip-ring"></div><div class="chip-center">♠</div></div>
-      <div class="hf-chip hf-ch2"><div class="chip-ring"></div><div class="chip-center">♦</div></div>
-      <div class="hf-chip hf-ch3"><div class="chip-ring"></div><div class="chip-center">♣</div></div>
+      <a href="#concept" class="hero-btn" id="heroBtn">
+        <span>Enter the Night</span>
+        <div class="btn-chip-bounce"></div>
+      </a>
     </div>
 
     <div class="hero-scroll"><span>Scroll</span><div class="hs-line"></div></div>
   </section>
 
+  <!-- ===== Divider ===== -->
+  <div class="sec-divider">
+    <span class="div-suit">♠</span><span class="div-suit">♥</span><span class="div-chip"></span><span class="div-suit">♦</span><span class="div-suit">♣</span>
+  </div>
+
   <!-- ===== Concept ===== -->
-  <section id="concept" class="sec">
+  <section id="concept" class="sec sec-concept">
     <div class="sec-bg concept-bg"></div>
+    <!-- Floating chips background -->
+    <div class="concept-chip-deco">
+      <div class="float-chip fc-1"></div>
+      <div class="float-chip fc-2"></div>
+      <div class="float-chip fc-3"></div>
+    </div>
     <div class="sec-inner">
       <div class="sec-head">
         <span class="sec-num">01</span><span class="sec-ln"></span><span class="sec-nm">Concept</span>
@@ -114,9 +188,16 @@
     </div>
   </section>
 
+  <!-- ===== Divider ===== -->
+  <div class="sec-divider">
+    <span class="div-suit">♦</span><span class="div-chip"></span><span class="div-suit">♣</span><span class="div-chip"></span><span class="div-suit">♥</span>
+  </div>
+
   <!-- ===== Experience ===== -->
-  <section id="experience" class="sec">
+  <section id="experience" class="sec sec-exp">
     <div class="sec-bg exp-bg"></div>
+    <!-- Dealer table edge -->
+    <div class="dealer-zone"></div>
     <div class="sec-inner sec-wide">
       <div class="sec-head">
         <span class="sec-num">02</span><span class="sec-ln"></span><span class="sec-nm">Experience</span>
@@ -125,28 +206,34 @@
         <span class="exp-en">Your Game Awaits</span>
         <span class="exp-ja">あなたのゲームが、待っている。</span>
       </h2>
+      <!-- Card deck source for dealing animation -->
+      <div class="exp-deck" id="expDeck">
+        <div class="exp-deck-stack"></div>
+        <div class="exp-deck-stack"></div>
+        <div class="exp-deck-stack"></div>
+      </div>
       <div class="game-grid" id="gameGrid">
         <div class="game-card gc-rv" data-suit="♠" data-color="dark">
           <div class="game-card-inner">
-            <div class="gc-front"><div class="gc-front-shine"></div><div class="gc-suit-lg">♠</div><span class="gc-tl">T</span><span class="gc-br">T</span></div>
+            <div class="gc-front"><div class="gc-front-shine"></div><div class="gc-suit-lg">♠</div><span class="gc-tl">T</span><span class="gc-br">T</span><div class="gc-chip-deco"></div></div>
             <div class="gc-back"><div class="gc-back-pattern"></div><h3>Tournament</h3><p>定期開催のポーカートーナメント。<br>初心者の方も参加OK。<br>真剣勝負の興奮と一体感を。</p><a href="/games/poker" class="btn-more" style="margin-top:12px;font-size:12px;">詳しく見る <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
           </div>
         </div>
         <div class="game-card gc-rv" data-suit="♥" data-color="red">
           <div class="game-card-inner">
-            <div class="gc-front"><div class="gc-front-shine"></div><div class="gc-suit-lg">♥</div><span class="gc-tl">R</span><span class="gc-br">R</span></div>
+            <div class="gc-front"><div class="gc-front-shine"></div><div class="gc-suit-lg">♥</div><span class="gc-tl">R</span><span class="gc-br">R</span><div class="gc-chip-deco"></div></div>
             <div class="gc-back"><div class="gc-back-pattern"></div><h3>Ring Game</h3><p>好きなタイミングで参加・退席OK。<br>自分のペースで楽しめる<br>カジュアルなポーカー。</p><a href="/games/poker" class="btn-more" style="margin-top:12px;font-size:12px;">詳しく見る <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
           </div>
         </div>
         <div class="game-card gc-rv" data-suit="♦" data-color="red">
           <div class="game-card-inner">
-            <div class="gc-front"><div class="gc-front-shine"></div><div class="gc-suit-lg">♦</div><span class="gc-tl">B</span><span class="gc-br">B</span></div>
+            <div class="gc-front"><div class="gc-front-shine"></div><div class="gc-suit-lg">♦</div><span class="gc-tl">B</span><span class="gc-br">B</span><div class="gc-chip-deco"></div></div>
             <div class="gc-back"><div class="gc-back-pattern"></div><h3>Blackjack</h3><p>ディーラーとの真剣勝負。<br>シンプルだからこそ奥深い、<br>カジノの王道ゲーム。</p><a href="/games/blackjack" class="btn-more" style="margin-top:12px;font-size:12px;">詳しく見る <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
           </div>
         </div>
         <div class="game-card gc-rv" data-suit="♣" data-color="dark">
           <div class="game-card-inner">
-            <div class="gc-front"><div class="gc-front-shine"></div><div class="gc-suit-lg">♣</div><span class="gc-tl">B</span><span class="gc-br">B</span></div>
+            <div class="gc-front"><div class="gc-front-shine"></div><div class="gc-suit-lg">♣</div><span class="gc-tl">B</span><span class="gc-br">B</span><div class="gc-chip-deco"></div></div>
             <div class="gc-back"><div class="gc-back-pattern"></div><h3>Baccarat</h3><p>プレイヤーかバンカーか。<br>絞りの緊張感を味わえる、<br>大人のカードゲーム。</p><a href="/games/baccarat" class="btn-more" style="margin-top:12px;font-size:12px;">詳しく見る <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
           </div>
         </div>
@@ -158,9 +245,18 @@
     </div>
   </section>
 
+  <!-- ===== Divider ===== -->
+  <div class="sec-divider">
+    <span class="div-suit">♠</span><span class="div-chip"></span><span class="div-suit">♦</span><span class="div-chip"></span><span class="div-suit">♣</span>
+  </div>
+
   <!-- ===== Food ===== -->
-  <section id="food" class="sec">
+  <section id="food" class="sec sec-food">
     <div class="sec-bg food-bg"></div>
+    <div class="food-chip-deco">
+      <div class="float-chip fc-4"></div>
+      <div class="float-chip fc-5"></div>
+    </div>
     <div class="sec-inner">
       <div class="sec-head">
         <span class="sec-num">03</span><span class="sec-ln"></span><span class="sec-nm">Food</span>
@@ -193,8 +289,17 @@
     </div>
   </section>
 
-  <!-- ===== Gallery (Dark Cinematic — Pinned) ===== -->
+  <!-- ===== Gallery ===== -->
   <section id="gallery" class="sec sec-gallery">
+    <!-- Floating suits background -->
+    <div class="gallery-suit-float">
+      <span class="gsf gsf-1">♠</span>
+      <span class="gsf gsf-2">♥</span>
+      <span class="gsf gsf-3">♦</span>
+      <span class="gsf gsf-4">♣</span>
+      <span class="gsf gsf-5">♠</span>
+      <span class="gsf gsf-6">♥</span>
+    </div>
     <div class="gallery-wrap">
       <div class="sec-head gallery-head">
         <span class="sec-num">04</span><span class="sec-ln"></span><span class="sec-nm">Gallery</span>
@@ -202,22 +307,35 @@
       <h2 class="gallery-h">The Scene</h2>
       <div class="gallery-carousel" id="galleryCarousel">
         <div class="gallery-track" id="galleryTrack">
-          <div class="gallery-slide"><div class="gs-inner"><div class="gs-ph"><span>Casino Floor</span></div></div></div>
-          <div class="gallery-slide"><div class="gs-inner"><div class="gs-ph"><span>Bar Counter</span></div></div></div>
-          <div class="gallery-slide"><div class="gs-inner"><div class="gs-ph"><span>Poker Table</span></div></div></div>
-          <div class="gallery-slide"><div class="gs-inner"><div class="gs-ph"><span>Cocktails</span></div></div></div>
-          <div class="gallery-slide"><div class="gs-inner"><div class="gs-ph"><span>河内鴨料理</span></div></div></div>
-          <div class="gallery-slide"><div class="gs-inner"><div class="gs-ph"><span>みんなの笑顔</span></div></div></div>
+          <div class="gallery-slide"><div class="gs-inner"><div class="gs-suit-mark">♠</div><div class="gs-ph"><span>Casino Floor</span></div></div></div>
+          <div class="gallery-slide"><div class="gs-inner"><div class="gs-suit-mark">♥</div><div class="gs-ph"><span>Bar Counter</span></div></div></div>
+          <div class="gallery-slide"><div class="gs-inner"><div class="gs-suit-mark">♦</div><div class="gs-ph"><span>Poker Table</span></div></div></div>
+          <div class="gallery-slide"><div class="gs-inner"><div class="gs-suit-mark">♣</div><div class="gs-ph"><span>Cocktails</span></div></div></div>
+          <div class="gallery-slide"><div class="gs-inner"><div class="gs-suit-mark">♠</div><div class="gs-ph"><span>河内鴨料理</span></div></div></div>
+          <div class="gallery-slide"><div class="gs-inner"><div class="gs-suit-mark">♥</div><div class="gs-ph"><span>みんなの笑顔</span></div></div></div>
         </div>
       </div>
       <div class="gallery-fade gallery-fade-l"></div>
       <div class="gallery-fade gallery-fade-r"></div>
-      <div class="gallery-progress"><div class="gallery-progress-fill" id="galleryProgress"></div></div>
+      <!-- Roulette wheel progress -->
+      <div class="gallery-wheel-wrap">
+        <svg viewBox="0 0 80 80" class="gallery-wheel" id="galleryWheel">
+          <circle cx="40" cy="40" r="36" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="2"/>
+          <circle cx="40" cy="40" r="36" fill="none" stroke="url(#wheelGrad)" stroke-width="2" stroke-dasharray="226.2" stroke-dashoffset="226.2" id="galleryWheelProgress" transform="rotate(-90 40 40)"/>
+          <defs><linearGradient id="wheelGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--blue-pale)"/><stop offset="100%" stop-color="var(--warm)"/></linearGradient></defs>
+        </svg>
+        <div class="gallery-wheel-dot" id="galleryWheelDot"></div>
+      </div>
     </div>
   </section>
 
+  <!-- ===== Divider ===== -->
+  <div class="sec-divider">
+    <span class="div-suit">♣</span><span class="div-suit">♠</span><span class="div-chip"></span><span class="div-suit">♥</span><span class="div-suit">♦</span>
+  </div>
+
   <!-- ===== System ===== -->
-  <section id="system" class="sec">
+  <section id="system" class="sec sec-system">
     <div class="sec-bg sys-bg"></div>
     <div class="sec-inner">
       <div class="sec-head">
@@ -225,10 +343,48 @@
       </div>
       <h2 class="system-h rv"><a href="/menu-system" style="color:inherit;text-decoration:none;">Menu & System</a></h2>
       <div class="system-grid">
-        <div class="sys-card rv"><div class="sys-icon">🃏</div><h3>Casino Time</h3><p class="sys-time">Mon - Sat / 18:00 - 24:00</p><p class="sys-desc">チップを購入してお好きなゲームをお楽しみください。初めての方にはフリーレッスンあり！気軽に声かけてくださいね。</p></div>
-        <div class="sys-card rv"><div class="sys-icon">☕</div><h3>Cafe & Lunch</h3><p class="sys-time">Mon - Fri / 11:00 - 14:00</p><p class="sys-desc">ランチタイムは河内鴨を使ったこだわりの料理をご提供。昼の顔もぜひ体験してみてください。</p></div>
-        <div class="sys-card rv"><div class="sys-icon">🍸</div><h3>Drinks & Food</h3><p class="sys-desc">ウイスキー、カクテル、ワインなど豊富なドリンクメニュー。河内鴨のフードメニューもおすすめです。</p></div>
-        <div class="sys-card rv"><div class="sys-icon">🎉</div><h3>Party & Event</h3><p class="sys-desc">貸切パーティー、トーナメントイベント、企業様のご利用も。お気軽にご相談ください！</p></div>
+        <div class="sys-card rv" data-suit="♠" data-letter="C">
+          <div class="sys-card-inner">
+            <div class="sys-front">
+              <div class="sys-suit-corner">♠</div>
+              <div class="sys-letter-corner">C</div>
+              <h3>Casino Time</h3>
+              <p class="sys-time">Mon - Sat / 18:00 - 24:00</p>
+              <p class="sys-desc">チップを購入してお好きなゲームをお楽しみください。初めての方にはフリーレッスンあり！</p>
+            </div>
+          </div>
+        </div>
+        <div class="sys-card rv" data-suit="♥" data-letter="L">
+          <div class="sys-card-inner">
+            <div class="sys-front">
+              <div class="sys-suit-corner" style="color:var(--red);">♥</div>
+              <div class="sys-letter-corner">L</div>
+              <h3>Cafe & Lunch</h3>
+              <p class="sys-time">Mon - Fri / 11:00 - 14:00</p>
+              <p class="sys-desc">ランチタイムは河内鴨を使ったこだわりの料理をご提供。昼の顔もぜひ。</p>
+            </div>
+          </div>
+        </div>
+        <div class="sys-card rv" data-suit="♦" data-letter="D">
+          <div class="sys-card-inner">
+            <div class="sys-front">
+              <div class="sys-suit-corner" style="color:var(--red);">♦</div>
+              <div class="sys-letter-corner">D</div>
+              <h3>Drinks & Food</h3>
+              <p class="sys-desc">ウイスキー、カクテル、ワインなど豊富なドリンクメニュー。河内鴨のフードもおすすめ。</p>
+            </div>
+          </div>
+        </div>
+        <div class="sys-card rv" data-suit="♣" data-letter="P">
+          <div class="sys-card-inner">
+            <div class="sys-front">
+              <div class="sys-suit-corner">♣</div>
+              <div class="sys-letter-corner">P</div>
+              <h3>Party & Event</h3>
+              <p class="sys-desc">貸切パーティー、トーナメントイベント、企業様のご利用も。お気軽にご相談ください！</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div style="text-align:center;margin-top:28px;">
         <a href="/menu-system" class="btn-more rv" style="justify-content:center;">料金・メニュー詳細 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
@@ -237,7 +393,7 @@
   </section>
 
   <!-- ===== Access ===== -->
-  <section id="access" class="sec">
+  <section id="access" class="sec sec-access">
     <div class="sec-bg access-bg"></div>
     <div class="sec-inner">
       <div class="sec-head">
@@ -281,6 +437,9 @@
   <!-- ===== Footer ===== -->
   <footer id="footer">
     <div class="footer-inner">
+      <div class="footer-roulette-ring">
+        <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="90" fill="none" stroke="rgba(123,176,222,.06)" stroke-width="1"/><circle cx="100" cy="100" r="70" fill="none" stroke="rgba(123,176,222,.04)" stroke-width="1"/></svg>
+      </div>
       <div class="footer-suits"><span>♠</span><span>♥</span><span>♦</span><span>♣</span></div>
       <img src="logo.png" alt="COME ON CASINO" class="footer-logo">
       <p class="footer-msg">今夜、お待ちしています。</p>
