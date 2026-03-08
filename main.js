@@ -655,7 +655,7 @@
   }
 
   /* ==============================
-     GALLERY — Pinned Horizontal Scroll with Card Dealing
+     GALLERY — Forced Horizontal Scroll (right → left, all cards must pass)
      ============================== */
   function initGallery() {
     var track    = document.getElementById('galleryTrack');
@@ -664,89 +664,68 @@
     var counter  = document.querySelector('.gc-current');
     if (!track || !viewport || !section) return;
 
-    var cards      = gsap.utils.toArray('.gallery-card');
-    var cardCount  = cards.length;
+    var cards     = gsap.utils.toArray('.gallery-card');
+    var cardCount = cards.length;
     if (!cardCount) return;
 
-    /* Calculate total scroll width — make scroll distance much larger for stronger slide */
-    var totalWidth = 0;
-    cards.forEach(function (card) {
-      totalWidth += card.offsetWidth + 28; /* gap */
-    });
-    var scrollDistance = totalWidth - viewport.offsetWidth;
-    if (scrollDistance < 0) scrollDistance = 0;
-    /* Multiply scroll distance to make the pin section much longer = more scroll per card */
-    var scrollMultiplier = 2.5;
+    /* Total width of the track */
+    var totalWidth = track.scrollWidth;
+    var vw = window.innerWidth;
 
-    /* Phase 1 initial state: all cards stacked in center */
-    cards.forEach(function (card, i) {
-      gsap.set(card, {
-        x: 0,
-        rotation: gsap.utils.random(-8, 8),
-        scale: 0.9,
-        opacity: 0.7
-      });
-    });
+    /* Start: all cards off-screen to the right */
+    gsap.set(track, { x: vw });
 
-    /* Pin the gallery section */
-    var galleryTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '#gallery',
-        start: 'top top',
-        end: '+=' + (scrollDistance * scrollMultiplier + window.innerHeight),
-        pin: true,
-        scrub: 2,
-        onUpdate: function (self) {
-          /* Update counter based on scroll progress */
-          if (counter) {
-            var p = self.progress;
-            var currentCard = Math.min(
-              Math.floor(p * cardCount) + 1,
-              cardCount
-            );
-            counter.textContent = currentCard;
-          }
+    /* Total travel distance: from right edge → all cards pass left edge */
+    var totalTravel = vw + totalWidth;
 
-          /* 3D perspective on each card based on center distance */
-          var center = window.innerWidth / 2;
-          cards.forEach(function (card) {
-            var r    = card.getBoundingClientRect();
-            var sc   = r.left + r.width / 2;
-            var dist = (sc - center) / window.innerWidth;
-            var rot  = dist * 8;
-            var scl  = 1 - Math.abs(dist) * 0.15;
-            gsap.set(card, {
-              rotateY: rot,
-              scale: Math.max(scl, 0.85),
-              transformPerspective: 1000
-            });
-          });
+    /* Pin the section and scrub the track from right to left */
+    ScrollTrigger.create({
+      trigger: '#gallery',
+      start: 'top top',
+      end: '+=' + totalTravel * 1.8,
+      pin: true,
+      scrub: 1.2,
+      onUpdate: function (self) {
+        var progress = self.progress;
+
+        /* Move track from right to left */
+        var currentX = vw - (totalTravel * progress);
+        gsap.set(track, { x: currentX });
+
+        /* Update counter */
+        if (counter) {
+          var cardProgress = Math.max(0, (vw - currentX) / totalWidth);
+          var currentCard = Math.min(
+            Math.floor(cardProgress * cardCount) + 1,
+            cardCount
+          );
+          counter.textContent = currentCard;
         }
+
+        /* 3D perspective on each card based on center distance */
+        var center = vw / 2;
+        cards.forEach(function (card) {
+          var r    = card.getBoundingClientRect();
+          var sc   = r.left + r.width / 2;
+          var dist = (sc - center) / vw;
+          var rot  = dist * 10;
+          var scl  = 1 - Math.abs(dist) * 0.12;
+          gsap.set(card, {
+            rotateY: rot,
+            scale: Math.max(scl, 0.88),
+            transformPerspective: 1000
+          });
+        });
       }
     });
 
-    /* Phase 1 (0-30%): Cards "deal" — spread from stack to positions */
-    cards.forEach(function (card, i) {
-      galleryTl.to(card, {
-        x: 0,
-        rotation: 0,
-        scale: 1,
-        opacity: 1,
-        duration: 0.3,
-        ease: 'power2.out'
-      }, i * 0.04);
-    });
-
-    /* Phase 2 (30-100%): Horizontal scroll through the dealt cards */
-    galleryTl.to(track, {
-      x: -scrollDistance,
-      duration: 0.7,
-      ease: 'none'
-    }, 0.3);
-
     /* Resize handler */
+    var resizeTimer;
     window.addEventListener('resize', function () {
-      ScrollTrigger.refresh();
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        ScrollTrigger.refresh();
+      }, 200);
     });
   }
 
@@ -781,30 +760,71 @@
       gsap.set(pk2, { rotation: 5 });
     }
 
-    /* ── BLACKJACK: Face-down card teases a flip ── */
-    var bjDown = document.querySelector('.bj-down');
-    if (bjDown) {
-      gsap.to(bjDown, {
-        rotateY: 180,
-        duration: 1,
-        ease: 'power2.inOut',
-        yoyo: true,
-        repeat: -1,
-        repeatDelay: 1
-      });
+    /* ── BLACKJACK: Face-down card periodically flips to reveal K♥ then flips back ── */
+    var bjDownInner = document.querySelector('.bj-down-inner');
+    if (bjDownInner) {
+      var bjFlipTl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
+      bjFlipTl
+        .to(bjDownInner, {
+          rotateY: 180,
+          duration: 0.8,
+          ease: 'power2.inOut',
+          transformPerspective: 600
+        })
+        .to({}, { duration: 1.5 }) /* hold revealed */
+        .to(bjDownInner, {
+          rotateY: 0,
+          duration: 0.8,
+          ease: 'power2.inOut',
+          transformPerspective: 600
+        });
     }
 
-    /* ── BACCARAT: "Squeeze" peek effect ── */
+    /* ── BACCARAT: Squeeze with suit peeking + 9 reveal ── */
     var bcCover = document.querySelector('.bc-cover');
-    if (bcCover) {
+    var bcPeek  = document.querySelector('.bc-peek-suit');
+    if (bcCover && bcPeek) {
       gsap.set(bcCover, { transformOrigin: 'center bottom' });
-      gsap.to(bcCover, {
-        rotateX: 15,
-        duration: 3,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1
-      });
+
+      var bcSqueezeTl = gsap.timeline({ repeat: -1, repeatDelay: 1.5 });
+      bcSqueezeTl
+        /* Phase 1: Slight lift — tease */
+        .to(bcCover, {
+          rotateX: 12,
+          duration: 1.5,
+          ease: 'sine.inOut'
+        })
+        /* Peek suit appears */
+        .to(bcPeek, {
+          opacity: 1,
+          duration: 0.5,
+          ease: 'power2.out'
+        }, '-=0.8')
+        /* Phase 2: More lift — see more pips */
+        .to(bcCover, {
+          rotateX: 30,
+          duration: 1.2,
+          ease: 'sine.inOut'
+        })
+        /* Phase 3: Full reveal — cover lifts away */
+        .to(bcCover, {
+          rotateX: 90,
+          opacity: 0,
+          duration: 0.6,
+          ease: 'power2.in'
+        })
+        .to(bcPeek, {
+          opacity: 0,
+          duration: 0.3
+        }, '-=0.6')
+        /* Hold revealed card */
+        .to({}, { duration: 1.5 })
+        /* Reset: cover snaps back */
+        .set(bcCover, {
+          rotateX: 0,
+          opacity: 1
+        })
+        .set(bcPeek, { opacity: 0 });
     }
 
     /* ── RING GAME: Cards oscillate + chips bounce ── */
