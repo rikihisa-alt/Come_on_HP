@@ -146,11 +146,16 @@
     /* ── c) Chips FALL from above with BOUNCE (t=1.5) ── */
 
     var chipEnds = [
-      { x: -25 * mob, y: 35 * mob },
-      { x:  -8 * mob, y: 38 * mob },
-      { x:   5 * mob, y: 33 * mob },
-      { x:  18 * mob, y: 37 * mob },
-      { x:  30 * mob, y: 34 * mob }
+      { x: -32 * mob, y: 32 * mob },
+      { x: -18 * mob, y: 38 * mob },
+      { x:  -5 * mob, y: 34 * mob },
+      { x:   8 * mob, y: 37 * mob },
+      { x:  22 * mob, y: 33 * mob },
+      { x:  35 * mob, y: 36 * mob },
+      { x: -38 * mob, y: 25 * mob },
+      { x:  38 * mob, y: 28 * mob },
+      { x: -12 * mob, y: 42 * mob },
+      { x:  15 * mob, y: 40 * mob }
     ];
 
     fallChips.forEach(function (chip, i) {
@@ -240,33 +245,33 @@
      ============================== */
   function initHeroScrollExit(flyCards, fallChips) {
 
-    /* The entire hero scales down — the "shrinking" effect */
+    /* The entire hero scales down gently — the "shrinking" effect */
     gsap.to('#hero', {
-      scale: 0.95,
+      scale: 0.96,
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
-        start: '30% top',
+        start: '60% top',
         end: 'bottom top',
         scrub: 1.5
       }
     });
 
-    /* Hero content shrinks and fades — starts later, takes longer */
+    /* Hero content fades — MUCH later so store name stays visible */
     gsap.to('#heroContent', {
-      scale: 0.9,
-      y: -40,
+      scale: 0.92,
+      y: -60,
       opacity: 0,
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
-        start: '25% top',
-        end: '85% top',
+        start: '55% top',
+        end: '100% top',
         scrub: 1.5
       }
     });
 
-    /* Cards scatter OUTWARD — starts later so they stay visible longer */
+    /* Cards scatter OUTWARD — delayed so they persist with the name */
     var cardScatterTargets = [
       { x: -800, y: -500, rotation: -360 },
       { x:  800, y: -400, rotation:  300 },
@@ -285,14 +290,14 @@
         ease: 'none',
         scrollTrigger: {
           trigger: '#hero',
-          start: '20% top',
-          end: '90% top',
+          start: '50% top',
+          end: '100% top',
           scrub: 1.5
         }
       });
     });
 
-    /* Chips drop further down and fade — also delayed */
+    /* Chips drift and fade — also delayed */
     fallChips.forEach(function (chip) {
       gsap.to(chip, {
         y: '+=300',
@@ -301,8 +306,8 @@
         ease: 'none',
         scrollTrigger: {
           trigger: '#hero',
-          start: '20% top',
-          end: '90% top',
+          start: '50% top',
+          end: '100% top',
           scrub: 1.5
         }
       });
@@ -315,8 +320,8 @@
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
-        start: '30% top',
-        end: '95% top',
+        start: '55% top',
+        end: '100% top',
         scrub: 1.5
       }
     });
@@ -333,15 +338,15 @@
       }
     });
 
-    /* Scroll indicator fades — a bit later */
+    /* Scroll indicator fades first */
     gsap.to('.hero-scroll', {
       opacity: 0,
       y: 20,
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
-        start: '10% top',
-        end: '25% top',
+        start: '15% top',
+        end: '35% top',
         scrub: 0.8
       }
     });

@@ -346,6 +346,7 @@ strong { font-weight: 500; }
   border: 1px solid rgba(0,0,0,.1);
 }
 
+/* ── BICYCLE Rider Back Design ── */
 .fc-back {
   position: absolute;
   inset: 0;
@@ -354,36 +355,59 @@ strong { font-weight: 500; }
   transform: rotateY(180deg);
   border-radius: 10px;
   overflow: hidden;
+  background: #ffffff;
   box-shadow:
     0 2px 4px rgba(0,0,0,.12),
     0 8px 24px rgba(0,0,0,.3);
   border: 1px solid rgba(0,0,0,.1);
 }
 
+/* Outer white border frame */
 .fc-back::before {
   content: '';
   position: absolute;
-  inset: 5px;
-  border-radius: 6px;
-  border: 2px solid rgba(212,176,96,.5);
-  background:
-    repeating-linear-gradient(45deg,
-      #1a3a6c 0px, #1a3a6c 3px,
-      #1e4278 3px, #1e4278 6px),
-    linear-gradient(135deg, #143060, #1a3a6c);
+  inset: 4px;
+  border-radius: 7px;
+  border: 2px solid #ffffff;
+  background: #c41e3a;
   z-index: 1;
+  /* Intricate diamond lattice pattern — Bicycle rider back */
+  background:
+    /* Center diamond medallion */
+    radial-gradient(ellipse 28px 36px at 50% 50%, rgba(255,255,255,.22) 0%, rgba(255,255,255,.22) 45%, transparent 46%),
+    /* Inner diamond ring */
+    radial-gradient(ellipse 36px 46px at 50% 50%, transparent 68%, rgba(255,255,255,.15) 69%, rgba(255,255,255,.15) 74%, transparent 75%),
+    /* Outer oval ring */
+    radial-gradient(ellipse 48px 60px at 50% 50%, transparent 68%, rgba(255,255,255,.12) 69%, rgba(255,255,255,.12) 73%, transparent 74%),
+    /* Cross-diamond lattice pattern */
+    repeating-linear-gradient(45deg,
+      transparent 0px, transparent 4px,
+      rgba(255,255,255,.10) 4px, rgba(255,255,255,.10) 5px),
+    repeating-linear-gradient(-45deg,
+      transparent 0px, transparent 4px,
+      rgba(255,255,255,.10) 4px, rgba(255,255,255,.10) 5px),
+    /* Horizontal/vertical subtle grid */
+    repeating-linear-gradient(0deg,
+      transparent 0px, transparent 8px,
+      rgba(255,255,255,.04) 8px, rgba(255,255,255,.04) 9px),
+    repeating-linear-gradient(90deg,
+      transparent 0px, transparent 8px,
+      rgba(255,255,255,.04) 8px, rgba(255,255,255,.04) 9px),
+    /* Base red gradient */
+    linear-gradient(180deg, #c41e3a 0%, #a11830 50%, #c41e3a 100%);
 }
 
+/* Inner ornate frame border — Bicycle style double frame */
 .fc-back::after {
-  content: '♠';
+  content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 32px;
-  color: rgba(212,176,96,.5);
+  inset: 8px;
+  border-radius: 5px;
+  border: 1.5px solid rgba(255,255,255,.35);
+  box-shadow:
+    inset 0 0 0 3px transparent,
+    inset 0 0 0 4.5px rgba(255,255,255,.18);
   z-index: 2;
-  text-shadow: 0 1px 2px rgba(0,0,0,.3);
 }
 
 .fc-tl {
@@ -845,11 +869,31 @@ strong { font-weight: 500; }
   transform: rotateY(180deg);
   border-radius: 6px;
   box-shadow: 0 2px 12px rgba(0,0,0,.3);
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,.1);
+  overflow: hidden;
+}
+
+.cd-back::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 4px;
   background:
-    repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(255,255,255,.08) 3px, rgba(255,255,255,.08) 4px),
-    repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(255,255,255,.08) 3px, rgba(255,255,255,.08) 4px),
-    linear-gradient(135deg, #1a3a6c, #0d2040);
-  border: 2px solid rgba(212,176,96,.3);
+    radial-gradient(ellipse 20px 26px at 50% 50%, rgba(255,255,255,.2) 0%, rgba(255,255,255,.2) 45%, transparent 46%),
+    radial-gradient(ellipse 30px 38px at 50% 50%, transparent 68%, rgba(255,255,255,.12) 69%, rgba(255,255,255,.12) 74%, transparent 75%),
+    repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(255,255,255,.09) 3px, rgba(255,255,255,.09) 4px),
+    repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(255,255,255,.09) 3px, rgba(255,255,255,.09) 4px),
+    linear-gradient(180deg, #c41e3a 0%, #a11830 50%, #c41e3a 100%);
+}
+
+.cd-back::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,.3);
+  box-shadow: inset 0 0 0 3px transparent, inset 0 0 0 4px rgba(255,255,255,.15);
 }
 
 .cd-front span {
@@ -1127,10 +1171,30 @@ strong { font-weight: 500; }
   inset: 0;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  background:
-    repeating-linear-gradient(45deg, var(--blue) 0px, var(--blue) 2px, var(--blue-mid) 2px, var(--blue-mid) 4px);
+  background: #ffffff;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  overflow: hidden;
+}
+
+.bj-down-back::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 3px;
+  background:
+    radial-gradient(ellipse 14px 18px at 50% 50%, rgba(255,255,255,.2) 0%, rgba(255,255,255,.2) 45%, transparent 46%),
+    repeating-linear-gradient(45deg, transparent 0px, transparent 2px, rgba(255,255,255,.08) 2px, rgba(255,255,255,.08) 3px),
+    repeating-linear-gradient(-45deg, transparent 0px, transparent 2px, rgba(255,255,255,.08) 2px, rgba(255,255,255,.08) 3px),
+    linear-gradient(180deg, #c41e3a 0%, #a11830 50%, #c41e3a 100%);
+}
+
+.bj-down-back::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 2px;
+  border: 1px solid rgba(255,255,255,.3);
 }
 
 .bj-down-front {
@@ -1270,9 +1334,14 @@ strong { font-weight: 500; }
 .bc-cover {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, var(--blue), var(--blue-mid));
+  background:
+    radial-gradient(ellipse 14px 18px at 50% 50%, rgba(255,255,255,.18) 0%, rgba(255,255,255,.18) 45%, transparent 46%),
+    repeating-linear-gradient(45deg, transparent 0px, transparent 2px, rgba(255,255,255,.07) 2px, rgba(255,255,255,.07) 3px),
+    repeating-linear-gradient(-45deg, transparent 0px, transparent 2px, rgba(255,255,255,.07) 2px, rgba(255,255,255,.07) 3px),
+    linear-gradient(180deg, #c41e3a 0%, #a11830 50%, #c41e3a 100%);
   transform-origin: bottom center;
   overflow: hidden;
+  border: 2px solid #ffffff;
 }
 
 .bc-peek-suit {
