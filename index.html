@@ -52,43 +52,43 @@
       <div class="fly-card" data-i="0">
         <div class="fc-face">
           <span class="fc-tl"><b>A</b><i>♠</i></span>
-          <span class="fc-big">♠</span>
+          <span class="fc-center"><span class="fc-pip">♠</span></span>
           <span class="fc-br"><b>A</b><i>♠</i></span>
         </div>
       </div>
       <div class="fly-card" data-i="1">
-        <div class="fc-face">
+        <div class="fc-face fc-royal">
           <span class="fc-tl"><b>K</b><i class="red">♥</i></span>
-          <span class="fc-big red">♥</span>
+          <span class="fc-center"><span class="fc-royal-letter">K</span><span class="fc-pip-sm red">♥</span></span>
           <span class="fc-br"><b>K</b><i class="red">♥</i></span>
         </div>
       </div>
       <div class="fly-card" data-i="2">
-        <div class="fc-face">
+        <div class="fc-face fc-royal">
           <span class="fc-tl"><b>Q</b><i class="red">♦</i></span>
-          <span class="fc-big red">♦</span>
+          <span class="fc-center"><span class="fc-royal-letter">Q</span><span class="fc-pip-sm red">♦</span></span>
           <span class="fc-br"><b>Q</b><i class="red">♦</i></span>
         </div>
       </div>
       <div class="fly-card" data-i="3">
-        <div class="fc-face">
+        <div class="fc-face fc-royal">
           <span class="fc-tl"><b>J</b><i>♣</i></span>
-          <span class="fc-big">♣</span>
+          <span class="fc-center"><span class="fc-royal-letter">J</span><span class="fc-pip-sm">♣</span></span>
           <span class="fc-br"><b>J</b><i>♣</i></span>
         </div>
       </div>
       <div class="fly-card" data-i="4">
         <div class="fc-face">
-          <span class="fc-tl"><b>10</b><i>♠</i></span>
-          <span class="fc-big">♠</span>
-          <span class="fc-br"><b>10</b><i>♠</i></span>
+          <span class="fc-tl"><b>T</b><i>♠</i></span>
+          <span class="fc-center"><span class="fc-pips-grid fc-pips-10"><i>♠</i><i>♠</i><i>♠</i><i>♠</i><i>♠</i><i>♠</i><i>♠</i><i>♠</i><i>♠</i><i>♠</i></span></span>
+          <span class="fc-br"><b>T</b><i>♠</i></span>
         </div>
       </div>
       <div class="fly-card" data-i="5">
         <div class="fc-face">
-          <span class="fc-tl"><b>9</b><i class="red">♥</i></span>
-          <span class="fc-big red">♥</span>
-          <span class="fc-br"><b>9</b><i class="red">♥</i></span>
+          <span class="fc-tl"><b>A</b><i class="red">♥</i></span>
+          <span class="fc-center"><span class="fc-pip red">♥</span></span>
+          <span class="fc-br"><b>A</b><i class="red">♥</i></span>
         </div>
       </div>
     </div>
@@ -142,7 +142,7 @@
           <div class="cd cd-2"><span>K</span><small class="red">♥</small></div>
           <div class="cd cd-3"><span>Q</span><small class="red">♦</small></div>
           <div class="cd cd-4"><span>J</span><small>♣</small></div>
-          <div class="cd cd-5"><span>10</span><small>♠</small></div>
+          <div class="cd cd-5"><span>T</span><small>♠</small></div>
         </div>
       </div>
     </div>
@@ -162,8 +162,8 @@
       </h2>
       <div class="game-grid" id="gameGrid">
 
-        <!-- POKER -->
-        <div class="game-card" data-game="poker">
+        <!-- TOURNAMENT -->
+        <div class="game-card" data-game="tournament">
           <div class="game-card-inner">
             <div class="gc-front">
               <div class="gc-anim">
@@ -173,14 +173,42 @@
                 </div>
               </div>
               <div class="gc-suit-bg">♠</div>
-              <h3>Poker</h3>
-              <p>Tournament & Ring Game</p>
+              <h3>Tournament</h3>
+              <p>Poker Tournament</p>
             </div>
             <div class="gc-back">
               <div class="gc-back-pattern"></div>
-              <h3>Poker</h3>
+              <h3>Tournament</h3>
               <p>定期開催のポーカートーナメント。<br>初心者の方も参加OK。<br>真剣勝負の興奮と一体感を。</p>
-              <a href="/games/poker" class="btn-more-sm">詳しく見る →</a>
+              <a href="/games" class="btn-more-sm">詳しく見る →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- RING GAME -->
+        <div class="game-card" data-game="ringgame">
+          <div class="game-card-inner">
+            <div class="gc-front">
+              <div class="gc-anim">
+                <div class="ring-hand">
+                  <div class="rg-card rg-1"><b>Q</b><i class="red">♦</i></div>
+                  <div class="rg-card rg-2"><b>J</b><i>♣</i></div>
+                  <div class="rg-chips">
+                    <span class="rg-chip rg-chip-1"></span>
+                    <span class="rg-chip rg-chip-2"></span>
+                    <span class="rg-chip rg-chip-3"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="gc-suit-bg red">♦</div>
+              <h3>Ring Game</h3>
+              <p>Cash Game Poker</p>
+            </div>
+            <div class="gc-back">
+              <div class="gc-back-pattern"></div>
+              <h3>Ring Game</h3>
+              <p>いつでも参加・離脱自由。<br>自分のペースで楽しめる<br>キャッシュゲームスタイル。</p>
+              <a href="/games" class="btn-more-sm">詳しく見る →</a>
             </div>
           </div>
         </div>
@@ -203,7 +231,7 @@
               <div class="gc-back-pattern"></div>
               <h3>Blackjack</h3>
               <p>ディーラーとの真剣勝負。<br>シンプルだからこそ奥深い、<br>カジノの王道ゲーム。</p>
-              <a href="/games/blackjack" class="btn-more-sm">詳しく見る →</a>
+              <a href="/games" class="btn-more-sm">詳しく見る →</a>
             </div>
           </div>
         </div>
@@ -220,7 +248,7 @@
                   </div>
                 </div>
               </div>
-              <div class="gc-suit-bg red">♦</div>
+              <div class="gc-suit-bg">♣</div>
               <h3>Baccarat</h3>
               <p>Squeeze the Card</p>
             </div>
@@ -228,31 +256,7 @@
               <div class="gc-back-pattern"></div>
               <h3>Baccarat</h3>
               <p>プレイヤーかバンカーか。<br>絞りの緊張感を味わえる、<br>大人のカードゲーム。</p>
-              <a href="/games/baccarat" class="btn-more-sm">詳しく見る →</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- ROULETTE -->
-        <div class="game-card" data-game="roulette">
-          <div class="game-card-inner">
-            <div class="gc-front">
-              <div class="gc-anim">
-                <div class="rl-wheel-mini">
-                  <div class="rl-outer"></div>
-                  <div class="rl-inner"></div>
-                  <div class="rl-ball-mini"></div>
-                </div>
-              </div>
-              <div class="gc-suit-bg">♣</div>
-              <h3>Roulette</h3>
-              <p>Spin the Wheel</p>
-            </div>
-            <div class="gc-back">
-              <div class="gc-back-pattern"></div>
-              <h3>Roulette</h3>
-              <p>運命の一回転。<br>ルーレットの興奮は、カジノの華。</p>
-              <a href="/games/roulette" class="btn-more-sm">詳しく見る →</a>
+              <a href="/games" class="btn-more-sm">詳しく見る →</a>
             </div>
           </div>
         </div>

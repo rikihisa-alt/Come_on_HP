@@ -242,31 +242,31 @@
 
     /* The entire hero scales down — the "shrinking" effect */
     gsap.to('#hero', {
-      scale: 0.92,
+      scale: 0.95,
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
-        start: 'top top',
+        start: '30% top',
         end: 'bottom top',
-        scrub: 1
+        scrub: 1.5
       }
     });
 
-    /* Hero content shrinks and fades */
+    /* Hero content shrinks and fades — starts later, takes longer */
     gsap.to('#heroContent', {
-      scale: 0.85,
-      y: -50,
+      scale: 0.9,
+      y: -40,
       opacity: 0,
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
-        start: 'top top',
-        end: '70% top',
-        scrub: 1
+        start: '25% top',
+        end: '85% top',
+        scrub: 1.5
       }
     });
 
-    /* Cards scatter OUTWARD — back toward off-screen positions */
+    /* Cards scatter OUTWARD — starts later so they stay visible longer */
     var cardScatterTargets = [
       { x: -800, y: -500, rotation: -360 },
       { x:  800, y: -400, rotation:  300 },
@@ -285,14 +285,14 @@
         ease: 'none',
         scrollTrigger: {
           trigger: '#hero',
-          start: 'top top',
-          end: '60% top',
-          scrub: 1
+          start: '20% top',
+          end: '90% top',
+          scrub: 1.5
         }
       });
     });
 
-    /* Chips drop further down and fade */
+    /* Chips drop further down and fade — also delayed */
     fallChips.forEach(function (chip) {
       gsap.to(chip, {
         y: '+=300',
@@ -301,48 +301,48 @@
         ease: 'none',
         scrollTrigger: {
           trigger: '#hero',
-          start: 'top top',
-          end: '60% top',
-          scrub: 1
+          start: '20% top',
+          end: '90% top',
+          scrub: 1.5
         }
       });
     });
 
     /* Roulette expands and fades */
     gsap.to('#heroRoulette', {
-      scale: 1.5,
+      scale: 1.3,
       opacity: 0,
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
-        start: 'top top',
-        end: '80% top',
-        scrub: 1.2
+        start: '30% top',
+        end: '95% top',
+        scrub: 1.5
       }
     });
 
     /* Canvas parallax */
     gsap.to('#heroCanvas', {
-      yPercent: 20,
+      yPercent: 15,
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
         start: 'top top',
         end: 'bottom top',
-        scrub: 1.5
+        scrub: 2
       }
     });
 
-    /* Scroll indicator fades early */
+    /* Scroll indicator fades — a bit later */
     gsap.to('.hero-scroll', {
       opacity: 0,
       y: 20,
       ease: 'none',
       scrollTrigger: {
         trigger: '#hero',
-        start: '5% top',
-        end: '15% top',
-        scrub: 0.5
+        start: '10% top',
+        end: '25% top',
+        scrub: 0.8
       }
     });
   }
@@ -668,13 +668,15 @@
     var cardCount  = cards.length;
     if (!cardCount) return;
 
-    /* Calculate total scroll width */
+    /* Calculate total scroll width — make scroll distance much larger for stronger slide */
     var totalWidth = 0;
     cards.forEach(function (card) {
       totalWidth += card.offsetWidth + 28; /* gap */
     });
     var scrollDistance = totalWidth - viewport.offsetWidth;
     if (scrollDistance < 0) scrollDistance = 0;
+    /* Multiply scroll distance to make the pin section much longer = more scroll per card */
+    var scrollMultiplier = 2.5;
 
     /* Phase 1 initial state: all cards stacked in center */
     cards.forEach(function (card, i) {
@@ -691,9 +693,9 @@
       scrollTrigger: {
         trigger: '#gallery',
         start: 'top top',
-        end: '+=' + (scrollDistance + window.innerHeight),
+        end: '+=' + (scrollDistance * scrollMultiplier + window.innerHeight),
         pin: true,
-        scrub: 1.5,
+        scrub: 2,
         onUpdate: function (self) {
           /* Update counter based on scroll progress */
           if (counter) {
@@ -805,21 +807,41 @@
       });
     }
 
-    /* ── ROULETTE: Ball orbits around the mini wheel ── */
-    var rlBall = document.querySelector('.rl-ball-mini');
-    if (rlBall) {
-      var ballAngle  = 0;
-      var ballRadius = 38;
-
-      function orbitBall() {
-        ballAngle += 0.03;
-        var bx = Math.cos(ballAngle) * ballRadius;
-        var by = Math.sin(ballAngle) * ballRadius;
-        rlBall.style.transform = 'translate(' + bx + 'px, ' + by + 'px)';
-        requestAnimationFrame(orbitBall);
-      }
-      orbitBall();
+    /* ── RING GAME: Cards oscillate + chips bounce ── */
+    var rg1 = document.querySelector('.rg-1');
+    var rg2 = document.querySelector('.rg-2');
+    if (rg1) {
+      gsap.to(rg1, {
+        rotation: -10,
+        y: -4,
+        duration: 2.2,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1
+      });
     }
+    if (rg2) {
+      gsap.to(rg2, {
+        rotation: 10,
+        y: 4,
+        duration: 2.2,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1
+      });
+    }
+
+    var rgChips = gsap.utils.toArray('.rg-chip');
+    rgChips.forEach(function (chip, i) {
+      gsap.to(chip, {
+        y: -4,
+        duration: 1.5,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        delay: i * 0.3
+      });
+    });
   }
 
   /* ==============================
