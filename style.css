@@ -1159,6 +1159,97 @@ strong { font-weight: 500; }
 }
 
 /* ============================================
+   BEGINNER
+   ============================================ */
+.beginner-wrap {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.beginner-icon {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.beginner-suit {
+  font-size: 2rem;
+  color: var(--text-s);
+  opacity: .5;
+  transition: opacity .3s;
+}
+
+.beginner-suit.red {
+  color: var(--red);
+}
+
+.beginner-h {
+  font-family: var(--ff-b);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 500;
+  color: var(--text-d);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.beginner-lead {
+  font-size: clamp(.95rem, 1.8vw, 1.1rem);
+  color: var(--text);
+  line-height: 2;
+  margin-bottom: 48px;
+}
+
+.beginner-points {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-bottom: 40px;
+}
+
+.beginner-point {
+  background: linear-gradient(145deg, rgba(20,35,70,.5) 0%, rgba(12,22,50,.4) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 20px 28px;
+  transition: border-color .3s, transform .3s;
+}
+
+.beginner-point:hover {
+  border-color: var(--border-h);
+  transform: translateY(-4px);
+}
+
+.bp-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.beginner-point h3 {
+  font-family: var(--ff-b);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-d);
+  margin-bottom: 10px;
+}
+
+.beginner-point p {
+  font-size: .9rem;
+  color: var(--text);
+  line-height: 1.8;
+}
+
+.beginner-point strong {
+  color: var(--warm);
+  font-weight: 500;
+}
+
+.beginner-cta {
+  margin-top: 12px;
+}
+
+/* ============================================
    FOOD
    ============================================ */
 .food-grid {
@@ -1804,6 +1895,12 @@ strong { font-weight: 500; }
     height: 320px;
   }
 
+  /* Beginner */
+  .beginner-points {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
   /* Food */
   .food-grid {
     grid-template-columns: 1fr;
@@ -2369,6 +2466,34 @@ strong { font-weight: 500; }
 }
 
 /* ---- Page CTA ---- */
+/* ---- Entrance Fee Cards (Beginner sub-page) ---- */
+.entrance-fee-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.entrance-card {
+  text-align: center;
+  padding: 36px 24px 32px;
+}
+
+.entrance-price {
+  font-family: var(--ff-d);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 600;
+  color: var(--warm);
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 600px) {
+  .entrance-fee-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
 .page-cta {
   margin-top: 60px;
   background: rgba(13,26,53,.5);
