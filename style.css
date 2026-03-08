@@ -303,7 +303,7 @@ strong { font-weight: 500; }
 
 .fly-card {
   width: 120px;
-  height: 168px;
+  height: 170px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -329,191 +329,33 @@ strong { font-weight: 500; }
   transform: rotateY(180deg);
 }
 
-/* ── Card Face ── */
-.fc-face {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  display: flex;
-  flex-direction: column;
-  padding: 6px 8px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow:
-    0 1px 3px rgba(0,0,0,.15),
-    0 6px 20px rgba(0,0,0,.25);
-  border: 1px solid rgba(0,0,0,.08);
-}
-
-/* Index — top-left & bottom-right */
-.fc-idx {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  line-height: 1;
-}
-
-.fc-idx b {
-  font-family: 'Georgia', 'Times New Roman', serif;
-  font-weight: 700;
-  font-size: 18px;
-  color: #1a1a2e;
-}
-
-.fc-idx i {
-  font-style: normal;
-  font-size: 13px;
-  color: #1a1a2e;
-  margin-top: -1px;
-}
-
-.fc-idx.red b,
-.fc-idx.red i {
-  color: #BE1E2D;
-}
-
-.fc-tl {
-  align-self: flex-start;
-}
-
-.fc-br {
-  align-self: flex-end;
-  transform: rotate(180deg);
-}
-
-/* Center area */
-.fc-center {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-}
-
-/* Suit pip */
-.fc-suit {
-  line-height: 1;
-  color: #1a1a2e;
-}
-
-.fc-suit.lg {
-  font-size: 52px;
-}
-
-.fc-suit.sm {
-  font-size: 20px;
-}
-
-.fc-suit.red {
-  color: #BE1E2D;
-}
-
-/* Royal letter (K/Q/J) */
-.fc-royal {
-  font-family: 'Georgia', 'Times New Roman', serif;
-  font-size: 40px;
-  font-weight: 700;
-  color: #1a1a2e;
-  line-height: 1;
-}
-
-/* 10 pips grid */
-.fc-pips {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1px 10px;
-  font-size: 14px;
-  color: #1a1a2e;
-  line-height: 1;
-  text-align: center;
-}
-
-.fc-pips i {
-  font-style: normal;
-}
-
-/* ══════════════════════════════════════════
-   BICYCLE RIDER BACK — Faithful Recreation
-   ══════════════════════════════════════════ */
+/* Card face & back — image-based */
+.fc-face,
 .fc-back {
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  transform: rotateY(180deg);
   border-radius: 8px;
   overflow: hidden;
-  background: #fff;
   box-shadow:
-    0 1px 3px rgba(0,0,0,.15),
-    0 6px 20px rgba(0,0,0,.25);
-  border: 1px solid rgba(0,0,0,.08);
+    0 2px 6px rgba(0,0,0,.2),
+    0 8px 24px rgba(0,0,0,.3);
 }
 
-/* Red field */
-.bicycle-back {
-  position: absolute;
-  inset: 5px;
-  border-radius: 4px;
-  overflow: hidden;
+.fc-face img,
+.fc-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-/* Lattice pattern + central medallion */
-.bicycle-back::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    /* Central medallion — core oval */
-    radial-gradient(ellipse 24% 20% at 50% 50%,
-      rgba(255,255,255,.2) 0%, rgba(255,255,255,.15) 65%, transparent 66%),
-    /* Inner ring */
-    radial-gradient(ellipse 32% 27% at 50% 50%,
-      transparent 62%, rgba(255,255,255,.25) 63%, rgba(255,255,255,.25) 68%, transparent 69%),
-    /* Middle ring */
-    radial-gradient(ellipse 42% 35% at 50% 50%,
-      transparent 62%, rgba(255,255,255,.15) 63%, rgba(255,255,255,.15) 67%, transparent 68%),
-    /* Outer ring */
-    radial-gradient(ellipse 52% 44% at 50% 50%,
-      transparent 62%, rgba(255,255,255,.10) 63%, rgba(255,255,255,.10) 66%, transparent 67%),
-    /* Fine diamond crosshatch */
-    repeating-linear-gradient(45deg,
-      transparent 0px, transparent 3px,
-      rgba(255,255,255,.13) 3px, rgba(255,255,255,.13) 4px),
-    repeating-linear-gradient(-45deg,
-      transparent 0px, transparent 3px,
-      rgba(255,255,255,.13) 3px, rgba(255,255,255,.13) 4px),
-    /* Secondary lattice (offset for weave density) */
-    repeating-linear-gradient(45deg,
-      transparent 0px, transparent 6.5px,
-      rgba(255,255,255,.07) 6.5px, rgba(255,255,255,.07) 7px),
-    repeating-linear-gradient(-45deg,
-      transparent 0px, transparent 6.5px,
-      rgba(255,255,255,.07) 6.5px, rgba(255,255,255,.07) 7px),
-    /* Subtle horizontal accent */
-    repeating-linear-gradient(0deg,
-      transparent 0px, transparent 10px,
-      rgba(255,255,255,.03) 10px, rgba(255,255,255,.03) 10.5px),
-    /* Base red — Bicycle signature */
-    linear-gradient(180deg, #c22a2a 0%, #BE1E2D 25%, #a01a25 50%, #BE1E2D 75%, #c22a2a 100%);
-  z-index: 1;
-}
-
-/* Ornate double frame */
-.bicycle-back::after {
-  content: '';
-  position: absolute;
-  inset: 3px;
-  border-radius: 3px;
-  border: 1.5px solid rgba(255,255,255,.45);
-  box-shadow:
-    inset 0 0 0 2.5px rgba(190,30,45,.5),
-    inset 0 0 0 4px rgba(255,255,255,.25),
-    inset 0 0 0 6px rgba(190,30,45,.35),
-    inset 0 0 0 7px rgba(255,255,255,.12);
-  z-index: 2;
+.fc-back {
+  transform: rotateY(180deg);
 }
 
 /* Casino chips */
@@ -528,6 +370,8 @@ strong { font-weight: 500; }
   width: 44px;
   height: 44px;
   position: absolute;
+  top: 50%;
+  left: 50%;
   border-radius: 50%;
   will-change: transform;
   perspective: 400px;
@@ -862,34 +706,8 @@ strong { font-weight: 500; }
   transform: rotateY(180deg);
   border-radius: 6px;
   box-shadow: 0 2px 12px rgba(0,0,0,.3);
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,.1);
+  background: url('../img/cards/torannpu-illust54.png') center/cover no-repeat;
   overflow: hidden;
-}
-
-.cd-back::before {
-  content: '';
-  position: absolute;
-  inset: 3px;
-  border-radius: 4px;
-  background:
-    radial-gradient(ellipse 24% 20% at 50% 50%, rgba(255,255,255,.18) 0%, rgba(255,255,255,.12) 65%, transparent 66%),
-    radial-gradient(ellipse 34% 28% at 50% 50%, transparent 62%, rgba(255,255,255,.2) 63%, rgba(255,255,255,.2) 68%, transparent 69%),
-    radial-gradient(ellipse 44% 36% at 50% 50%, transparent 62%, rgba(255,255,255,.12) 63%, rgba(255,255,255,.12) 66%, transparent 67%),
-    repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(255,255,255,.12) 3px, rgba(255,255,255,.12) 4px),
-    repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(255,255,255,.12) 3px, rgba(255,255,255,.12) 4px),
-    repeating-linear-gradient(45deg, transparent 0px, transparent 6.5px, rgba(255,255,255,.06) 6.5px, rgba(255,255,255,.06) 7px),
-    repeating-linear-gradient(-45deg, transparent 0px, transparent 6.5px, rgba(255,255,255,.06) 6.5px, rgba(255,255,255,.06) 7px),
-    linear-gradient(180deg, #c22a2a 0%, #BE1E2D 25%, #a01a25 50%, #BE1E2D 75%, #c22a2a 100%);
-}
-
-.cd-back::after {
-  content: '';
-  position: absolute;
-  inset: 5px;
-  border-radius: 3px;
-  border: 1.5px solid rgba(255,255,255,.4);
-  box-shadow: inset 0 0 0 2.5px rgba(190,30,45,.5), inset 0 0 0 4px rgba(255,255,255,.2);
 }
 
 .cd-front span {
@@ -1167,34 +985,10 @@ strong { font-weight: 500; }
   inset: 0;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  background: #ffffff;
+  background: url('../img/cards/torannpu-illust54.png') center/cover no-repeat;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0,0,0,.3);
   overflow: hidden;
-}
-
-.bj-down-back::before {
-  content: '';
-  position: absolute;
-  inset: 2px;
-  border-radius: 3px;
-  background:
-    radial-gradient(ellipse 24% 20% at 50% 50%, rgba(255,255,255,.15) 0%, rgba(255,255,255,.1) 65%, transparent 66%),
-    radial-gradient(ellipse 34% 28% at 50% 50%, transparent 62%, rgba(255,255,255,.18) 63%, rgba(255,255,255,.18) 68%, transparent 69%),
-    repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(255,255,255,.12) 3px, rgba(255,255,255,.12) 4px),
-    repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(255,255,255,.12) 3px, rgba(255,255,255,.12) 4px),
-    repeating-linear-gradient(45deg, transparent 0px, transparent 6.5px, rgba(255,255,255,.06) 6.5px, rgba(255,255,255,.06) 7px),
-    repeating-linear-gradient(-45deg, transparent 0px, transparent 6.5px, rgba(255,255,255,.06) 6.5px, rgba(255,255,255,.06) 7px),
-    linear-gradient(180deg, #c22a2a 0%, #BE1E2D 25%, #a01a25 50%, #BE1E2D 75%, #c22a2a 100%);
-}
-
-.bj-down-back::after {
-  content: '';
-  position: absolute;
-  inset: 4px;
-  border-radius: 2px;
-  border: 1.5px solid rgba(255,255,255,.4);
-  box-shadow: inset 0 0 0 2px rgba(190,30,45,.5), inset 0 0 0 3.5px rgba(255,255,255,.2);
 }
 
 .bj-down-front {
@@ -1334,14 +1128,7 @@ strong { font-weight: 500; }
 .bc-cover {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 24% 20% at 50% 50%, rgba(255,255,255,.15) 0%, rgba(255,255,255,.1) 65%, transparent 66%),
-    radial-gradient(ellipse 34% 28% at 50% 50%, transparent 62%, rgba(255,255,255,.18) 63%, rgba(255,255,255,.18) 68%, transparent 69%),
-    repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(255,255,255,.12) 3px, rgba(255,255,255,.12) 4px),
-    repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(255,255,255,.12) 3px, rgba(255,255,255,.12) 4px),
-    repeating-linear-gradient(45deg, transparent 0px, transparent 6.5px, rgba(255,255,255,.06) 6.5px, rgba(255,255,255,.06) 7px),
-    repeating-linear-gradient(-45deg, transparent 0px, transparent 6.5px, rgba(255,255,255,.06) 6.5px, rgba(255,255,255,.06) 7px),
-    linear-gradient(180deg, #c22a2a 0%, #BE1E2D 25%, #a01a25 50%, #BE1E2D 75%, #c22a2a 100%);
+  background: url('../img/cards/torannpu-illust54.png') center/cover no-repeat;
   transform-origin: bottom center;
   overflow: hidden;
   border: 2px solid #ffffff;
@@ -2211,16 +1998,9 @@ strong { font-weight: 500; }
 
   /* Hero cards smaller */
   .fly-card {
-    width: 64px;
-    height: 90px;
+    width: 72px;
+    height: 102px;
   }
-
-  .fc-idx b { font-size: 11px; }
-  .fc-idx i { font-size: 8px; }
-  .fc-suit.lg { font-size: 28px; }
-  .fc-suit.sm { font-size: 12px; }
-  .fc-royal { font-size: 22px; }
-  .fc-pips { font-size: 8px; gap: 0 4px; }
 
   /* Hero chips */
   .fall-chip {
