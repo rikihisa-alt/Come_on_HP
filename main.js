@@ -146,16 +146,12 @@
     /* ── c) Chips FALL from above with BOUNCE (t=1.5) ── */
 
     var chipEnds = [
-      { x: -32 * mob, y: 32 * mob },
-      { x: -18 * mob, y: 38 * mob },
-      { x:  -5 * mob, y: 34 * mob },
-      { x:   8 * mob, y: 37 * mob },
-      { x:  22 * mob, y: 33 * mob },
-      { x:  35 * mob, y: 36 * mob },
-      { x: -38 * mob, y: 25 * mob },
-      { x:  38 * mob, y: 28 * mob },
-      { x: -12 * mob, y: 42 * mob },
-      { x:  15 * mob, y: 40 * mob }
+      { x: -36 * mob, y: 22 * mob },
+      { x: -28 * mob, y: 34 * mob },
+      { x: -38 * mob, y: 40 * mob },
+      { x:  36 * mob, y: 24 * mob },
+      { x:  28 * mob, y: 36 * mob },
+      { x:  38 * mob, y: 42 * mob }
     ];
 
     fallChips.forEach(function (chip, i) {

@@ -313,6 +313,7 @@ strong { font-weight: 500; }
   pointer-events: auto;
   cursor: pointer;
   z-index: 1;
+  opacity: 0; /* prevent flash before GSAP */
 }
 
 .fly-card-inner {
@@ -321,13 +322,14 @@ strong { font-weight: 500; }
   position: relative;
   transform-style: preserve-3d;
   transition: transform .6s cubic-bezier(.4,0,.2,1);
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .fly-card:hover .fly-card-inner {
   transform: rotateY(180deg);
 }
 
+/* ── Card Face ── */
 .fc-face {
   position: absolute;
   inset: 0;
@@ -335,193 +337,183 @@ strong { font-weight: 500; }
   -webkit-backface-visibility: hidden;
   display: flex;
   flex-direction: column;
-  padding: 8px 10px;
-  background: #ffffff;
-  border-radius: 10px;
+  padding: 6px 8px;
+  background: #fff;
+  border-radius: 8px;
   box-shadow:
-    0 2px 4px rgba(0,0,0,.12),
-    0 8px 24px rgba(0,0,0,.3),
-    inset 0 0 0 4px #ffffff,
-    inset 0 0 0 5px rgba(0,0,0,.06);
-  border: 1px solid rgba(0,0,0,.1);
+    0 1px 3px rgba(0,0,0,.15),
+    0 6px 20px rgba(0,0,0,.25);
+  border: 1px solid rgba(0,0,0,.08);
 }
 
-/* ── BICYCLE Rider Back Design ── */
-.fc-back {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: rotateY(180deg);
-  border-radius: 10px;
-  overflow: hidden;
-  background: #ffffff;
-  box-shadow:
-    0 2px 4px rgba(0,0,0,.12),
-    0 8px 24px rgba(0,0,0,.3);
-  border: 1px solid rgba(0,0,0,.1);
+/* Index — top-left & bottom-right */
+.fc-idx {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
 }
 
-/* Outer white border frame */
-.fc-back::before {
-  content: '';
-  position: absolute;
-  inset: 4px;
-  border-radius: 7px;
-  border: 2px solid #ffffff;
-  background: #c41e3a;
-  z-index: 1;
-  /* Intricate diamond lattice pattern — Bicycle rider back */
-  background:
-    /* Center diamond medallion */
-    radial-gradient(ellipse 28px 36px at 50% 50%, rgba(255,255,255,.22) 0%, rgba(255,255,255,.22) 45%, transparent 46%),
-    /* Inner diamond ring */
-    radial-gradient(ellipse 36px 46px at 50% 50%, transparent 68%, rgba(255,255,255,.15) 69%, rgba(255,255,255,.15) 74%, transparent 75%),
-    /* Outer oval ring */
-    radial-gradient(ellipse 48px 60px at 50% 50%, transparent 68%, rgba(255,255,255,.12) 69%, rgba(255,255,255,.12) 73%, transparent 74%),
-    /* Cross-diamond lattice pattern */
-    repeating-linear-gradient(45deg,
-      transparent 0px, transparent 4px,
-      rgba(255,255,255,.10) 4px, rgba(255,255,255,.10) 5px),
-    repeating-linear-gradient(-45deg,
-      transparent 0px, transparent 4px,
-      rgba(255,255,255,.10) 4px, rgba(255,255,255,.10) 5px),
-    /* Horizontal/vertical subtle grid */
-    repeating-linear-gradient(0deg,
-      transparent 0px, transparent 8px,
-      rgba(255,255,255,.04) 8px, rgba(255,255,255,.04) 9px),
-    repeating-linear-gradient(90deg,
-      transparent 0px, transparent 8px,
-      rgba(255,255,255,.04) 8px, rgba(255,255,255,.04) 9px),
-    /* Base red gradient */
-    linear-gradient(180deg, #c41e3a 0%, #a11830 50%, #c41e3a 100%);
+.fc-idx b {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #1a1a2e;
 }
 
-/* Inner ornate frame border — Bicycle style double frame */
-.fc-back::after {
-  content: '';
-  position: absolute;
-  inset: 8px;
-  border-radius: 5px;
-  border: 1.5px solid rgba(255,255,255,.35);
-  box-shadow:
-    inset 0 0 0 3px transparent,
-    inset 0 0 0 4.5px rgba(255,255,255,.18);
-  z-index: 2;
+.fc-idx i {
+  font-style: normal;
+  font-size: 13px;
+  color: #1a1a2e;
+  margin-top: -1px;
+}
+
+.fc-idx.red b,
+.fc-idx.red i {
+  color: #BE1E2D;
 }
 
 .fc-tl {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  line-height: 1;
-  gap: 1px;
+  align-self: flex-start;
 }
 
-.fc-tl b {
-  font-family: 'Georgia', serif;
-  font-weight: 700;
-  color: #1a1a2e;
-  font-size: 20px;
+.fc-br {
+  align-self: flex-end;
+  transform: rotate(180deg);
 }
 
-.fc-tl i {
-  font-style: normal;
-  font-size: 16px;
-  color: #1a1a2e;
-}
-
-.fc-tl i.red, .fc-tl b + i.red {
-  color: #c41e3a;
-}
-
+/* Center area */
 .fc-center {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 0;
 }
 
-.fc-pip {
+/* Suit pip */
+.fc-suit {
+  line-height: 1;
+  color: #1a1a2e;
+}
+
+.fc-suit.lg {
   font-size: 52px;
-  color: #1a1a2e;
-  line-height: 1;
 }
 
-.fc-pip.red {
-  color: #c41e3a;
-}
-
-.fc-pip-sm {
-  font-size: 22px;
-  color: #1a1a2e;
-  font-style: normal;
-  line-height: 1;
-}
-
-.fc-pip-sm.red {
-  color: #c41e3a;
-}
-
-.fc-royal-letter {
-  font-family: 'Georgia', serif;
-  font-size: 42px;
-  font-weight: 700;
-  color: #1a1a2e;
-  line-height: 1;
-}
-
-.fc-royal .fc-tl b,
-.fc-royal .fc-br b {
-  color: #1a1a2e;
-}
-
-.fc-pips-grid {
-  display: grid;
-  gap: 2px;
-  font-style: normal;
-}
-
-.fc-pips-10 {
-  grid-template-columns: repeat(2, 1fr);
-  font-size: 14px;
-  color: #1a1a2e;
-  line-height: 1;
-  gap: 2px 8px;
-}
-
-.fc-pips-10 i {
-  font-style: normal;
-  text-align: center;
-}
-
-.fc-br {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  line-height: 1;
-  transform: rotate(180deg);
-  align-self: flex-end;
-  gap: 1px;
-}
-
-.fc-br b {
-  font-family: 'Georgia', serif;
-  font-weight: 700;
-  color: #1a1a2e;
+.fc-suit.sm {
   font-size: 20px;
 }
 
-.fc-br i {
-  font-style: normal;
-  font-size: 16px;
-  color: #1a1a2e;
+.fc-suit.red {
+  color: #BE1E2D;
 }
 
-.fc-br i.red {
-  color: #c41e3a;
+/* Royal letter (K/Q/J) */
+.fc-royal {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 40px;
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1;
+}
+
+/* 10 pips grid */
+.fc-pips {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px 10px;
+  font-size: 14px;
+  color: #1a1a2e;
+  line-height: 1;
+  text-align: center;
+}
+
+.fc-pips i {
+  font-style: normal;
+}
+
+/* ══════════════════════════════════════════
+   BICYCLE RIDER BACK — Faithful Recreation
+   ══════════════════════════════════════════ */
+.fc-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(180deg);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow:
+    0 1px 3px rgba(0,0,0,.15),
+    0 6px 20px rgba(0,0,0,.25);
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+/* Red field */
+.bicycle-back {
+  position: absolute;
+  inset: 5px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Lattice pattern + central medallion */
+.bicycle-back::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    /* Central medallion — core oval */
+    radial-gradient(ellipse 24% 20% at 50% 50%,
+      rgba(255,255,255,.2) 0%, rgba(255,255,255,.15) 65%, transparent 66%),
+    /* Inner ring */
+    radial-gradient(ellipse 32% 27% at 50% 50%,
+      transparent 62%, rgba(255,255,255,.25) 63%, rgba(255,255,255,.25) 68%, transparent 69%),
+    /* Middle ring */
+    radial-gradient(ellipse 42% 35% at 50% 50%,
+      transparent 62%, rgba(255,255,255,.15) 63%, rgba(255,255,255,.15) 67%, transparent 68%),
+    /* Outer ring */
+    radial-gradient(ellipse 52% 44% at 50% 50%,
+      transparent 62%, rgba(255,255,255,.10) 63%, rgba(255,255,255,.10) 66%, transparent 67%),
+    /* Fine diamond crosshatch */
+    repeating-linear-gradient(45deg,
+      transparent 0px, transparent 3px,
+      rgba(255,255,255,.13) 3px, rgba(255,255,255,.13) 4px),
+    repeating-linear-gradient(-45deg,
+      transparent 0px, transparent 3px,
+      rgba(255,255,255,.13) 3px, rgba(255,255,255,.13) 4px),
+    /* Secondary lattice (offset for weave density) */
+    repeating-linear-gradient(45deg,
+      transparent 0px, transparent 6.5px,
+      rgba(255,255,255,.07) 6.5px, rgba(255,255,255,.07) 7px),
+    repeating-linear-gradient(-45deg,
+      transparent 0px, transparent 6.5px,
+      rgba(255,255,255,.07) 6.5px, rgba(255,255,255,.07) 7px),
+    /* Subtle horizontal accent */
+    repeating-linear-gradient(0deg,
+      transparent 0px, transparent 10px,
+      rgba(255,255,255,.03) 10px, rgba(255,255,255,.03) 10.5px),
+    /* Base red — Bicycle signature */
+    linear-gradient(180deg, #c22a2a 0%, #BE1E2D 25%, #a01a25 50%, #BE1E2D 75%, #c22a2a 100%);
+  z-index: 1;
+}
+
+/* Ornate double frame */
+.bicycle-back::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 3px;
+  border: 1.5px solid rgba(255,255,255,.45);
+  box-shadow:
+    inset 0 0 0 2.5px rgba(190,30,45,.5),
+    inset 0 0 0 4px rgba(255,255,255,.25),
+    inset 0 0 0 6px rgba(190,30,45,.35),
+    inset 0 0 0 7px rgba(255,255,255,.12);
+  z-index: 2;
 }
 
 /* Casino chips */
@@ -541,6 +533,7 @@ strong { font-weight: 500; }
   perspective: 400px;
   pointer-events: auto;
   cursor: pointer;
+  opacity: 0; /* prevent flash before GSAP */
 }
 
 .chip-inner {
@@ -880,20 +873,23 @@ strong { font-weight: 500; }
   inset: 3px;
   border-radius: 4px;
   background:
-    radial-gradient(ellipse 20px 26px at 50% 50%, rgba(255,255,255,.2) 0%, rgba(255,255,255,.2) 45%, transparent 46%),
-    radial-gradient(ellipse 30px 38px at 50% 50%, transparent 68%, rgba(255,255,255,.12) 69%, rgba(255,255,255,.12) 74%, transparent 75%),
-    repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(255,255,255,.09) 3px, rgba(255,255,255,.09) 4px),
-    repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(255,255,255,.09) 3px, rgba(255,255,255,.09) 4px),
-    linear-gradient(180deg, #c41e3a 0%, #a11830 50%, #c41e3a 100%);
+    radial-gradient(ellipse 24% 20% at 50% 50%, rgba(255,255,255,.18) 0%, rgba(255,255,255,.12) 65%, transparent 66%),
+    radial-gradient(ellipse 34% 28% at 50% 50%, transparent 62%, rgba(255,255,255,.2) 63%, rgba(255,255,255,.2) 68%, transparent 69%),
+    radial-gradient(ellipse 44% 36% at 50% 50%, transparent 62%, rgba(255,255,255,.12) 63%, rgba(255,255,255,.12) 66%, transparent 67%),
+    repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(255,255,255,.12) 3px, rgba(255,255,255,.12) 4px),
+    repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(255,255,255,.12) 3px, rgba(255,255,255,.12) 4px),
+    repeating-linear-gradient(45deg, transparent 0px, transparent 6.5px, rgba(255,255,255,.06) 6.5px, rgba(255,255,255,.06) 7px),
+    repeating-linear-gradient(-45deg, transparent 0px, transparent 6.5px, rgba(255,255,255,.06) 6.5px, rgba(255,255,255,.06) 7px),
+    linear-gradient(180deg, #c22a2a 0%, #BE1E2D 25%, #a01a25 50%, #BE1E2D 75%, #c22a2a 100%);
 }
 
 .cd-back::after {
   content: '';
   position: absolute;
-  inset: 6px;
+  inset: 5px;
   border-radius: 3px;
-  border: 1px solid rgba(255,255,255,.3);
-  box-shadow: inset 0 0 0 3px transparent, inset 0 0 0 4px rgba(255,255,255,.15);
+  border: 1.5px solid rgba(255,255,255,.4);
+  box-shadow: inset 0 0 0 2.5px rgba(190,30,45,.5), inset 0 0 0 4px rgba(255,255,255,.2);
 }
 
 .cd-front span {
@@ -1183,10 +1179,13 @@ strong { font-weight: 500; }
   inset: 2px;
   border-radius: 3px;
   background:
-    radial-gradient(ellipse 14px 18px at 50% 50%, rgba(255,255,255,.2) 0%, rgba(255,255,255,.2) 45%, transparent 46%),
-    repeating-linear-gradient(45deg, transparent 0px, transparent 2px, rgba(255,255,255,.08) 2px, rgba(255,255,255,.08) 3px),
-    repeating-linear-gradient(-45deg, transparent 0px, transparent 2px, rgba(255,255,255,.08) 2px, rgba(255,255,255,.08) 3px),
-    linear-gradient(180deg, #c41e3a 0%, #a11830 50%, #c41e3a 100%);
+    radial-gradient(ellipse 24% 20% at 50% 50%, rgba(255,255,255,.15) 0%, rgba(255,255,255,.1) 65%, transparent 66%),
+    radial-gradient(ellipse 34% 28% at 50% 50%, transparent 62%, rgba(255,255,255,.18) 63%, rgba(255,255,255,.18) 68%, transparent 69%),
+    repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(255,255,255,.12) 3px, rgba(255,255,255,.12) 4px),
+    repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(255,255,255,.12) 3px, rgba(255,255,255,.12) 4px),
+    repeating-linear-gradient(45deg, transparent 0px, transparent 6.5px, rgba(255,255,255,.06) 6.5px, rgba(255,255,255,.06) 7px),
+    repeating-linear-gradient(-45deg, transparent 0px, transparent 6.5px, rgba(255,255,255,.06) 6.5px, rgba(255,255,255,.06) 7px),
+    linear-gradient(180deg, #c22a2a 0%, #BE1E2D 25%, #a01a25 50%, #BE1E2D 75%, #c22a2a 100%);
 }
 
 .bj-down-back::after {
@@ -1194,7 +1193,8 @@ strong { font-weight: 500; }
   position: absolute;
   inset: 4px;
   border-radius: 2px;
-  border: 1px solid rgba(255,255,255,.3);
+  border: 1.5px solid rgba(255,255,255,.4);
+  box-shadow: inset 0 0 0 2px rgba(190,30,45,.5), inset 0 0 0 3.5px rgba(255,255,255,.2);
 }
 
 .bj-down-front {
@@ -1335,10 +1335,13 @@ strong { font-weight: 500; }
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 14px 18px at 50% 50%, rgba(255,255,255,.18) 0%, rgba(255,255,255,.18) 45%, transparent 46%),
-    repeating-linear-gradient(45deg, transparent 0px, transparent 2px, rgba(255,255,255,.07) 2px, rgba(255,255,255,.07) 3px),
-    repeating-linear-gradient(-45deg, transparent 0px, transparent 2px, rgba(255,255,255,.07) 2px, rgba(255,255,255,.07) 3px),
-    linear-gradient(180deg, #c41e3a 0%, #a11830 50%, #c41e3a 100%);
+    radial-gradient(ellipse 24% 20% at 50% 50%, rgba(255,255,255,.15) 0%, rgba(255,255,255,.1) 65%, transparent 66%),
+    radial-gradient(ellipse 34% 28% at 50% 50%, transparent 62%, rgba(255,255,255,.18) 63%, rgba(255,255,255,.18) 68%, transparent 69%),
+    repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(255,255,255,.12) 3px, rgba(255,255,255,.12) 4px),
+    repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(255,255,255,.12) 3px, rgba(255,255,255,.12) 4px),
+    repeating-linear-gradient(45deg, transparent 0px, transparent 6.5px, rgba(255,255,255,.06) 6.5px, rgba(255,255,255,.06) 7px),
+    repeating-linear-gradient(-45deg, transparent 0px, transparent 6.5px, rgba(255,255,255,.06) 6.5px, rgba(255,255,255,.06) 7px),
+    linear-gradient(180deg, #c22a2a 0%, #BE1E2D 25%, #a01a25 50%, #BE1E2D 75%, #c22a2a 100%);
   transform-origin: bottom center;
   overflow: hidden;
   border: 2px solid #ffffff;
@@ -2208,15 +2211,16 @@ strong { font-weight: 500; }
 
   /* Hero cards smaller */
   .fly-card {
-    width: 56px;
-    height: 78px;
+    width: 64px;
+    height: 90px;
   }
 
-  .fc-tl { font-size: 9px; }
-  .fc-tl i { font-size: 8px; }
-  .fc-big { font-size: 24px; }
-  .fc-br { font-size: 9px; }
-  .fc-br i { font-size: 8px; }
+  .fc-idx b { font-size: 11px; }
+  .fc-idx i { font-size: 8px; }
+  .fc-suit.lg { font-size: 28px; }
+  .fc-suit.sm { font-size: 12px; }
+  .fc-royal { font-size: 22px; }
+  .fc-pips { font-size: 8px; gap: 0 4px; }
 
   /* Hero chips */
   .fall-chip {
