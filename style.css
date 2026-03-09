@@ -38,8 +38,8 @@
   --glass:       rgba(12,22,50,.35);
   --glass-border:rgba(120,170,220,.08);
   --glass-blur:  blur(20px);
-  --ff-d: 'Cormorant Garamond', Georgia, serif;
-  --ff-b: 'Noto Sans JP', -apple-system, sans-serif;
+  --ff-d: 'Playfair Display', Georgia, serif;
+  --ff-b: 'Shippori Mincho B1', 'Hiragino Mincho ProN', serif;
   --sec-pad: clamp(100px, 18vh, 220px);
   --side:    clamp(24px, 6vw, 80px);
   --max-w:   1000px;
@@ -60,11 +60,12 @@ html {
 
 body {
   font-family: var(--ff-b);
-  font-weight: 300;
+  font-weight: 400;
   color: var(--text);
   background: var(--bg-1);
   overflow-x: hidden;
-  line-height: 1.8;
+  line-height: 2;
+  letter-spacing: 0.04em;
 }
 
 img { max-width: 100%; height: auto; display: block; }
@@ -370,8 +371,8 @@ strong { font-weight: 500; }
 }
 
 .fall-chip {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1897,6 +1898,15 @@ strong { font-weight: 500; }
   margin-top: 24px;
 }
 
+/* Section CTA (centered button) */
+.sec-cta {
+  text-align: center;
+  margin-top: 28px;
+}
+.sec-cta .btn-more {
+  justify-content: center;
+}
+
 /* ============================================
    BUTTONS — Common
    ============================================ */
@@ -1992,16 +2002,37 @@ strong { font-weight: 500; }
     letter-spacing: 3px;
   }
 
-  /* Hero cards smaller */
+  /* Hero cards — much smaller & pushed to edges on mobile */
   .fly-card {
-    width: 72px;
-    height: 102px;
+    width: 48px;
+    height: 68px;
+    opacity: 0 !important; /* GSAP sets to max 0.35 on mobile */
   }
 
-  /* Hero chips */
+  /* Hero chips — hidden on mobile to reduce clutter */
   .fall-chip {
-    width: 44px;
-    height: 44px;
+    display: none;
+  }
+
+  /* Hero text needs more breathing room on mobile */
+  .hero-content {
+    padding-top: 25vh;
+  }
+
+  .hero-catch {
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    padding: 0 20px;
+  }
+
+  .hero-sub {
+    font-size: 12px;
+    padding: 0 24px;
+  }
+
+  .hero-btn {
+    padding: 12px 32px;
+    font-size: 12px;
   }
 
   /* Concept */
@@ -2071,19 +2102,15 @@ strong { font-weight: 500; }
   }
 
   .hero-content {
-    padding-top: 18vh;
+    padding-top: 22vh;
+  }
+
+  .ht-line {
+    font-size: clamp(36px, 14vw, 64px);
   }
 
   .gallery-track {
     padding: 0 calc(50vw - 100px);
-  }
-}
-
-/* Desktop chips are slightly bigger */
-@media (min-width: 769px) {
-  .fall-chip {
-    width: 48px;
-    height: 48px;
   }
 }
 

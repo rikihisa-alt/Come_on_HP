@@ -12,6 +12,32 @@
   var isMobile = window.innerWidth < 768;
   var isTouch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
+  /* Shared 3D tilt effect for card elements */
+  function addTiltEffect(selector, intensity) {
+    document.querySelectorAll(selector).forEach(function (el) {
+      el.addEventListener('mousemove', function (e) {
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        gsap.to(el, {
+          rotateY: x * intensity,
+          rotateX: -y * intensity,
+          duration: 0.4,
+          ease: 'power2.out',
+          transformPerspective: 800
+        });
+      });
+      el.addEventListener('mouseleave', function () {
+        gsap.to(el, {
+          rotateY: 0,
+          rotateX: 0,
+          duration: 0.6,
+          ease: 'elastic.out(1, 0.4)'
+        });
+      });
+    });
+  }
+
   /* ==============================
      LOADER -> HERO TRANSITION
      ============================== */
@@ -69,7 +95,6 @@
 
     var flyCards  = gsap.utils.toArray('.fly-card');
     var fallChips = gsap.utils.toArray('.fall-chip');
-    var mob = isMobile ? 0.5 : 1;
 
     /* ── a) Roulette wheel entrance (t=0) ── */
     gsap.set('#heroRoulette', { opacity: 0, scale: 0.5 });
@@ -80,9 +105,8 @@
       ease: 'power1.out'
     }, 0);
 
-    /* ── b) Cards FLY in from WAY off-screen (t=0.3) ── */
+    /* ── b) Cards FLY in from off-screen ── */
 
-    /* Starting positions — far outside viewport */
     var cardStarts = [
       { x: -1200, y: -800, rotation: -720 },
       { x:  1200, y: -600, rotation:  540 },
@@ -92,17 +116,25 @@
       { x:  900,  y: -900, rotation:  540 }
     ];
 
-    /* Landing positions — around edges, clear of center text */
-    var cardEnds = [
-      { x: -38 * mob, y: -22 * mob, rotation: -15 },
-      { x:  36 * mob, y: -18 * mob, rotation:  12 },
-      { x: -42 * mob, y:   8 * mob, rotation:  -8 },
-      { x:  40 * mob, y:  12 * mob, rotation:  10 },
-      { x: -30 * mob, y:  28 * mob, rotation: -20 },
-      { x:  32 * mob, y:  25 * mob, rotation:  18 }
+    /* Landing positions — mobile: far edges, low opacity. Desktop: closer, higher opacity */
+    var cardEnds = isMobile ? [
+      { x: -46, y: -28, rotation: -18 },
+      { x:  44, y: -24, rotation:  14 },
+      { x: -48, y:   4, rotation: -10 },
+      { x:  46, y:   8, rotation:  12 },
+      { x: -42, y:  30, rotation: -22 },
+      { x:  40, y:  28, rotation:  20 }
+    ] : [
+      { x: -38, y: -22, rotation: -15 },
+      { x:  36, y: -18, rotation:  12 },
+      { x: -42, y:   8, rotation:  -8 },
+      { x:  40, y:  12, rotation:  10 },
+      { x: -30, y:  28, rotation: -20 },
+      { x:  32, y:  25, rotation:  18 }
     ];
 
-    /* Set initial state for all cards */
+    var cardLandOpacity = isMobile ? 0.3 : 0.85;
+
     flyCards.forEach(function (card, i) {
       gsap.set(card, {
         x: cardStarts[i].x,
@@ -113,9 +145,7 @@
       });
     });
 
-    /* Animate each card from off-screen to landing position */
     flyCards.forEach(function (card, i) {
-      /* Convert vw/vh to pixels for landing */
       var endX = (cardEnds[i].x / 100) * window.innerWidth;
       var endY = (cardEnds[i].y / 100) * window.innerHeight;
 
@@ -123,19 +153,19 @@
         x: endX,
         y: endY,
         rotation: cardEnds[i].rotation,
-        opacity: 0.85,
-        scale: 1,
+        opacity: cardLandOpacity,
+        scale: isMobile ? 0.9 : 1,
         duration: 2.2,
         ease: 'power1.out'
       }, 0.3 + i * 0.18);
     });
 
-    /* After landing: gentle perpetual float — slow & dreamy */
+    /* Gentle perpetual float */
     flyCards.forEach(function (card, i) {
       gsap.to(card, {
         y: '+=' + gsap.utils.random(-8, 8),
         rotation: '+=' + gsap.utils.random(-2, 2),
-        opacity: '+=' + gsap.utils.random(-0.08, 0.05),
+        opacity: '+=' + gsap.utils.random(-0.05, 0.03),
         duration: gsap.utils.random(5, 8),
         ease: 'sine.inOut',
         yoyo: true,
@@ -144,40 +174,39 @@
       });
     });
 
-    /* ── c) Chips FALL from above with BOUNCE (t=1.5) ── */
+    /* ── c) Chips FALL (desktop only) ── */
+    if (!isMobile) {
+      var chipEnds = [
+        { x: -34, y: -10 },
+        { x: -28, y:  15 },
+        { x: -36, y:  32 },
+        { x:  34, y:  -8 },
+        { x:  28, y:  18 },
+        { x:  36, y:  34 }
+      ];
 
-    var chipEnds = [
-      { x: -34 * mob, y: -10 * mob },
-      { x: -28 * mob, y:  15 * mob },
-      { x: -36 * mob, y:  32 * mob },
-      { x:  34 * mob, y:  -8 * mob },
-      { x:  28 * mob, y:  18 * mob },
-      { x:  36 * mob, y:  34 * mob }
-    ];
+      fallChips.forEach(function (chip, i) {
+        var endX = (chipEnds[i].x / 100) * window.innerWidth;
+        var endY = (chipEnds[i].y / 100) * window.innerHeight;
 
-    fallChips.forEach(function (chip, i) {
-      var startRot = gsap.utils.random(-180, 180);
-      var endRot   = gsap.utils.random(-10, 10);
-      var endX = (chipEnds[i].x / 100) * window.innerWidth;
-      var endY = (chipEnds[i].y / 100) * window.innerHeight;
+        gsap.set(chip, {
+          y: -600,
+          x: endX,
+          rotation: gsap.utils.random(-180, 180),
+          opacity: 0,
+          scale: 0.8
+        });
 
-      gsap.set(chip, {
-        y: -600,
-        x: endX,
-        rotation: startRot,
-        opacity: 0,
-        scale: 0.8
+        tl.to(chip, {
+          y: endY,
+          rotation: gsap.utils.random(-10, 10),
+          opacity: 0.8,
+          scale: 1,
+          duration: 1.6,
+          ease: 'power2.out'
+        }, 1.5 + i * 0.25);
       });
-
-      tl.to(chip, {
-        y: endY,
-        rotation: endRot,
-        opacity: 0.8,
-        scale: 1,
-        duration: 1.6,
-        ease: 'power2.out'
-      }, 1.5 + i * 0.25);
-    });
+    }
 
     /* ── d) Text appears AFTER cards and chips (t=2.5) ── */
 
@@ -531,31 +560,9 @@
       });
     });
 
-    /* 3D tilt on hover (desktop) */
+    /* 3D tilt on hover (desktop) — shared with sys-cards */
     if (!isMobile) {
-      document.querySelectorAll('.game-card').forEach(function (card) {
-        card.addEventListener('mousemove', function (e) {
-          var r = card.getBoundingClientRect();
-          var x = (e.clientX - r.left) / r.width - 0.5;
-          var y = (e.clientY - r.top) / r.height - 0.5;
-          gsap.to(card, {
-            rotateY: x * 12,
-            rotateX: -y * 12,
-            duration: 0.4,
-            ease: 'power2.out',
-            transformPerspective: 800
-          });
-        });
-
-        card.addEventListener('mouseleave', function () {
-          gsap.to(card, {
-            rotateY: 0,
-            rotateX: 0,
-            duration: 0.7,
-            ease: 'elastic.out(1, 0.4)'
-          });
-        });
-      });
+      addTiltEffect('.game-card', 12);
     }
 
     /* Click/tap to flip game cards */
@@ -619,30 +626,9 @@
       });
     });
 
-    /* System cards: 3D tilt on hover (desktop, subtler) */
+    /* System cards: 3D tilt (subtler) */
     if (!isMobile) {
-      document.querySelectorAll('.sys-card').forEach(function (card) {
-        card.addEventListener('mousemove', function (e) {
-          var r = card.getBoundingClientRect();
-          var x = (e.clientX - r.left) / r.width - 0.5;
-          var y = (e.clientY - r.top) / r.height - 0.5;
-          gsap.to(card, {
-            rotateY: x * 8,
-            rotateX: -y * 8,
-            duration: 0.35,
-            ease: 'power2.out',
-            transformPerspective: 800
-          });
-        });
-        card.addEventListener('mouseleave', function () {
-          gsap.to(card, {
-            rotateY: 0,
-            rotateX: 0,
-            duration: 0.6,
-            ease: 'elastic.out(1, 0.5)'
-          });
-        });
-      });
+      addTiltEffect('.sys-card', 8);
     }
 
     /* ────────────────────────────
