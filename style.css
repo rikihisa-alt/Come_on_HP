@@ -1732,8 +1732,16 @@ strong { font-weight: 500; }
   color: var(--blue);
 }
 
-.access-welcome {
+.access-note {
   margin-top: 24px;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--text-m);
+  letter-spacing: 0.02em;
+}
+
+.access-welcome {
+  margin-top: 16px;
   font-size: 14px;
   color: var(--text-s);
   line-height: 1.8;
