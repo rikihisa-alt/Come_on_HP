@@ -105,14 +105,72 @@ strong { font-weight: 500; }
   text-align: center;
 }
 
-.loader-ring {
-  width: 70px;
-  height: 70px;
-  border: 1px solid rgba(123,176,222,.15);
-  border-top-color: var(--blue-lt);
-  border-radius: 50%;
-  margin: 0 auto 24px;
-  animation: loaderRing 1.2s linear infinite;
+/* 3 cards spinning on diagonal axes */
+.loader-cards {
+  position: relative;
+  width: 80px;
+  height: 110px;
+  margin: 0 auto 28px;
+  perspective: 600px;
+}
+
+.lc-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,.25);
+}
+
+.lc-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Card 1: spins on a diagonal axis (top-left ↔ bottom-right) */
+.lc-1 {
+  animation: lcSpin1 2.4s cubic-bezier(.4,0,.2,1) infinite;
+  z-index: 3;
+}
+
+/* Card 2: spins on opposite diagonal, offset timing */
+.lc-2 {
+  animation: lcSpin2 2.4s cubic-bezier(.4,0,.2,1) infinite;
+  animation-delay: -0.8s;
+  z-index: 2;
+}
+
+/* Card 3: spins on Y axis tilted 45deg, offset timing */
+.lc-3 {
+  animation: lcSpin3 2.4s cubic-bezier(.4,0,.2,1) infinite;
+  animation-delay: -1.6s;
+  z-index: 1;
+}
+
+@keyframes lcSpin1 {
+  0%   { transform: rotate(0deg)   rotateY(0deg);   opacity: 0.9; }
+  25%  { transform: rotate(15deg)  rotateY(90deg);  opacity: 0.4; }
+  50%  { transform: rotate(0deg)   rotateY(180deg); opacity: 0.9; }
+  75%  { transform: rotate(-15deg) rotateY(270deg); opacity: 0.4; }
+  100% { transform: rotate(0deg)   rotateY(360deg); opacity: 0.9; }
+}
+
+@keyframes lcSpin2 {
+  0%   { transform: rotate(45deg)  rotateX(0deg);   opacity: 0.7; }
+  25%  { transform: rotate(30deg)  rotateX(90deg);  opacity: 0.3; }
+  50%  { transform: rotate(45deg)  rotateX(180deg); opacity: 0.7; }
+  75%  { transform: rotate(60deg)  rotateX(270deg); opacity: 0.3; }
+  100% { transform: rotate(45deg)  rotateX(360deg); opacity: 0.7; }
+}
+
+@keyframes lcSpin3 {
+  0%   { transform: rotate(-45deg) rotateY(0deg);   opacity: 0.5; }
+  25%  { transform: rotate(-30deg) rotateY(90deg);  opacity: 0.2; }
+  50%  { transform: rotate(-45deg) rotateY(180deg); opacity: 0.5; }
+  75%  { transform: rotate(-60deg) rotateY(270deg); opacity: 0.2; }
+  100% { transform: rotate(-45deg) rotateY(360deg); opacity: 0.5; }
 }
 
 .loader-text {
@@ -121,6 +179,12 @@ strong { font-weight: 500; }
   letter-spacing: 6px;
   color: rgba(255,255,255,.5);
   text-transform: uppercase;
+  animation: loaderTextPulse 2s ease-in-out infinite;
+}
+
+@keyframes loaderTextPulse {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 0.8; }
 }
 
 /* ============================================
@@ -1959,11 +2023,6 @@ strong { font-weight: 500; }
   50%      { opacity: 1; transform: scaleY(1.2); }
 }
 
-@keyframes loaderRing {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 /* ============================================
    RESPONSIVE
    ============================================ */
@@ -1977,6 +2036,12 @@ strong { font-weight: 500; }
 
 @media (max-width: 768px) {
   .sp { display: inline; }
+
+  /* Loader cards smaller on mobile */
+  .loader-cards {
+    width: 64px;
+    height: 90px;
+  }
 
   /* Nav mobile */
   .nav-toggle {
